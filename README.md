@@ -1,4 +1,4 @@
-# Sports Event OS Modular Kernel v1.1
+# Sports Event OS Modular Kernel v1.1.1
 
 离线、确定性、完全合成数据的个人赛事工具。**Kernel 不认识票价、座席、退款或旅行包**；业务由可独立安装的 Python 模块提供。无 GUI、AI、网络平台连接、自动定价或真实库存操作。
 
@@ -11,27 +11,27 @@ python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[excel]'
 python -m unittest discover -s tests -v
-python tests/run_v11_acceptance.py
+python tests/run_v111_acceptance.py
 ```
 
 Windows 激活用 `.venv\Scripts\activate`。核心仅标准库；`excel` 用于保留的只读 Excel 适配器及其测试。不要跳过包安装：模块来自安装元数据的 `sports_os.modules` entry points；仅设置 PYTHONPATH 不等于完成安装。离线且已有 setuptools≥68/openpyxl 时可 `python -m pip install --no-build-isolation --no-deps -e .`。
 
-基线 **72 项**，当前完整验收见 **V1_1_TEST_REPORT.md**；所有输入均为虚构。旧版本文档和批准快照保留，不改标为 v1.1。
+本轮基线 **140 项**、新增 **40 项**，合计 **180 项**；实际结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构。旧测试文件、旧工作样本和批准快照保留原样。
 
 ## 立即运行
 
-在项目根目录：
+在项目根目录，选择一个**新的工作目录**（仓库根目录的工作库是保留的 v1.1 历史样本）：
 
 ```bash
 python -m sports_os modules
-python -m sports_os demo
-python -m sports_os validate
-python -m sports_os revenue
-python -m sports_os diff version_a version_b
-python -m sports_os snapshot
+python -m sports_os demo --workspace ./outputs/my-v111-event
+python -m sports_os validate --workspace ./outputs/my-v111-event
+python -m sports_os revenue --workspace ./outputs/my-v111-event
+python -m sports_os diff version_a version_b --workspace ./outputs/my-v111-event
+python -m sports_os snapshot --workspace ./outputs/my-v111-event
 ```
 
-Demo 是 **2027 Global Racket Masters**（16场、4阶段、5票档、8040物理席），使用模拟批准引用。现成 Demo 已随仓库提供；重复运行不会覆盖用户编辑过的数据。每条命令均支持 `--workspace /path/to/local-workspace`，所有路径限制在该独立目录内，拒绝 `/Volumes` 与越界符号链接。
+Demo 是 **2027 Global Racket Masters**（16场、4阶段、5票档、8040物理席），使用模拟批准引用。上述命令生成当前schema的 Demo；重复运行不会覆盖已修改工作态。仓库原有v1.1样本需显式迁移，不能直接用新模块静默运行。每条命令均支持 `--workspace /path/to/local-workspace`，所有路径限制在该独立目录内，拒绝 `/Volumes` 与越界符号链接。
 
 不售票项目也可完整运行：
 
@@ -60,18 +60,33 @@ Profile 仅预填启用清单。没有 `profile == ...` 业务分支，不是限
 
 金额在服务层保留 Decimal。JSON 将 Decimal 输出为**精确十进制字符串**；这是计算结果，不是输入数值替代。只在阅读展示时四舍五入到分，不能将取整显示值回灌。分组显示额相加可能有分币尾差；精确汇总严格闭合。
 
-## 修改、启停、替换
+## 修改、人工批准、启停、替换
+
+所有界面业务写入必须走 ApplicationService；不要直接修改 `Project.states[*].payload` 或手填批准字段。
+
+`update` 替换整个模块payload；`patch` 接受已有字段的结构化path数组，不是字符串路径。增加/删除行或可选字段用整份 `update`。
+
+在新工作目录中创建 `price-patch.json`：
+
+```json
+[{"path": ["rows", 0, "price"], "value": 731}]
+```
 
 ```bash
-python -m sports_os export-data
-# 编辑 outputs/working-project.json，数据输入仍为JSON数字。
-python -m sports_os validate --data outputs/working-project.json
-python -m sports_os revenue --data outputs/working-project.json
-python -m sports_os load outputs/working-project.json
-python -m sports_os disable product.travel
-python -m sports_os enable product.travel
-python -m sports_os calculate ticketing.rights
+python -m sports_os patch ticketing.pricing price-patch.json --workspace ./outputs/my-v111-event
+python -m sports_os validate --workspace ./outputs/my-v111-event
+python -m sports_os snapshot --workspace ./outputs/my-v111-event
+# 此时应BLOCK；从patch的输出读取实际module data_version及project version。
+python -m sports_os approve-module ticketing.pricing --version '<实际data_version>' --approval-ref '<人工批准引用>' --workspace ./outputs/my-v111-event
+python -m sports_os approve-project --version '<实际project version>' --approval-ref '<人工批准引用>' --workspace ./outputs/my-v111-event
+python -m sports_os snapshot --workspace ./outputs/my-v111-event
 ```
+
+尖括号内容必须替换，不是默认批准。批准接口只记录人工确认；没有auto_approve。canonical内容改变才生成 `原版本-r1/-r2/...`，清除模块和项目批准；完全相同payload不变。Pricing/Rule内部版本和批准字段由所属模块hook同步，不由GUI自己维护。先批准变化模块，再批准项目，最后snapshot；旧snapshot不变。
+
+`export-data` 可导出工作JSON；`load` 和 `--data` 是外部导入入口，统一按DRAFT处理，不继承输入声称的批准。`--data snapshot` 因未批准而BLOCK，应先load再明确批准。`save_project` 验证完整工作态后落盘；可以在内存中多次编辑修正跨模块约束，再统一保存。API返回副本，不会修改传入对象。
+
+所有命令都可指定 `--workspace`；例如 `disable product.travel`、`enable product.travel`、`calculate ticketing.rights`。
 
 禁用保留payload以便重新启用，但不运行其schema/validator/calculation/diff/export，快照只包含启用模块的payload。未安装且禁用的模块也不会阻塞。启用新模块用 `--payload path/to/payload.json`；缺依赖、能力冲突或依赖环立即BLOCK，不静默补默认值。
 
@@ -85,7 +100,22 @@ CLI启停/替换会把项目设为DRAFT，需要重新批准。独立产品、�
 python -m sports_os create --id SYNTHETIC-NEW --name "Synthetic community event" --timezone UTC --workspace ./outputs/my-project
 ```
 
-生成合法但未批准的裸Kernel项目。加 `--profile` 只写入推荐manifest及 `outputs/project-skeleton.json`，**不编造业务payload**；按独立schema补齐各启用模块，再 `load`。批准必须由人输入 APPROVED/PUBLISHED 与非空 approval_ref；程序不会自动批准。
+生成合法但未批准的裸Kernel项目。加 `--profile` 只写入推荐manifest及 `outputs/project-skeleton.json`，**不编造业务payload**；按独立schema补齐各启用模块，再 `load`。批准必须通过 `approve-module` / `approve-project` 明确输入版本与非空批准引用；程序不会自动批准。
+
+## v1.1 → v1.1.1 显式迁移
+
+先备份工作目录，再运行：
+
+```bash
+python -m sports_os migrate-project --workspace /path/to/existing-v11-workspace
+python -m sports_os export-data --workspace /path/to/existing-v11-workspace
+```
+
+`migrate-project` 调用各启用模块的migration，全部验证通过才保存；失败不落盘。Schedule、Rights、五个Rule模块升级到schema 2；Revenue输出语义升级、schema仍为1。旧Rights显式映射REDEEMED、旧Rule映射ALL，保留原经济含义；不会静默猜测ALLOCATED。
+
+迁移产生DRAFT、新revision，需逐一人工批准变化模块及项目。`migrate-module` 用于单模块升级；多个模块一起升级用 `migrate-project`，避免中间版本阻断保存。禁用模块可留旧状态，重新启用前按需显式迁移。
+
+旧SN11快照只读且hash仍可核验，不用新模块重算旧版本发布件。原v1.0迁移与旧CLI保留如下。
 
 ## v1.0迁移与兼容
 
@@ -108,15 +138,15 @@ python -m sports_os --legacy validate
 "custom.checklist" = "custom_package:Checklist"
 ```
 
-继承 `sports_os.kernel.Module`，实现 `module_id`、`schema()`；按需实现validate、cross_validate、calculate、diff、export、release_requirements、migrate并声明依赖。calculate/export可不实现。安装后`modules`即能发现，不需修改Kernel注册表。完整示例见 [架构](V1_1_ARCHITECTURE.md)。插件是可信Python代码，不是沙箱。
+继承 `sports_os.kernel.Module`，实现 `module_id`、`schema()`；按需实现validate、cross_validate、calculate、diff、export、release_requirements、migrate并声明依赖。嵌入生命周期字段的插件还需实现纯函数prepare_revision；支持requires_capabilities及optional_capabilities。calculate/export可不实现。安装后`modules`即能发现，不需修改Kernel注册表。完整示例见 [架构](V1_1_ARCHITECTURE.md)。插件是可信Python代码，不是沙箱。
 
 ## 边界
 
 - 原型适合继续做**只读/轻编辑桌面原型**，不等于生产票务系统已验收。
-- 每规则模块目前一条全局规则，未实现多产品/渠道作用域优先级。
+- 规则支持ALL及SESSION集合；共同场次和有效期同时重叠BLOCK。未实现产品/渠道优先级或继承。
 - 收入是容量/需求情景，不是实际销量结算；旅行/通票营业额不叠加到已覆盖的座席收入。
 - 只有两个内置Demand Provider；历史模型可扩展，但本次不实现AI或真实历史数据接入。
 - 同名不同内容、人工批准状态和hash可以校验；审批真伪、证据真实性及插件代码可信度仍由人核实。
 - 单用户SQLite；不支持并发编辑协调、分布式权限、插件安全沙箱或真实现场安全判断。
 
-文档：[架构](V1_1_ARCHITECTURE.md) · [迁移](V1_1_MIGRATION.md) · [数据字典](docs/DATA_DICTIONARY.md) · [业务规则](docs/BUSINESS_RULES.md) · [测试](V1_1_TEST_REPORT.md)
+文档：[本轮加固](V1_1_1_HARDENING.md) · [架构](docs/ARCHITECTURE.md) · [迁移](V1_1_MIGRATION.md) · [数据字典](docs/DATA_DICTIONARY.md) · [业务规则](docs/BUSINESS_RULES.md) · [测试](V1_1_1_TEST_REPORT.md)

@@ -1,4 +1,4 @@
-# DATA_DICTIONARY v1.1
+# DATA_DICTIONARY v1.1.1
 
 ## Project Manifest (project.toml)
 
@@ -16,14 +16,14 @@ JSON文件用 `format_version=1.1`、manifest、modules字典、evidence数组�
 
 ## 业务键与单位
 
-- Schedule：session_id；时间包含UTC偏移。可选sales_start/sales_end必须成对。
+- Schedule：session_id；时间包含UTC偏移。可选sales_start/sales_end必须成对；venue_id可省略/null，否则引用venues Provider键。
 - Seating：session_id + zone_id + tier；price_class_id关联价格。容量按票张（跨场次汇总为座席机会，不是物理场馆独立座位）。
 - Pricing：session_id + price_class_id；价格单元为DEMO_CURRENCY/张，最多2位小数。
 - Inventory：inventory_id；quantity为票张；每容量池互斥状态合计等于sellable_capacity，as_of一致。渠道只能分配，不能重复计同一批票。
-- Rights：session_id + zone_id + tier；quantity为票张；strategy/value定义有效价；expected_fulfillment按scenario给[0,1]比例。免费权益仍在Seating扣减，付费权益由本模块输出。
+- Rights：session_id + zone_id + tier；quantity为分配票张；billing_basis必填ALLOCATED/REDEEMED；strategy/value定义有效价；expected_fulfillment按scenario给[0,1]比例。免费权益仍在Seating扣减，付费权益由本模块输出。
 - Product：product_id；included_sessions内按容量键唯一；ticket_quantity为每份产品在该场次座区消耗的票张，不是订单/份/人数。
 - Travel：guests为人；room_quantity/expected_rooms为房；nights为每房夜数；room_cost为每房每晚成本；service_per_guest按人；other_cost按份；quoted_non_ticket为每份非票报价。
-- Rules：rule_id；各模块独立数据版本；时间为半开有效期，每模块定义自己的业务覆盖期。
+- Rules：rule_id；各模块独立数据版本；scope为ALL或SESSION（后者session_ids非空唯一）；时间为半开有效期，每模块定义自己的业务覆盖期。
 - Task：task_id；depends_on按task_id，不能循环；owner_role不用实名。
 - Decision：decision_id；明确changed_paths与来源、批准角色，不自动推测变化动机。
 - Demand：scenario名称不限于low/mid/high。multiplicative使用session_rates/tier_rates；direct使用逐池session_id/zone_id/tier/rate行。
@@ -42,10 +42,19 @@ confirmed=true且角色明确才显示“已确认原因（输入证据）”；
 
 format_version、snapshot_id（SN11-）、created_at、content_hash、record_hash、warnings_acknowledged、quality_gate、完整project和module_index。module_index记录每个启用模块module_version/schema_version/content_hash；project保留模块data_version/approval_ref。历史快照不靠后来工作配置重建。
 
-## 各模块payload字段（由运行时schema生成）
+## v1.1.1 新增口径
 
-完整机器定义位于data/schemas/modules/。下表展开嵌套结构；标记required的字段在其父对象出现时必须提供。不是一个所有模块必填的总schema。
+- working revision：原版本-r1、-r2；no-op不递增。嵌入价格price_version/规则version由模块prepare_revision同步。
+- venues标准结果：venue_id → 场馆row。schedule.sessions各row可有venue_id。
+- rights标准结果新增billing_basis，不能缺省。旧工作态显式迁移默认REDEEMED以保留原语义。
+- Revenue每行每情景：public_expected_tickets、rights_allocated、rights_expected_fulfilled、rights_revenue_tickets、revenue_tickets、fulfilled_tickets、revenue_basis、public_revenue、rights_revenue、revenue。
+- revenue_basis行级为ALLOCATED/REDEEMED或无权益时null；汇总为basis → 分配票张的字典。两种票张不相加冒充人数；fulfilled_tickets是预计票张，不是去重观众。
+- 汇总average_price_per_revenue_ticket = revenue/revenue_tickets；average_revenue_per_fulfilled_ticket = revenue/fulfilled_tickets；分母0则null。删除旧歧义tickets/expected_tickets/average_price字段，调用方显式选择口径。
+- Schedule、Rights及五个Rule模块：module_version=1.1.1/schema_version=2。Revenue：module_version=1.1.1/schema_version=1（输出语义变化）。未升级模块保留1.1.0/1。应用包版本1.1.1不要求所有插件同步版本号。
 
+## 各模块payload字段（运行时schema生成）
+
+机器定义在data/schemas/modules/。表内“必填”相对于父对象；scope的条件约束另由模块validate检查。
 
 ### core.schedule
 
@@ -57,6 +66,7 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows[].stage|string|是|
 |rows[].start_time|string|是|
 |rows[].end_time|string|是|
+|rows[].venue_id|['string', 'null']|否|
 |sales_start|string|否|
 |sales_end|string|否|
 
@@ -209,6 +219,9 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows|array|是|
 |rows[].rule_id|string|是|
 |rows[].version|string|是|
+|rows[].scope|object|是|
+|rows[].scope.type|['ALL', 'SESSION']|是|
+|rows[].scope.session_ids|array|否|
 |rows[].content|object|是|
 |rows[].content.mode|string|是|
 |rows[].valid_from|string|是|
@@ -239,6 +252,9 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows|array|是|
 |rows[].rule_id|string|是|
 |rows[].version|string|是|
+|rows[].scope|object|是|
+|rows[].scope.type|['ALL', 'SESSION']|是|
+|rows[].scope.session_ids|array|否|
 |rows[].content|object|是|
 |rows[].content.denominator|PUBLIC_POOL|是|
 |rows[].content.rounds|array|是|
@@ -269,6 +285,9 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows|array|是|
 |rows[].rule_id|string|是|
 |rows[].version|string|是|
+|rows[].scope|object|是|
+|rows[].scope.type|['ALL', 'SESSION']|是|
+|rows[].scope.session_ids|array|否|
 |rows[].content|object|是|
 |rows[].content.coverage_start|string|是|
 |rows[].content.coverage_end|string|是|
@@ -290,6 +309,7 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows[].zone_id|string|是|
 |rows[].tier|string|是|
 |rows[].quantity|integer|是|
+|rows[].billing_basis|['ALLOCATED', 'REDEEMED']|是|
 |rows[].strategy|['FACE_VALUE', 'FIXED_PRICE', 'DISCOUNT_RATE']|是|
 |rows[].value|number|是|
 |rows[].expected_fulfillment|object|是|
@@ -301,6 +321,9 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows|array|是|
 |rows[].rule_id|string|是|
 |rows[].version|string|是|
+|rows[].scope|object|是|
+|rows[].scope.type|['ALL', 'SESSION']|是|
+|rows[].scope.session_ids|array|否|
 |rows[].content|object|是|
 |rows[].content.hours_before|integer|是|
 |rows[].valid_from|string|是|
@@ -336,6 +359,9 @@ format_version、snapshot_id（SN11-）、created_at、content_hash、record_has
 |rows|array|是|
 |rows[].rule_id|string|是|
 |rows[].version|string|是|
+|rows[].scope|object|是|
+|rows[].scope.type|['ALL', 'SESSION']|是|
+|rows[].scope.session_ids|array|否|
 |rows[].content|object|是|
 |rows[].content.allowed|boolean|是|
 |rows[].valid_from|string|是|

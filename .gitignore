@@ -10,3 +10,5 @@ data/event.sqlite-shm
 *.sqlite-journal
 *.sqlite-wal
 *.sqlite-shm
+
+build/

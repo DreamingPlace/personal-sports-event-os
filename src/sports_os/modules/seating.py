@@ -5,7 +5,7 @@ def sellable(row):return row['physical_capacity']-sum(row[k] for k in HOLDS)
 
 class Seating(RowsModule):
     module_id='ticketing.seating'
-    dependencies=('core.schedule','ticketing.pricing')
+    requires_capabilities=('schedule','prices')
     provides=('capacity',)
     identity=('session_id','zone_id','tier')
     row_schema=obj(dict(session_id=S,zone_id=S,tier=S,price_class_id=S,physical_capacity=I,

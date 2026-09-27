@@ -1,0 +1,1277 @@
+{
+  "verdict": "PASS",
+  "base_commit": "8ffdfb6b1905453e1940e968c506cfbd8d7dda5a",
+  "created_at": "2026-09-27T09:06:12.960729+00:00",
+  "python": "3.12.14",
+  "old_count": 140,
+  "old_pass": 140,
+  "new_count": 40,
+  "new_pass": 40,
+  "hard_count": 24,
+  "tests_run": 180,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "tests": [
+    {
+      "test": "tests.test_s0.ModelTests.test_demo_shape",
+      "input": "test_demo_shape",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s0.ModelTests.test_dependency_cycle",
+      "input": "test_dependency_cycle",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s0.ModelTests.test_derived_and_paid_rights",
+      "input": "test_derived_and_paid_rights",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s0.ModelTests.test_invalid_key_type_and_missing",
+      "input": "test_invalid_key_type_and_missing",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s0.ModelTests.test_product_mapping",
+      "input": "test_product_mapping",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s0.ModelTests.test_sqlite_roundtrip",
+      "input": "test_sqlite_roundtrip",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s1.RevenueTests.test_one_price_updates_all",
+      "input": "test_one_price_updates_all",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s1.RevenueTests.test_one_seat_updates_all",
+      "input": "test_one_seat_updates_all",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s1.RevenueTests.test_paid_rights_not_lost",
+      "input": "test_paid_rights_not_lost",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s1.RevenueTests.test_recompute_and_rollups",
+      "input": "test_recompute_and_rollups",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s1.RevenueTests.test_scenario_order",
+      "input": "test_scenario_order",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s2.GateSmokeTests.test_draft_can_preview_not_release",
+      "input": "test_draft_can_preview_not_release",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s2.GateSmokeTests.test_findings_have_contract",
+      "input": "test_findings_have_contract",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s2.GateSmokeTests.test_malformed_rule_blocks_not_crashes",
+      "input": "test_malformed_rule_blocks_not_crashes",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s2.GateSmokeTests.test_valid_demo_passes_release",
+      "input": "test_valid_demo_passes_release",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s2.GateSmokeTests.test_xlsx_readonly_arithmetic_and_contract",
+      "input": "test_xlsx_readonly_arithmetic_and_contract",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_approved_with_draft_rule",
+      "input": "test_approved_with_draft_rule",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_deduction_duplicate",
+      "input": "test_deduction_duplicate",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_duplicate_json_keys_rejected",
+      "input": "test_duplicate_json_keys_rejected",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_inconsistent_versions",
+      "input": "test_inconsistent_versions",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_mismatched_inventory_times",
+      "input": "test_mismatched_inventory_times",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_missing_cell_reference",
+      "input": "test_missing_cell_reference",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_negative_and_over_capacity",
+      "input": "test_negative_and_over_capacity",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_no_silent_nan_boolean_or_fractional_count",
+      "input": "test_no_silent_nan_boolean_or_fractional_count",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_outputs_different_snapshot",
+      "input": "test_outputs_different_snapshot",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_paid_rights_sold_not_lost",
+      "input": "test_paid_rights_sold_not_lost",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_percentage_120",
+      "input": "test_percentage_120",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_refund_gap",
+      "input": "test_refund_gap",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_required_rate_no_silent_default",
+      "input": "test_required_rate_no_silent_default",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_same_name_different_content",
+      "input": "test_same_name_different_content",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_scenarios_order",
+      "input": "test_scenarios_order",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_stale_hardcoded_summary",
+      "input": "test_stale_hardcoded_summary",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_time_order_and_preparation",
+      "input": "test_time_order_and_preparation",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.EdgeTests.test_unit_warning_and_old_year_noncritical",
+      "input": "test_unit_warning_and_old_year_noncritical",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.ExcelEdgeTests.test_errors_and_blank",
+      "input": "test_errors_and_blank",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.ExcelEdgeTests.test_hardcoded_contract_mismatch",
+      "input": "test_hardcoded_contract_mismatch",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.ExcelEdgeTests.test_percent_and_parentheses",
+      "input": "test_percent_and_parentheses",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_001",
+      "input": "合成单元格公式 =A1+#REF! → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_002",
+      "input": "2027赛事关键标题含2026年 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_003",
+      "input": "分项100+200+300，声明总计650 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_004",
+      "input": "测试专用：VIP 16×1080=17280；通票声明等于总和却写19980 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_005",
+      "input": "库存原已闭合，再新增售出1张，超出可售总池 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_006",
+      "input": "双人共房产品声明1间，成本计费2间 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_007",
+      "input": "声称成本加10%，实际按成本/0.9报价 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_008",
+      "input": "第二退款窗口提前一天开始，与首窗重叠 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_009",
+      "input": "同一metric_id分别标为订单和票张 → WARNING",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s3.HistoricalRegressionTests.test_TEST_010",
+      "input": "PUBLISHED price_version缺少approval_ref → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s4.DiffTests.test_identical",
+      "input": "test_identical",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s4.DiffTests.test_numeric_confirmed_and_unknown",
+      "input": "test_numeric_confirmed_and_unknown",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s4.DiffTests.test_reordering_not_change",
+      "input": "test_reordering_not_change",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s4.DiffTests.test_seating_derived_and_product_add_delete",
+      "input": "test_seating_derived_and_product_add_delete",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s4.DiffTests.test_text_replacement_no_semantic_claim",
+      "input": "test_text_replacement_no_semantic_claim",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s4.DiffTests.test_unconfirmed_never_promoted",
+      "input": "test_unconfirmed_never_promoted",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s5.SnapshotTests.test_block_writes_nothing",
+      "input": "test_block_writes_nothing",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s5.SnapshotTests.test_immutable_and_repeatable",
+      "input": "test_immutable_and_repeatable",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s5.SnapshotTests.test_metadata_tamper",
+      "input": "test_metadata_tamper",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s5.SnapshotTests.test_release_single_snapshot_and_idempotent",
+      "input": "test_release_single_snapshot_and_idempotent",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s5.SnapshotTests.test_tamper_blocks_export",
+      "input": "test_tamper_blocks_export",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s5.SnapshotTests.test_warning_requires_ack",
+      "input": "test_warning_requires_ack",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s6.CLITests.test_block_cannot_publish",
+      "input": "test_block_cannot_publish",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s6.CLITests.test_escape_and_usb_prohibited",
+      "input": "test_escape_and_usb_prohibited",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s6.CLITests.test_full_cli_workflow",
+      "input": "test_full_cli_workflow",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s6.CLITests.test_json_edit_not_silently_authoritative",
+      "input": "test_json_edit_not_silently_authoritative",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s6.CLITests.test_warning_not_blocked_validate_but_requires_snapshot_ack",
+      "input": "test_warning_not_blocked_validate_but_requires_snapshot_ack",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_derived_product_price_updates",
+      "input": "test_derived_product_price_updates",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_missing_or_competing_rules_block_release",
+      "input": "test_missing_or_competing_rules_block_release",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_nonnumeric_summary_pointer_blocks",
+      "input": "test_nonnumeric_summary_pointer_blocks",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_schema_and_demo_no_actual_data",
+      "input": "test_schema_and_demo_no_actual_data",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_unrepresentable_money_and_boolean_const_fail_closed",
+      "input": "test_unrepresentable_money_and_boolean_const_fail_closed",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_version_b_all_categories_and_passes",
+      "input": "test_version_b_all_categories_and_passes",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_version_labels_cannot_be_reused_for_different_content",
+      "input": "test_version_labels_cannot_be_reused_for_different_content",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_s7.FinalAcceptanceTests.test_zero_capacity_and_zero_demand",
+      "input": "test_zero_capacity_and_zero_demand",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_001",
+      "input": "已批准票价改为731",
+      "expected": "模块/项目DRAFT且新版本、清批准",
+      "actual": "实际断言通过：模块/项目DRAFT且新版本、清批准",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_002",
+      "input": "相同payload",
+      "expected": "版本/批准保持",
+      "actual": "实际断言通过：版本/批准保持",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_003",
+      "input": "edit后snapshot",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_004",
+      "input": "edit后显式人工重新批准",
+      "expected": "snapshot成功",
+      "actual": "实际断言通过：snapshot成功",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_005",
+      "input": "旧snapshot后编辑并再批准",
+      "expected": "旧snapshot不变",
+      "actual": "实际断言通过：旧snapshot不变",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_006",
+      "input": "Revenue仅缺schedule，其他capabilities存在",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_007",
+      "input": "自定义prices替代官方Pricing",
+      "expected": "Revenue相同",
+      "actual": "实际断言通过：Revenue相同",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_008",
+      "input": "两个prices提供者",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_009",
+      "input": "多session关联三个虚构场馆",
+      "expected": "PASS",
+      "actual": "实际断言通过：PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_010",
+      "input": "session引用不存在的venue",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_011",
+      "input": "禁用Venue且没有venue_id",
+      "expected": "PASS",
+      "actual": "实际断言通过：PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_012",
+      "input": "100权益×300，fulfillment=.8，ALLOCATED",
+      "expected": "收入30000/履约80",
+      "actual": "实际断言通过：收入30000/履约80",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_013",
+      "input": "相同权益，REDEEMED",
+      "expected": "收入24000/履约80",
+      "actual": "实际断言通过：收入24000/履约80",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_014",
+      "input": "只改billing_basis",
+      "expected": "Public收入/票张不变",
+      "actual": "实际断言通过：Public收入/票张不变",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_015",
+      "input": "一个Refund ALL",
+      "expected": "PASS",
+      "actual": "实际断言通过：PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_016",
+      "input": "两个Refund，Session集合不相交",
+      "expected": "PASS",
+      "actual": "实际断言通过：PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_017",
+      "input": "两个Refund共享Session且有效期重叠",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_018",
+      "input": "Scope引用不存在Session",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_019",
+      "input": "edit后仅手工把项目改APPROVED，模块DRAFT",
+      "expected": "发布BLOCK",
+      "actual": "实际断言通过：发布BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_020",
+      "input": "edit后仅调用approve_project，不批准模块",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_021",
+      "input": "删除多个venue中仍被引用的一个",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_022",
+      "input": "ALLOCATED权益履约率0",
+      "expected": "收入30000/履约0",
+      "actual": "实际断言通过：收入30000/履约0",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_023",
+      "input": "REDEEMED权益履约率0",
+      "expected": "收入0/履约0",
+      "actual": "实际断言通过：收入0/履约0",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_HARD_024",
+      "input": "不同Scope共享S02但有效时间仅边界相接",
+      "expected": "PASS",
+      "actual": "实际断言通过：PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_approval_stale_and_empty",
+      "input": "空批准引用/旧版本批准",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_cli_edit_and_manual_approval",
+      "input": "patch→snapshot BLOCK→approve-module→approve-project→snapshot",
+      "expected": "PASS",
+      "actual": "实际断言通过：PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_cli_explicit_project_migration",
+      "input": "旧工作库执行migrate-project",
+      "expected": "成功且重新批准前发布BLOCK",
+      "actual": "实际断言通过：成功且重新批准前发布BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_existing_enable_uses_revision_lifecycle",
+      "input": "对已存在模块enable时替换payload",
+      "expected": "新revision/DRAFT",
+      "actual": "实际断言通过：新revision/DRAFT",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_explicit_v11_working_migration",
+      "input": "原v1.1工作态",
+      "expected": "升级前BLOCK、显式迁移后DRAFT/PASS",
+      "actual": "实际断言通过：升级前BLOCK、显式迁移后DRAFT/PASS",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_external_manifest_change_is_not_approval",
+      "input": "手改TOML禁用模块并保留批准",
+      "expected": "open后DRAFT/新revision",
+      "actual": "实际断言通过：open后DRAFT/新revision",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_import_cannot_transfer_approval",
+      "input": "从JSON导入已修改且声称APPROVED数据",
+      "expected": "DRAFT/发布BLOCK",
+      "actual": "实际断言通过：DRAFT/发布BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_old_snapshot_preserved_and_not_reinterpreted",
+      "input": "仓库原v1.1发布件",
+      "expected": "hash仍有效、新模块拒绝静默重解释",
+      "actual": "实际断言通过：hash仍有效、新模块拒绝静默重解释",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_patch_malformed_is_atomic",
+      "input": "非数组/非对象changeset",
+      "expected": "KernelError且无写入",
+      "actual": "实际断言通过：KernelError且无写入",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_replace_with_already_enabled_invalidates",
+      "input": "replace为已启用模块、payload不变但配置改变",
+      "expected": "项目DRAFT",
+      "actual": "实际断言通过：项目DRAFT",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_rights_provider_and_inventory",
+      "input": "替换Rights",
+      "expected": "Revenue及Inventory使用能力、不依赖官方ID",
+      "actual": "实际断言通过：Revenue及Inventory使用能力、不依赖官方ID",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_rights_schema_and_provider_basis_required",
+      "input": "缺失/未知billing_basis",
+      "expected": "BLOCK而非静默默认",
+      "actual": "实际断言通过：BLOCK而非静默默认",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_rule_scope_contracts",
+      "input": "所有规则支持SESSION；ALL/SESSION重叠、重复ID、无scope",
+      "expected": "BLOCK",
+      "actual": "实际断言通过：BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_schedule_provider_and_tasks",
+      "input": "替换Schedule，Tasks仍校验赛前时序",
+      "expected": "计算不变/坏任务BLOCK",
+      "actual": "实际断言通过：计算不变/坏任务BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_scoped_identity_temporal_coverage",
+      "input": "Identity两段相接覆盖销售至场次结束",
+      "expected": "PASS；留空档BLOCK",
+      "actual": "实际断言通过：PASS；留空档BLOCK",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v111_hardening.HardeningTests.test_service_copy_atomic_revision",
+      "input": "返回payload副本、无效patch",
+      "expected": "原对象不变，版本-r1/-r2",
+      "actual": "实际断言通过：原对象不变，版本-r1/-r2",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_fixes.BusinessFixes.test_expired_rules",
+      "input": "test_expired_rules",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_fixes.BusinessFixes.test_price_class",
+      "input": "test_price_class",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_fixes.BusinessFixes.test_product_order",
+      "input": "test_product_order",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_fixes.BusinessFixes.test_rights_strategies",
+      "input": "test_rights_strategies",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_fixes.BusinessFixes.test_split_zone_invariant",
+      "input": "test_split_zone_invariant",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_fixes.BusinessFixes.test_travel_null",
+      "input": "test_travel_null",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_001_kernel_schedule",
+      "input": "MOD-001: Kernel+Schedule，无票务 → PASS",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_002_no_travel_validator",
+      "input": "MOD-002: 禁用Travel → validator绝不运行",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_003_free_event_snapshot",
+      "input": "MOD-003: 免费群众赛事 → validate/snapshot成功",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_004_missing_travel_dependency",
+      "input": "MOD-004: Travel缺Pricing → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_005_disabled_payload_quarantined",
+      "input": "MOD-005: 保留损坏的禁用payload，不执行/不冻结",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_006_cycle",
+      "input": "MOD-006: 模块依赖环 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_007_price_class",
+      "input": "MOD-007: 同tier不同zone不同price_class → 分别按价计算",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_008_rights_discount",
+      "input": "MOD-008: 权益8折 → 采用有效单价，非公开价",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_009_travel_missing_price",
+      "input": "MOD-009: Travel含非票成本但price=null → BLOCK，不能snapshot",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_010_rule_expiry",
+      "input": "MOD-010: 所有规则模块适用期检查 → 过期BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_011_zone_split",
+      "input": "MOD-011: 经济事实不变，zone拆分 → 精确总收入完全不变",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_012_product_order",
+      "input": "MOD-012: 产品included_sessions仅重排 → 无业务差异",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_013_only_active_findings",
+      "input": "MOD-013: Disabled未知模块坏payload → 不产生Finding",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_014_snapshot_enable",
+      "input": "MOD-014: snapshot后启用新模块 → 历史记录字节/索引不变",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_015_upgrade_without_migration",
+      "input": "MOD-015: 插件升级无migration → BLOCK，不静默解释",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_MOD_016_migration",
+      "input": "MOD-016: v1.0迁移 → 与修正舍入后的模型精确对账",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_demand_missing_conflicting_and_unknown",
+      "input": "test_demand_missing_conflicting_and_unknown",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_disable_rights_requires_inventory_reconciliation",
+      "input": "test_disable_rights_requires_inventory_reconciliation",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_external_entrypoint_discovery",
+      "input": "实际通过临时独立distribution元数据发现插件，不改Kernel注册表。",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_fresh_cli",
+      "input": "test_fresh_cli",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_kernel_business_independence",
+      "input": "test_kernel_business_independence",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_manifest_roundtrip",
+      "input": "test_manifest_roundtrip",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_old_snapshot_not_relabelled",
+      "input": "test_old_snapshot_not_relabelled",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_profiles_not_runtime_modes",
+      "input": "test_profiles_not_runtime_modes",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_replace_demand",
+      "input": "test_replace_demand",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_revenue_and_inventory_independent",
+      "input": "test_revenue_and_inventory_independent",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_rights_fixed_price",
+      "input": "test_rights_fixed_price",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_schema_missing_false_nan_unknown",
+      "input": "test_schema_missing_false_nan_unknown",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_snapshot_integrity_and_immutable",
+      "input": "test_snapshot_integrity_and_immutable",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_travel_closure_and_no_double_count",
+      "input": "test_travel_closure_and_no_double_count",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_version_reuse_blocks",
+      "input": "test_version_reuse_blocks",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.ModularTests.test_working_hash_tamper",
+      "input": "test_working_hash_tamper",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_001",
+      "input": "模块化迁移 TEST-001: 合成单元格公式 =A1+#REF! → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_002",
+      "input": "模块化迁移 TEST-002: 2027赛事关键标题含2026年 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_003",
+      "input": "模块化迁移 TEST-003: 分项100+200+300，声明总计650 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_004",
+      "input": "模块化迁移 TEST-004: 测试专用：VIP 16×1080=17280；通票声明等于总和却写19980 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_005",
+      "input": "模块化迁移 TEST-005: 库存原已闭合，再新增售出1张，超出可售总池 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_006",
+      "input": "模块化迁移 TEST-006: 双人共房产品声明1间，成本计费2间 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_007",
+      "input": "模块化迁移 TEST-007: 声称成本加10%，实际按成本/0.9报价 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_008",
+      "input": "模块化迁移 TEST-008: 第二退款窗口提前一天开始，与首窗重叠 → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_009",
+      "input": "模块化迁移 TEST-009: 同一metric_id分别标为订单和票张 → WARNING",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.MigratedHistoricalTests.test_migrated_TEST_010",
+      "input": "模块化迁移 TEST-010: PUBLISHED price_version缺少approval_ref → BLOCK",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_evidence_confirmed_vs_unconfirmed",
+      "input": "test_evidence_confirmed_vs_unconfirmed",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_optional_module_no_calculation",
+      "input": "test_optional_module_no_calculation",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_all_module_calculations_json_serializable",
+      "input": "test_all_module_calculations_json_serializable",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_schema_upgrade_explicit_migration",
+      "input": "test_schema_upgrade_explicit_migration",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_unknown_disabled_plugin_not_loaded",
+      "input": "test_unknown_disabled_plugin_not_loaded",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_warning_ack_snapshot",
+      "input": "test_warning_ack_snapshot",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_no_mutation_by_calculation_or_export",
+      "input": "test_no_mutation_by_calculation_or_export",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_missing_demand_rate_no_default",
+      "input": "test_missing_demand_rate_no_default",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_demand_provider_conflict",
+      "input": "test_demand_provider_conflict",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_sales_window_and_last_rights_node",
+      "input": "test_sales_window_and_last_rights_node",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_sensitivity_and_group_exactness",
+      "input": "test_sensitivity_and_group_exactness",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_seat_edit_propagates_and_inventory_blocks",
+      "input": "test_seat_edit_propagates_and_inventory_blocks",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_blank_evidence_role_not_confirmed",
+      "input": "test_blank_evidence_role_not_confirmed",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_decimal_context_does_not_change_result",
+      "input": "test_decimal_context_does_not_change_result",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_snapshot_diff_metadata",
+      "input": "test_snapshot_diff_metadata",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_configuration_edit_invalidates_approval_in_service",
+      "input": "test_configuration_edit_invalidates_approval_in_service",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_failed_dependency_change_is_atomic",
+      "input": "test_failed_dependency_change_is_atomic",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_unknown_schema_properties_block",
+      "input": "test_unknown_schema_properties_block",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_numeric_input_precision_is_not_silently_rounded",
+      "input": "test_numeric_input_precision_is_not_silently_rounded",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    },
+    {
+      "test": "tests.test_v11_modular.AdditionalBoundaryTests.test_empty_kernel_snapshot_with_explicit_approval",
+      "input": "test_empty_kernel_snapshot_with_explicit_approval",
+      "expected": "所有断言成立",
+      "actual": "无断言失败",
+      "result": "PASS"
+    }
+  ]
+}

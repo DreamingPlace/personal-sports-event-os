@@ -9,3 +9,40 @@
 - validators/legacy_checks/：仅v1.0兼容域检查。
 
 旧架构已保存在 [v1_0/ARCHITECTURE.md](v1_0/ARCHITECTURE.md)，只说明旧数据格式，不代表当前Kernel。
+
+## v1.1.1 增量（当前契约）
+
+[原架构](../V1_1_ARCHITECTURE.md)是v1.1基线；本节和[加固报告](../V1_1_1_HARDENING.md)记录当前差异，主分层不变。
+
+- Registry增加通用optional_capabilities，存在则进入拓扑排序，不存在不强制启用；冲突仍BLOCK。
+- Module增加纯函数prepare_revision(payload, data_version, approval_ref=None)，默认复制输入。ApplicationService决定何时失效/批准；业务模块只同步自身嵌套生命周期字段。Kernel不含票价或规则字段名。
+- 新写接口：get_module_data、update_module_data、apply_changeset、approve_module、approve_project、import_project、migrate_project。既有create/open/list/enable/disable/replace/validate/calculate/compare/snapshot/list_snapshots/export继续使用。
+- 写操作和迁移先返回独立Project，save_project验证后持久化；patch只替换已有typed path，失败不改输入。单用户工作版本递增-rN，非多写者乐观锁。
+- 新JSON导入统一DRAFT。外部TOML变化被识别为工作配置变化，不接受其批准声明。GUI不直接改Project内部对象；这是一条应用工程边界，不是恶意插件/管理员安全边界。
+- 原快照及数据格式format_version=1.1、SN11前缀保持；插件/schema升级只显式迁移工作态。旧发布件不重写，不用新模块重算旧快照。
+
+### 当前Provider依赖（运行时Registry导出）
+
+|模块|必需能力|可选能力|提供能力|具体模块依赖/可选|
+|---|---|---|---|---|
+|core.schedule|—|venues|schedule|— / —|
+|core.venue|—|—|venues|— / —|
+|demand.direct|capacity|—|demand|— / —|
+|demand.multiplicative|capacity|—|demand|— / —|
+|finance.revenue|capacity, demand, prices, schedule|rights|—|— / —|
+|product.pass|capacity, prices|—|—|— / —|
+|product.travel|capacity, prices|—|—|— / —|
+|project.decisions|—|—|—|— / —|
+|project.tasks|—|schedule|—|— / —|
+|quality.declarations|schedule|—|—|— / finance.revenue|
+|ticketing.identity|schedule|—|—|— / —|
+|ticketing.inventory|capacity|rights|—|— / —|
+|ticketing.launch|schedule|—|—|— / —|
+|ticketing.pricing|schedule|—|prices|— / —|
+|ticketing.refund|schedule|—|—|— / —|
+|ticketing.rights|capacity, prices|—|rights|— / —|
+|ticketing.rights_return|schedule|—|—|— / —|
+|ticketing.seating|schedule, prices|—|capacity|— / —|
+|ticketing.transfer|schedule|—|—|— / —|
+
+quality.declarations的可选finance.revenue依赖保留：该模块summary明确使用该输出结构，不是通用金额能力。其他本轮审查模块已按能力消费。

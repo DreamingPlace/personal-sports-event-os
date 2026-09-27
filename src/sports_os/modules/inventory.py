@@ -4,7 +4,7 @@ from .common import *
 class Inventory(RowsModule):
     module_id='ticketing.inventory'
     requires_capabilities=('capacity',)
-    optional_dependencies=('ticketing.rights',)
+    optional_capabilities=('rights',)
     identity=('inventory_id',)
     row_schema=obj(dict(inventory_id=S,session_id=S,zone_id=S,tier=S,channel=S,
         status={'enum':['AVAILABLE','SOLD','LOCKED','PAID_RESERVED']},

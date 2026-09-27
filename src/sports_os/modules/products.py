@@ -5,8 +5,7 @@ BASE=dict(product_id=S,product_type={'enum':['SINGLE','PASS','TRAVEL']},included
           price={'type':['number','null'],'minimum':0,'maximum':10**12},price_claim={'enum':['INDEPENDENT','SUM_FACE_PRICES']})
 
 class Products(RowsModule):
-    dependencies=('ticketing.pricing',)
-    requires_capabilities=('capacity',)
+    requires_capabilities=('capacity','prices')
     identity=('product_id',)
     row_schema=obj(BASE)
     allowed_types=()

@@ -6,7 +6,7 @@ class RightsReturn(RuleModule):
     module_id='ticketing.rights_return'
     content_schema=obj(dict(hours_before=I))
     def applicability(self,r,c,g):
-        schedule=c.provider('schedule');rows=schedule['sessions'].values()
+        schedule=self.scoped_schedule(r,c);rows=schedule['sessions'].values()
         deadlines=[moment(s['start_time'])-timedelta(hours=r['content']['hours_before']) for s in rows]
         require(bool(deadlines),'权益回流需要场次')
         require(schedule['sales_start'] is not None and schedule['sales_start']<=min(deadlines),'登记开始不能晚于回流节点')

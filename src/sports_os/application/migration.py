@@ -24,7 +24,7 @@ def migrate_v10(data,registry):
         row=dict(old);row['price_class_id']=row.get('price_class_id',row['tier'])
         paid=row.pop('paid_rights');policy=row.pop('paid_rights_pricing',dict(strategy='FACE_VALUE',value=1))
         seats.append(row)
-        rights.append(dict(session_id=row['session_id'],zone_id=row['zone_id'],tier=row['tier'],quantity=paid,**policy,
+        rights.append(dict(session_id=row['session_id'],zone_id=row['zone_id'],tier=row['tier'],quantity=paid,billing_basis='REDEEMED',**policy,
                            expected_fulfillment={k:v['paid_rights_rate'] for k,v in d['scenarios'].items()}))
     add('ticketing.seating',dict(rows=seats));add('ticketing.rights',dict(rows=rights))
     prices=[]
@@ -39,7 +39,7 @@ def migrate_v10(data,registry):
         rows=[]
         for rule in d['rules']:
             if rule['rule_type']==kind:
-                row=dict(rule);row.pop('rule_type');rows.append(row)
+                row=dict(rule);row.pop('rule_type');row['scope']={'type':'ALL'};rows.append(row)
         if rows:add(key,dict(rows=rows),d['rules_version'])
     for old,key in [('tasks','project.tasks'),('decisions','project.decisions')]:add(key,dict(rows=d[old]))
     add('demand.multiplicative',dict(scenarios={k:{f:v[f] for f in ('session_rates','tier_rates')} for k,v in d['scenarios'].items()}))

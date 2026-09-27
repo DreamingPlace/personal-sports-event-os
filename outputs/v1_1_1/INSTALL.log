@@ -1,0 +1,11 @@
+Processing <PROJECT>
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: personal-sports-event-os
+  Building wheel for personal-sports-event-os (pyproject.toml): started
+  Building wheel for personal-sports-event-os (pyproject.toml): finished with status 'done'
+  Created wheel for personal-sports-event-os: filename=personal_sports_event_os-1.1.1-py3-none-any.whl size=80932 sha256=954490822600a40b51580f91065a8ebb40643b120c60f727fe785e0011808278
+  Stored in directory: <TEMP_BUILD_PATH>
+Successfully built personal-sports-event-os
+Installing collected packages: personal-sports-event-os
+Successfully installed personal-sports-event-os-1.1.1

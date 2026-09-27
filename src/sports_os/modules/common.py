@@ -49,3 +49,15 @@ class RowsModule(Module):
         def keyed(payload):return {'/'.join(map(str,self.key(r))):self.canonical_row(r) for r in payload['rows']}
         return changes(keyed(old),keyed(new))
     def export(self,context):return context.payload(self.module_id)
+
+class ApprovedRowsModule(RowsModule):
+    version_field='version'
+
+    def prepare_revision(self,payload,data_version,approval_ref=None):
+        from copy import deepcopy
+        payload=deepcopy(payload)
+        for row in payload['rows']:
+            row[self.version_field]=data_version
+            row['status']='APPROVED' if approval_ref else 'DRAFT'
+            row['approval_ref']=approval_ref
+        return payload

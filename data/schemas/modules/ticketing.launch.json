@@ -14,6 +14,28 @@
             "type": "string",
             "minLength": 1
           },
+          "scope": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "ALL",
+                  "SESSION"
+                ]
+              },
+              "session_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "additionalProperties": false
+          },
           "content": {
             "type": "object",
             "properties": {
@@ -75,6 +97,7 @@
         "required": [
           "rule_id",
           "version",
+          "scope",
           "content",
           "valid_from",
           "valid_to",

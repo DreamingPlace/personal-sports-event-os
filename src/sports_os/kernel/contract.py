@@ -51,6 +51,7 @@ class Module:
     optional_dependencies = ()
     provides = ()
     requires_capabilities = ()
+    optional_capabilities = ()
 
     def schema(self):
         raise NotImplementedError
@@ -73,6 +74,10 @@ class Module:
 
     def release_requirements(self, context, gate):
         pass
+
+    def prepare_revision(self, payload, data_version, approval_ref=None):
+        """Pure module-owned synchronization of embedded lifecycle metadata."""
+        return deepcopy(payload)
 
     def migrate(self, old_version, old_schema, payload):
         raise KernelError(f'{self.module_id}: 没有 {old_version}/{old_schema} 到 {self.module_version}/{self.schema_version} 的迁移')

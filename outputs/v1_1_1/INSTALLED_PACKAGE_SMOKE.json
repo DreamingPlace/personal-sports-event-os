@@ -1,0 +1,72 @@
+{
+  "package_version": "1.1.1",
+  "installed_package_not_source": true,
+  "commands": [
+    {
+      "command": "python -m sports_os demo --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os validate --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os revenue --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os diff version_a version_b --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os snapshot --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os snapshot --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os patch ticketing.pricing price-patch.json --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os snapshot --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "command": "python -m sports_os approve-module ticketing.pricing --version prices-a-r1 --approval-ref SYNTHETIC-SMOKE-MODULE --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os approve-project --version demo-a-v11-r1 --approval-ref SYNTHETIC-SMOKE-PROJECT --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os snapshot --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "command": "python -m sports_os revenue --workspace <FRESH_WORKSPACE>",
+      "expected_exit": 0,
+      "actual_exit": 0
+    }
+  ],
+  "status": "PASS",
+  "full_revenue_before": "52390520",
+  "full_revenue_after": "52391214",
+  "price_edit_delta": "694",
+  "old_snapshot_byte_identical": true,
+  "diff_has_changes": true
+}

@@ -5,7 +5,7 @@ from .common import *
 
 class QualityDeclarations(Module):
     module_id='quality.declarations'
-    dependencies=('core.schedule',)
+    requires_capabilities=('schedule',)
     optional_dependencies=('finance.revenue',)
     def schema(self):
         return obj(dict(

@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "files": [
+    "src/sports_os/kernel/__init__.py",
+    "src/sports_os/kernel/contract.py",
+    "src/sports_os/kernel/data.py",
+    "src/sports_os/kernel/diff.py",
+    "src/sports_os/kernel/findings.py",
+    "src/sports_os/kernel/gate.py",
+    "src/sports_os/kernel/registry.py",
+    "src/sports_os/kernel/snapshot.py",
+    "src/sports_os/kernel/store.py"
+  ],
+  "forbidden": [
+    "ticketing.",
+    "ticket price",
+    "refund",
+    "travel",
+    "rights",
+    "venue",
+    "from ..modules",
+    "from ..models"
+  ],
+  "violations": []
+}

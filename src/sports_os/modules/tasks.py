@@ -2,7 +2,7 @@ from .common import *
 
 class Tasks(RowsModule):
     module_id='project.tasks'
-    optional_dependencies=('core.schedule',)
+    optional_capabilities=('schedule',)
     identity=('task_id',)
     row_schema=obj(dict(task_id=S,title=S,owner_role=S,due_at=S,depends_on=arr(S),
         status={'enum':['TODO','DOING','DONE']},acceptance=S,proof=NULL_S,
@@ -20,8 +20,8 @@ class Tasks(RowsModule):
             visit(key);moment(t['due_at'])
             require(t['status']!='DONE' or (t['proof'] and t['proof'].strip()),'完成任务缺证据')
     def cross_validate(self,c,g):
-        if not c.enabled('core.schedule'):return
-        s=c.provider('schedule')
+        s=c.provider('schedule',required=False)
+        if s is None:return
         for t in self.rows(c):
             due=moment(t['due_at'])
             if t['phase']=='PRE_EVENT':require(s['start'] is not None and due<s['start'],'赛前任务时序错误')

@@ -25,6 +25,12 @@
           "end_time": {
             "type": "string",
             "minLength": 1
+          },
+          "venue_id": {
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [

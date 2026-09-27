@@ -4,9 +4,9 @@ from .common import *
 
 class Revenue(Module):
     module_id='finance.revenue'
-    dependencies=('ticketing.pricing',)
-    optional_dependencies=('ticketing.rights','product.pass','product.travel')
-    requires_capabilities=('capacity','demand')
+    module_version='1.1.1'
+    requires_capabilities=('capacity','demand','prices','schedule')
+    optional_capabilities=('rights',)
     def schema(self):return obj({})
 
     def cross_validate(self,c,g):
@@ -18,6 +18,7 @@ class Revenue(Module):
             if key in rights:
                 r=rights[key]
                 require(0<=r['quantity']<=pool['sellable_capacity'] and r['effective_unit_price']>=0,'权益标准化结果无效')
+                require(r['billing_basis'] in ('ALLOCATED','REDEEMED'),'权益计费基础无效')
                 require(set(r['expected_fulfillment'])==set(demand),'权益履约率必须覆盖当前Demand情景')
                 require(all(0<=q<=1 for q in r['expected_fulfillment'].values()),'权益履约率越界')
         require(set(rights)<=set(pools),'权益结果引用未知容量池')
@@ -51,8 +52,14 @@ class Revenue(Module):
                 price=public_price,full_revenue=D(public)*public_price+D(quantity)*effective,scenarios={})
             for name,rates in demand.items():
                 q=rates[key];fulfillment=right['expected_fulfillment'][name] if right else ZERO
-                tickets=D(public)*q+D(quantity)*fulfillment
-                row['scenarios'][name]=dict(tickets=tickets,revenue=D(public)*q*public_price+D(quantity)*fulfillment*effective)
+                public_tickets=D(public)*q;fulfilled=D(quantity)*fulfillment
+                basis=right['billing_basis'] if right else None
+                billed=D(quantity) if basis=='ALLOCATED' else fulfilled
+                row['scenarios'][name]=dict(public_expected_tickets=public_tickets,rights_allocated=quantity,
+                    rights_expected_fulfilled=fulfilled,rights_revenue_tickets=billed,
+                    revenue_basis=basis,revenue_tickets=public_tickets+billed,
+                    fulfilled_tickets=public_tickets+fulfilled,public_revenue=public_tickets*public_price,
+                    rights_revenue=billed*effective,revenue=public_tickets*public_price+billed*effective)
             rows.append(row)
         def aggregate(items):
             physical=sum(r['physical_capacity'] for r in items);capacity=sum(r['sellable_capacity'] for r in items)
@@ -60,9 +67,17 @@ class Revenue(Module):
             result=dict(physical_seat_opportunities=physical,sellable_seat_opportunities=capacity,full_revenue=full,
                         sellable_rate=D(capacity)/physical if physical else None,full_average_price=full/capacity if capacity else None,scenarios={})
             for name in demand:
-                tickets=sum((r['scenarios'][name]['tickets'] for r in items),ZERO)
-                revenue=sum((r['scenarios'][name]['revenue'] for r in items),ZERO)
-                result['scenarios'][name]=dict(revenue=revenue,expected_tickets=tickets,average_price=revenue/tickets if tickets else None)
+                fields=('public_expected_tickets','rights_allocated','rights_expected_fulfilled','rights_revenue_tickets',
+                        'revenue_tickets','fulfilled_tickets','public_revenue','rights_revenue','revenue')
+                totals={f:sum((r['scenarios'][name][f] for r in items),ZERO) for f in fields}
+                bases=defaultdict(int)
+                for r in items:
+                    v=r['scenarios'][name]
+                    if v['revenue_basis']:bases[v['revenue_basis']]+=v['rights_allocated']
+                totals['revenue_basis']=dict(sorted(bases.items()))
+                totals['average_price_per_revenue_ticket']=totals['revenue']/totals['revenue_tickets'] if totals['revenue_tickets'] else None
+                totals['average_revenue_per_fulfilled_ticket']=totals['revenue']/totals['fulfilled_tickets'] if totals['fulfilled_tickets'] else None
+                result['scenarios'][name]=totals
             return result
         groups={}
         for group,key in [('by_stage','stage'),('by_tier','tier'),('by_session','session_id')]:
@@ -77,9 +92,13 @@ class Revenue(Module):
             sensitivity[name]=dict(public_demand_plus_1pp_delta=delta,
                 public_price_plus_1percent_delta=sum((D(r['public_capacity'])*rates[(r['session_id'],r['zone_id'],r['tier'])]*r['price']*D('.01') for r in rows),ZERO))
         return dict(unit='DEMO_CURRENCY',totals=aggregate(rows),rows=rows,**groups,sensitivity=sensitivity,
-                    notes=['全程Decimal；货币仅在显示层舍入。','权益采用提供者有效价格/履约率。',
+                    notes=['全程Decimal；货币仅在显示层舍入。','权益收入按billing_basis确认；履约票张始终乘履约率。',
                            '容量票房不加通票或旅行包营业额；产品金额另行查看。',
                            '敏感性仅改变公开池价格/需求，权益合同输入保持不变，不是价格弹性预测。'])
 
     def export(self,c):
         return c.calculate(self.module_id)
+
+    def migrate(self,old_version,old_schema,payload):
+        require((old_version,old_schema)==('1.1.0','1'),'不支持的Revenue迁移')
+        return payload

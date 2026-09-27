@@ -27,7 +27,8 @@ class Registry:
     def list(self):
         return [dict(module_id=m.module_id,module_version=m.module_version,schema_version=m.schema_version,
                      dependencies=list(m.dependencies),optional_dependencies=list(m.optional_dependencies),
-                     provides=list(m.provides),requires_capabilities=list(m.requires_capabilities))
+                     provides=list(m.provides),requires_capabilities=list(m.requires_capabilities),
+                     optional_capabilities=list(m.optional_capabilities))
                 for _,m in sorted(self._modules.items())]
 
     def order(self, enabled):
@@ -40,6 +41,8 @@ class Registry:
                 providers=[k for k in enabled if cap in self.get(k).provides]
                 if len(providers)!=1:raise KernelError(f'{key}: 能力 {cap} 提供者必须唯一：{providers}')
                 deps.add(providers[0])
+            for cap in m.optional_capabilities:
+                deps.update(k for k in enabled if cap in self.get(k).provides)
             graph[key]=deps
         caps={}
         for key in sorted(enabled):

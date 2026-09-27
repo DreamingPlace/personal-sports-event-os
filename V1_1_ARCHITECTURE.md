@@ -1,5 +1,7 @@
 # Sports Event OS Modular Kernel v1.1
 
+> 本文件保留v1.1基线说明；v1.1.1写入生命周期、Provider和规则契约见[当前架构](docs/ARCHITECTURE.md)。
+
 ## 边界
 
 ```

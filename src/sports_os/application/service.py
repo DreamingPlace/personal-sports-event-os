@@ -3,6 +3,7 @@ from copy import deepcopy
 from decimal import Decimal
 from datetime import datetime
 import json
+import re
 from ..kernel import Project,ModuleState,Context,Registry
 from ..kernel.store import Store
 from ..kernel.gate import validate_project
@@ -66,9 +67,15 @@ class ApplicationService:
 
     def open_project(self):
         project=self.store.load();path=safe_path(self.root,'project.toml')
-        if path.exists():project.manifest=parse_manifest(path)
-        if project.manifest['project']['id']!=self.store.load().manifest['project']['id']:
-            raise KernelError('manifest项目ID与工作库不符')
+        if path.exists():
+            manifest=parse_manifest(path)
+            if manifest['project']['id']!=project.manifest['project']['id']:
+                raise KernelError('manifest项目ID与工作库不符')
+            if canonical(manifest)!=canonical(project.manifest):
+                # External TOML edits are working changes, not a route to record approval.
+                version=project.manifest['project']['version']
+                project.manifest=manifest;project.manifest['project']['version']=version
+                self._configuration_changed(project)
         return project
 
     def save_project(self,project):
@@ -79,21 +86,32 @@ class ApplicationService:
         return gate
 
     @staticmethod
-    def _configuration_changed(project):
+    def _next_revision(version):
+        match=re.fullmatch(r"(.*)-r([0-9]+)",version)
+        return f"{match[1]}-r{int(match[2])+1}" if match else version+"-r1"
+
+    @classmethod
+    def _configuration_changed(cls,project):
         meta=project.manifest['project']
-        meta.update(status='DRAFT',approval_ref='',version=meta['version']+'-edited')
+        meta.update(status='DRAFT',approval_ref='',version=cls._next_revision(meta['version']))
         return project
 
     def enable_module(self,project,module_id,payload=None):
-        out=deepcopy(project);module=self.registry.get(module_id)
+        module=self.registry.get(module_id);out=deepcopy(project)
+        was_enabled=module_id in out.enabled
         out.manifest['modules'][module_id]=True
         self.registry.order(out.enabled)
-        if payload is not None:
-            out.states[module_id]=ModuleState(module.module_version,module.schema_version,deepcopy(payload))
+        if module_id in out.states:
+            if payload is not None:out=self.update_module_data(out,module_id,payload)
+        elif payload is not None:
+            out.states[module_id]=ModuleState(module.module_version,module.schema_version,
+                                              module.prepare_revision(deepcopy(payload),'1'))
         if module_id not in out.states:raise KernelError('启用模块必须显式提供payload')
+        if was_enabled or out.manifest['project']['version']!=project.manifest['project']['version']:return out
         return self._configuration_changed(out)
 
     def disable_module(self,project,module_id):
+        if module_id not in project.enabled:return deepcopy(project)
         out=deepcopy(project);out.manifest['modules'][module_id]=False
         self.registry.order(out.enabled)
         # Retain inactive state for deliberate re-enabling; excluded from execution and snapshots.
@@ -101,15 +119,112 @@ class ApplicationService:
 
     def replace_module(self,project,old_id,new_id,payload):
         out=deepcopy(project);out.manifest['modules'][old_id]=False
-        return self.enable_module(out,new_id,payload)
+        out=self.enable_module(out,new_id,payload)
+        if out.manifest['modules']!=project.manifest['modules'] and out.manifest['project']['version']==project.manifest['project']['version']:
+            self._configuration_changed(out)
+        return out
+
+    def import_project(self,data):
+        """Import untrusted working JSON as DRAFT, never as an approval transfer."""
+        out=Project.from_dict(data)
+        for key,state in out.states.items():
+            state.data_version=self._next_revision(state.data_version)
+            state.status='DRAFT';state.approval_ref=None
+            if key in out.enabled:
+                module=self.registry.get(key)
+                if (state.module_version,state.schema_version)!=(module.module_version,module.schema_version):
+                    raise KernelError('导入前须显式迁移模块：'+key)
+                state.payload=module.prepare_revision(state.payload,state.data_version)
+        return self._configuration_changed(out)
+
+    def get_module_data(self,project,module_id):
+        return deepcopy(project.states[module_id].payload)
+
+    def update_module_data(self,project,module_id,payload):
+        module=self.registry.get(module_id);state=project.states[module_id]
+        if (state.module_version,state.schema_version)!=(module.module_version,module.schema_version):
+            raise KernelError('请先显式迁移模块')
+        if canonical(state.payload)==canonical(payload):return deepcopy(project)
+        out=deepcopy(project);state=out.states[module_id]
+        state.data_version=self._next_revision(state.data_version)
+        state.payload=module.prepare_revision(deepcopy(payload),state.data_version)
+        canonical(state.payload)
+        state.status='DRAFT';state.approval_ref=None
+        return self._configuration_changed(out)
+
+    def apply_changeset(self,project,module_id,changes):
+        """Atomic replace of existing typed paths, e.g. ['rows', 0, 'price']."""
+        payload=self.get_module_data(project,module_id)
+        if not isinstance(changes,list):raise KernelError('changeset必须为数组')
+        for change in changes:
+            if not isinstance(change,dict):raise KernelError('每个patch必须为对象')
+            if set(change)!={'path','value'} or not isinstance(change['path'],list) or not change['path']:
+                raise KernelError('patch需要非空结构化path和value')
+            parent=payload
+            for key in change['path']:
+                if isinstance(parent,list):
+                    if type(key) is not int or not 0<=key<len(parent):raise KernelError('数组path越界')
+                elif isinstance(parent,dict):
+                    if not isinstance(key,str) or key not in parent:raise KernelError('对象path不存在')
+                else:raise KernelError('path穿过标量')
+                value=parent[key]
+                parent=value
+            parent=payload
+            for key in change['path'][:-1]:parent=parent[key]
+            parent[change['path'][-1]]=deepcopy(change['value'])
+        return self.update_module_data(project,module_id,payload)
+
+    @staticmethod
+    def _approval_ref(ref):
+        if not isinstance(ref,str) or not ref.strip():raise KernelError('必须提供明确的人工批准引用')
+
+    def approve_module(self,project,module_id,approval_ref,data_version):
+        self._approval_ref(approval_ref)
+        if module_id not in project.enabled:raise KernelError('只能批准启用模块')
+        state=project.states[module_id]
+        if state.data_version!=data_version:raise KernelError('批准版本已过期')
+        if state.status in ('APPROVED','PUBLISHED'):
+            if state.approval_ref==approval_ref:return deepcopy(project)
+            raise KernelError('已批准版本不可改写批准引用；先修改工作数据')
+        out=deepcopy(project);state=out.states[module_id]
+        state.payload=self.registry.get(module_id).prepare_revision(state.payload,data_version,approval_ref)
+        state.status='APPROVED';state.approval_ref=approval_ref
+        gate=self.validate_project(out)
+        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        return out
+
+    def approve_project(self,project,approval_ref,version):
+        self._approval_ref(approval_ref)
+        meta=project.manifest['project']
+        if meta['version']!=version:raise KernelError('批准项目版本已过期')
+        if meta['status'] in ('APPROVED','PUBLISHED') and meta['approval_ref']!=approval_ref:
+            raise KernelError('已批准项目不可改写批准引用')
+        out=deepcopy(project);out.manifest['project'].update(status='APPROVED',approval_ref=approval_ref)
+        gate=self.validate_project(out,True)
+        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        return out
+
+    def migrate_project(self,project):
+        """Explicit all-installed-module migration; persist only after every migration succeeds."""
+        out=deepcopy(project)
+        for key in sorted(out.states):
+            state=out.states[key]
+            if key not in out.enabled:continue
+            module=self.registry.get(key)
+            if (state.module_version,state.schema_version)!=(module.module_version,module.schema_version):
+                out=self.migrate_module(out,key)
+        gate=self.validate_project(out)
+        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        return out
 
     def migrate_module(self,project,module_id):
         out=deepcopy(project);module=self.registry.get(module_id);state=out.states[module_id]
         state.payload=module.migrate(state.module_version,state.schema_version,deepcopy(state.payload))
         state.module_version=module.module_version;state.schema_version=module.schema_version
-        state.data_version=state.data_version+'-migrated';state.status='DRAFT';state.approval_ref=None
-        out.manifest['project'].update(status='DRAFT',approval_ref='',version=out.manifest['project']['version']+'-migrated')
-        return out
+        state.data_version=self._next_revision(state.data_version)
+        state.payload=module.prepare_revision(state.payload,state.data_version)
+        state.status='DRAFT';state.approval_ref=None
+        return self._configuration_changed(out)
 
     def validate_project(self,project,for_release=False):return validate_project(project,self.registry,for_release)
 

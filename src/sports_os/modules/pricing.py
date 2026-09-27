@@ -1,8 +1,9 @@
 from .common import *
 
-class Pricing(RowsModule):
+class Pricing(ApprovedRowsModule):
     module_id='ticketing.pricing'
-    dependencies=('core.schedule',)
+    version_field='price_version'
+    requires_capabilities=('schedule',)
     provides=('prices',)
     identity=('session_id','price_class_id')
     row_schema=obj(dict(session_id=S,price_class_id=S,price=N,price_version=S,status=STATUS,valid_from=S,approval_ref=NULL_S))

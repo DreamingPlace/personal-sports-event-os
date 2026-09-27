@@ -23,6 +23,12 @@
             "minimum": 0,
             "maximum": 1000000000000
           },
+          "billing_basis": {
+            "enum": [
+              "ALLOCATED",
+              "REDEEMED"
+            ]
+          },
           "strategy": {
             "enum": [
               "FACE_VALUE",
@@ -49,6 +55,7 @@
           "zone_id",
           "tier",
           "quantity",
+          "billing_basis",
           "strategy",
           "value",
           "expected_fulfillment"
