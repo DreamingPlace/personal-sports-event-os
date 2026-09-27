@@ -1,0 +1,363 @@
+{
+  "version_a": "version_a",
+  "version_b": "version_b",
+  "changes": [
+    {
+      "category": "price",
+      "path": "prices/S01/VIP/price",
+      "old": 730,
+      "new": 765,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "已确认原因（输入决定记录）",
+          "reason": "Fictional demand experiment",
+          "source_ref": "SYNTHETIC-DECISION-1",
+          "decision_id": "D-DEMO-1"
+        }
+      ]
+    },
+    {
+      "category": "seating",
+      "path": "seating/S01/MAIN/VIP/physical_capacity",
+      "old": 608,
+      "new": 620,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "seating",
+      "path": "seating/S01/MAIN/VIP/sellable_capacity",
+      "old": 554,
+      "new": 566,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "inventory",
+      "path": "inventory/S01-VIP-MAIN-AVAILABLE/quantity",
+      "old": 530,
+      "new": 542,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/SINGLE-DEMO/included_sessions",
+      "old": [
+        {
+          "session_id": "S01",
+          "zone_id": "MAIN",
+          "tier": "VIP",
+          "ticket_quantity": 1
+        }
+      ],
+      "new": "[不存在]",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/SINGLE-DEMO/price",
+      "old": null,
+      "new": "[不存在]",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/SINGLE-DEMO/price_claim",
+      "old": "SUM_FACE_PRICES",
+      "new": "[不存在]",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/SINGLE-DEMO/product_id",
+      "old": "SINGLE-DEMO",
+      "new": "[不存在]",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/SINGLE-DEMO/product_type",
+      "old": "SINGLE",
+      "new": "[不存在]",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/WEEKEND-PASS-DEMO/included_sessions",
+      "old": "[不存在]",
+      "new": [
+        {
+          "session_id": "S15",
+          "zone_id": "MAIN",
+          "tier": "GOLD",
+          "ticket_quantity": 1
+        },
+        {
+          "session_id": "S16",
+          "zone_id": "MAIN",
+          "tier": "GOLD",
+          "ticket_quantity": 1
+        }
+      ],
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/WEEKEND-PASS-DEMO/price",
+      "old": "[不存在]",
+      "new": null,
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/WEEKEND-PASS-DEMO/price_claim",
+      "old": "[不存在]",
+      "new": "SUM_FACE_PRICES",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/WEEKEND-PASS-DEMO/product_id",
+      "old": "[不存在]",
+      "new": "WEEKEND-PASS-DEMO",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "product",
+      "path": "products/WEEKEND-PASS-DEMO/product_type",
+      "old": "[不存在]",
+      "new": "PASS",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "time",
+      "path": "rules/R-launch/content/rounds/0/at",
+      "old": "2027-06-01T09:00:00+00:00",
+      "new": "2027-05-30T09:00:00+00:00",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "inventory",
+      "path": "rules/R-launch/content/rounds/0/fraction",
+      "old": 0.25,
+      "new": 0.3,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "inventory",
+      "path": "rules/R-launch/content/rounds/1/fraction",
+      "old": 0.45,
+      "new": 0.4,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "rule",
+      "path": "rules/R-rights_return/content/hours_before",
+      "old": 60,
+      "new": 72,
+      "fact_kind": "数值变化",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "metadata",
+      "path": "data_version",
+      "old": "demo-a",
+      "new": "demo-b",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "metadata",
+      "path": "rules_version",
+      "old": "rules-a",
+      "new": "rules-b",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "metadata",
+      "path": "price_version",
+      "old": "prices-a",
+      "new": "prices-b",
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    },
+    {
+      "category": "text",
+      "path": "documents/demo/title/insert:A空@插入点2/B行2-2",
+      "old": [],
+      "new": [
+        "Synthetic revised plan; reasons need evidence."
+      ],
+      "fact_kind": "文件事实",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认",
+          "source_ref": null,
+          "decision_id": null
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "本地确定性比较；不调用LLM、不推断动机。",
+    "已确认原因仅表示输入提供带来源的确认记录，不替代对批准真伪的人工核验。",
+    "文字替换可定位，但语义含义仍需人工确认；文本相同不证明图形或签章相同。"
+  ]
+}

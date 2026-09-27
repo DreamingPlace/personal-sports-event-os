@@ -1,0 +1,12 @@
+[
+ {"id":"TEST-001","input":"合成单元格公式 =A1+#REF!","expected":"BLOCK","rule":"Q002"},
+ {"id":"TEST-002","input":"2027赛事关键标题含2026年","expected":"BLOCK","rule":"Q011"},
+ {"id":"TEST-003","input":"分项100+200+300，声明总计650","expected":"BLOCK","rule":"Q005"},
+ {"id":"TEST-004","input":"测试专用：VIP 16×1080=17280；通票声明等于总和却写19980","expected":"BLOCK","rule":"Q021"},
+ {"id":"TEST-005","input":"库存原已闭合，再新增售出1张，超出可售总池","expected":"BLOCK","rule":"Q024"},
+ {"id":"TEST-006","input":"双人共房产品声明1间，成本计费2间","expected":"BLOCK","rule":"Q022"},
+ {"id":"TEST-007","input":"声称成本加10%，实际按成本/0.9报价","expected":"BLOCK","rule":"Q023"},
+ {"id":"TEST-008","input":"第二退款窗口提前一天开始，与首窗重叠","expected":"BLOCK","rule":"Q014"},
+ {"id":"TEST-009","input":"同一metric_id分别标为订单和票张","expected":"WARNING","rule":"Q007"},
+ {"id":"TEST-010","input":"PUBLISHED price_version缺少approval_ref","expected":"BLOCK","rule":"Q016"}
+]

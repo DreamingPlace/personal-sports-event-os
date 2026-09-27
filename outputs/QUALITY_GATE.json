@@ -1,0 +1,266 @@
+{
+  "status": "PASS",
+  "findings": [
+    {
+      "rule_id": "Q001",
+      "severity": "PASS",
+      "message": "结构、类型、唯一键、外键及缺失值",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q002",
+      "severity": "PASS",
+      "message": "Excel错误值与计算错误",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q003",
+      "severity": "PASS",
+      "message": "空单元格或缺失引用",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q004",
+      "severity": "PASS",
+      "message": "硬编码摘要与派生值",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q005",
+      "severity": "PASS",
+      "message": "分项与总计",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q006",
+      "severity": "PASS",
+      "message": "百分比闭合",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q007",
+      "severity": "PASS",
+      "message": "同一指标单位一致",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q008",
+      "severity": "PASS",
+      "message": "负可售库存",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q009",
+      "severity": "PASS",
+      "message": "容量与付费权益边界",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q010",
+      "severity": "PASS",
+      "message": "扣减标识重复",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q011",
+      "severity": "PASS",
+      "message": "年度残留",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q012",
+      "severity": "PASS",
+      "message": "开始结束时间与有效期",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q013",
+      "severity": "PASS",
+      "message": "赛前任务时序",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q014",
+      "severity": "PASS",
+      "message": "退款窗口重叠",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q015",
+      "severity": "PASS",
+      "message": "退款窗口空档",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q016",
+      "severity": "PASS",
+      "message": "批准凭证",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q017",
+      "severity": "PASS",
+      "message": "草案禁止发布",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q018",
+      "severity": "PASS",
+      "message": "同名内容冲突",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q019",
+      "severity": "PASS",
+      "message": "发布件引用规则状态",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q020",
+      "severity": "PASS",
+      "message": "统一快照引用",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q021",
+      "severity": "PASS",
+      "message": "通票等于票价之和的声明",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q022",
+      "severity": "PASS",
+      "message": "旅行包房间数量",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q023",
+      "severity": "PASS",
+      "message": "markup与margin",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q024",
+      "severity": "PASS",
+      "message": "库存守恒与时点",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q025",
+      "severity": "PASS",
+      "message": "产品价格与占票结构",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q026",
+      "severity": "PASS",
+      "message": "需求情景排序",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q027",
+      "severity": "PASS",
+      "message": "活动版本一致",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q028",
+      "severity": "PASS",
+      "message": "任务完成凭证",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    },
+    {
+      "rule_id": "Q029",
+      "severity": "PASS",
+      "message": "规则内容结构",
+      "source": "$",
+      "expected": "无适用违规",
+      "actual": "未发现适用违规",
+      "suggested_action": "无；PASS仅覆盖本次结构化输入与声明的检查契约"
+    }
+  ]
+}

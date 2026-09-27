@@ -1,0 +1,62 @@
+test_demo_shape (tests.test_s0.ModelTests.test_demo_shape) ... ok
+test_dependency_cycle (tests.test_s0.ModelTests.test_dependency_cycle) ... ok
+test_derived_and_paid_rights (tests.test_s0.ModelTests.test_derived_and_paid_rights) ... ok
+test_invalid_key_type_and_missing (tests.test_s0.ModelTests.test_invalid_key_type_and_missing) ... ok
+test_product_mapping (tests.test_s0.ModelTests.test_product_mapping) ... ok
+test_sqlite_roundtrip (tests.test_s0.ModelTests.test_sqlite_roundtrip) ... ok
+test_one_price_updates_all (tests.test_s1.RevenueTests.test_one_price_updates_all) ... ok
+test_one_seat_updates_all (tests.test_s1.RevenueTests.test_one_seat_updates_all) ... ok
+test_paid_rights_not_lost (tests.test_s1.RevenueTests.test_paid_rights_not_lost) ... ok
+test_recompute_and_rollups (tests.test_s1.RevenueTests.test_recompute_and_rollups) ... ok
+test_scenario_order (tests.test_s1.RevenueTests.test_scenario_order) ... ok
+test_draft_can_preview_not_release (tests.test_s2.GateSmokeTests.test_draft_can_preview_not_release) ... ok
+test_findings_have_contract (tests.test_s2.GateSmokeTests.test_findings_have_contract) ... ok
+test_malformed_rule_blocks_not_crashes (tests.test_s2.GateSmokeTests.test_malformed_rule_blocks_not_crashes) ... ok
+test_valid_demo_passes_release (tests.test_s2.GateSmokeTests.test_valid_demo_passes_release) ... ok
+test_xlsx_readonly_arithmetic_and_contract (tests.test_s2.GateSmokeTests.test_xlsx_readonly_arithmetic_and_contract) ... ok
+test_approved_with_draft_rule (tests.test_s3.EdgeTests.test_approved_with_draft_rule) ... ok
+test_deduction_duplicate (tests.test_s3.EdgeTests.test_deduction_duplicate) ... ok
+test_duplicate_json_keys_rejected (tests.test_s3.EdgeTests.test_duplicate_json_keys_rejected) ... ok
+test_inconsistent_versions (tests.test_s3.EdgeTests.test_inconsistent_versions) ... ok
+test_mismatched_inventory_times (tests.test_s3.EdgeTests.test_mismatched_inventory_times) ... ok
+test_missing_cell_reference (tests.test_s3.EdgeTests.test_missing_cell_reference) ... ok
+test_negative_and_over_capacity (tests.test_s3.EdgeTests.test_negative_and_over_capacity) ... ok
+test_no_silent_nan_boolean_or_fractional_count (tests.test_s3.EdgeTests.test_no_silent_nan_boolean_or_fractional_count) ... ok
+test_outputs_different_snapshot (tests.test_s3.EdgeTests.test_outputs_different_snapshot) ... ok
+test_paid_rights_sold_not_lost (tests.test_s3.EdgeTests.test_paid_rights_sold_not_lost) ... ok
+test_percentage_120 (tests.test_s3.EdgeTests.test_percentage_120) ... ok
+test_refund_gap (tests.test_s3.EdgeTests.test_refund_gap) ... ok
+test_required_rate_no_silent_default (tests.test_s3.EdgeTests.test_required_rate_no_silent_default) ... ok
+test_same_name_different_content (tests.test_s3.EdgeTests.test_same_name_different_content) ... ok
+test_scenarios_order (tests.test_s3.EdgeTests.test_scenarios_order) ... ok
+test_stale_hardcoded_summary (tests.test_s3.EdgeTests.test_stale_hardcoded_summary) ... ok
+test_time_order_and_preparation (tests.test_s3.EdgeTests.test_time_order_and_preparation) ... ok
+test_unit_warning_and_old_year_noncritical (tests.test_s3.EdgeTests.test_unit_warning_and_old_year_noncritical) ... ok
+test_errors_and_blank (tests.test_s3.ExcelEdgeTests.test_errors_and_blank) ... ok
+test_hardcoded_contract_mismatch (tests.test_s3.ExcelEdgeTests.test_hardcoded_contract_mismatch) ... ok
+test_percent_and_parentheses (tests.test_s3.ExcelEdgeTests.test_percent_and_parentheses) ... ok
+test_TEST_001 (tests.test_s3.HistoricalRegressionTests.test_TEST_001)
+合成单元格公式 =A1+#REF! → BLOCK ... ok
+test_TEST_002 (tests.test_s3.HistoricalRegressionTests.test_TEST_002)
+2027赛事关键标题含2026年 → BLOCK ... ok
+test_TEST_003 (tests.test_s3.HistoricalRegressionTests.test_TEST_003)
+分项100+200+300，声明总计650 → BLOCK ... ok
+test_TEST_004 (tests.test_s3.HistoricalRegressionTests.test_TEST_004)
+测试专用：VIP 16×1080=17280；通票声明等于总和却写19980 → BLOCK ... ok
+test_TEST_005 (tests.test_s3.HistoricalRegressionTests.test_TEST_005)
+库存原已闭合，再新增售出1张，超出可售总池 → BLOCK ... ok
+test_TEST_006 (tests.test_s3.HistoricalRegressionTests.test_TEST_006)
+双人共房产品声明1间，成本计费2间 → BLOCK ... ok
+test_TEST_007 (tests.test_s3.HistoricalRegressionTests.test_TEST_007)
+声称成本加10%，实际按成本/0.9报价 → BLOCK ... ok
+test_TEST_008 (tests.test_s3.HistoricalRegressionTests.test_TEST_008)
+第二退款窗口提前一天开始，与首窗重叠 → BLOCK ... ok
+test_TEST_009 (tests.test_s3.HistoricalRegressionTests.test_TEST_009)
+同一metric_id分别标为订单和票张 → WARNING ... ok
+test_TEST_010 (tests.test_s3.HistoricalRegressionTests.test_TEST_010)
+PUBLISHED price_version缺少approval_ref → BLOCK ... ok
+
+----------------------------------------------------------------------
+Ran 47 tests in 0.349s
+
+OK

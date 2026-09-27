@@ -1,0 +1,12 @@
+{
+  "data_version": "demo-a",
+  "files": {
+    "QUALITY_GATE.json": "5acff98e505cfa1c2c59e1d7917db1aaa9a3e444f3277ae5aabcc839ef888cc9",
+    "REVENUE.md": "64ffdf657b3433793a8d9d040990fed3d233efdbbb208281d4c244b6d1126c02",
+    "revenue.json": "7d3cb7e3e4196481fabce1a3366ad724d6809f348c9ac6ac7dff5f711f6dd54c",
+    "snapshot.json": "3f6a546c3f55e963f57c8118b64f26dc12e6131ab5ec0580e96817f15420d970"
+  },
+  "price_version": "prices-a",
+  "rules_version": "rules-a",
+  "snapshot_id": "SN-5d0c88136b2d6d1cf3f0"
+}

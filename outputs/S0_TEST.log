@@ -1,0 +1,11 @@
+test_demo_shape (tests.test_s0.ModelTests.test_demo_shape) ... ok
+test_dependency_cycle (tests.test_s0.ModelTests.test_dependency_cycle) ... ok
+test_derived_and_paid_rights (tests.test_s0.ModelTests.test_derived_and_paid_rights) ... ok
+test_invalid_key_type_and_missing (tests.test_s0.ModelTests.test_invalid_key_type_and_missing) ... ok
+test_product_mapping (tests.test_s0.ModelTests.test_product_mapping) ... ok
+test_sqlite_roundtrip (tests.test_s0.ModelTests.test_sqlite_roundtrip) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.035s
+
+OK

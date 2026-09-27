@@ -1,0 +1,1029 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "data_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rules_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "price_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "APPROVED",
+        "PUBLISHED",
+        "RETIRED"
+      ]
+    },
+    "approval_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "snapshot_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "synthetic": {
+      "const": true
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2200
+        },
+        "venue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "DRAFT",
+            "APPROVED",
+            "PUBLISHED",
+            "RETIRED"
+          ]
+        }
+      },
+      "required": [
+        "event_id",
+        "event_name",
+        "year",
+        "venue",
+        "timezone",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "stage": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_time": {
+            "type": "string",
+            "minLength": 1
+          },
+          "end_time": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "session_id",
+          "event_id",
+          "stage",
+          "start_time",
+          "end_time"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "seating": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "zone_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visibility": {
+            "enum": [
+              "CLEAR",
+              "RESTRICTED"
+            ]
+          },
+          "physical_capacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "functional_hold": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "broadcast_hold": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "free_rights": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "other_hold": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "paid_rights": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "deduction_refs": {
+            "type": "object",
+            "properties": {
+              "functional_hold": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "broadcast_hold": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "free_rights": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "other_hold": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "functional_hold",
+              "broadcast_hold",
+              "free_rights",
+              "other_hold"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "session_id",
+          "zone_id",
+          "tier",
+          "visibility",
+          "physical_capacity",
+          "functional_hold",
+          "broadcast_hold",
+          "free_rights",
+          "other_hold",
+          "paid_rights",
+          "deduction_refs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "prices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "price_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "price": {
+            "type": "number"
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "APPROVED",
+              "PUBLISHED",
+              "RETIRED"
+            ]
+          },
+          "valid_from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approval_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "price_version",
+          "session_id",
+          "tier",
+          "price",
+          "status",
+          "valid_from",
+          "approval_ref"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "inventory_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "zone_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "AVAILABLE",
+              "SOLD",
+              "LOCKED",
+              "PAID_RESERVED"
+            ]
+          },
+          "allocation_type": {
+            "enum": [
+              "PUBLIC",
+              "PAID_RIGHTS"
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "as_of": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "inventory_id",
+          "session_id",
+          "zone_id",
+          "tier",
+          "channel",
+          "status",
+          "allocation_type",
+          "quantity",
+          "as_of",
+          "source_ref"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product_type": {
+            "enum": [
+              "SINGLE",
+              "PASS",
+              "TRAVEL"
+            ]
+          },
+          "included_sessions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "zone_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tier": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ticket_quantity": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "session_id",
+                "zone_id",
+                "tier",
+                "ticket_quantity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "price": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "price_claim": {
+            "enum": [
+              "INDEPENDENT",
+              "SUM_FACE_PRICES"
+            ]
+          },
+          "travel": {
+            "type": "object",
+            "properties": {
+              "guests": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "expected_rooms": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "room_quantity": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "nights": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "room_cost": {
+                "type": "number"
+              },
+              "service_per_guest": {
+                "type": "number"
+              },
+              "other_cost": {
+                "type": "number"
+              },
+              "pricing_method": {
+                "enum": [
+                  "markup",
+                  "margin"
+                ]
+              },
+              "rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "actual_method": {
+                "enum": [
+                  "markup",
+                  "margin"
+                ]
+              },
+              "quoted_non_ticket": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "guests",
+              "expected_rooms",
+              "room_quantity",
+              "nights",
+              "room_cost",
+              "service_per_guest",
+              "other_cost",
+              "pricing_method",
+              "rate",
+              "actual_method",
+              "quoted_non_ticket"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "product_id",
+          "product_type",
+          "included_sessions",
+          "price",
+          "price_claim"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rule_type": {
+            "enum": [
+              "refund",
+              "transfer",
+              "identity",
+              "rights_return",
+              "launch"
+            ]
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "object"
+          },
+          "valid_from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "valid_to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "APPROVED",
+              "PUBLISHED",
+              "RETIRED"
+            ]
+          },
+          "approval_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "rule_id",
+          "rule_type",
+          "version",
+          "content",
+          "valid_from",
+          "valid_to",
+          "status",
+          "approval_ref"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "due_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "status": {
+            "enum": [
+              "TODO",
+              "DOING",
+              "DONE"
+            ]
+          },
+          "acceptance": {
+            "type": "string",
+            "minLength": 1
+          },
+          "proof": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phase": {
+            "enum": [
+              "PRE_EVENT",
+              "DURING_EVENT",
+              "POST_EVENT"
+            ]
+          }
+        },
+        "required": [
+          "task_id",
+          "title",
+          "owner_role",
+          "due_at",
+          "depends_on",
+          "status",
+          "acceptance",
+          "proof",
+          "phase"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "decision_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "issue": {
+            "type": "string",
+            "minLength": 1
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "decision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approved_by_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "effective_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "confirmed": {
+            "type": "boolean"
+          },
+          "changed_paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "decision_id",
+          "issue",
+          "options",
+          "decision",
+          "reason",
+          "approved_by_role",
+          "effective_at",
+          "source_ref",
+          "confirmed",
+          "changed_paths"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "scenarios": {
+      "type": "object",
+      "properties": {
+        "low": {
+          "type": "object",
+          "properties": {
+            "session_rates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "tier_rates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "paid_rights_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "session_rates",
+            "tier_rates",
+            "paid_rights_rate"
+          ],
+          "additionalProperties": false
+        },
+        "mid": {
+          "type": "object",
+          "properties": {
+            "session_rates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "tier_rates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "paid_rights_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "session_rates",
+            "tier_rates",
+            "paid_rights_rate"
+          ],
+          "additionalProperties": false
+        },
+        "high": {
+          "type": "object",
+          "properties": {
+            "session_rates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "tier_rates": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "paid_rights_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "session_rates",
+            "tier_rates",
+            "paid_rights_rate"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "low",
+        "mid",
+        "high"
+      ],
+      "additionalProperties": false
+    },
+    "quality_evidence": {
+      "type": "object",
+      "properties": {
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "source",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "totals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "declared": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "source",
+              "components",
+              "declared"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "summaries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "metric": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "number"
+              },
+              "mode": {
+                "enum": [
+                  "FORMULA",
+                  "HARDCODED"
+                ]
+              }
+            },
+            "required": [
+              "source",
+              "metric",
+              "value",
+              "mode"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "percentages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "expected": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "source",
+              "values",
+              "expected"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "metric_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "metric_id",
+              "unit",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string"
+              },
+              "critical": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "source",
+              "text",
+              "critical"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "named_models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "content": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "content",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "snapshot_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "source",
+              "snapshot_id"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "cells",
+        "totals",
+        "summaries",
+        "percentages",
+        "metrics",
+        "documents",
+        "named_models",
+        "output_refs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_version",
+    "rules_version",
+    "price_version",
+    "status",
+    "approval_ref",
+    "snapshot_id",
+    "synthetic",
+    "event",
+    "sessions",
+    "seating",
+    "prices",
+    "inventory",
+    "products",
+    "rules",
+    "tasks",
+    "decisions",
+    "scenarios",
+    "quality_evidence"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic Event Master v1"
+}

@@ -1,0 +1,6507 @@
+{
+  "data_version": "demo-a",
+  "price_version": "prices-a",
+  "rules_version": "rules-a",
+  "snapshot_id": null,
+  "unit": "DEMO_CURRENCY",
+  "totals": {
+    "physical_seat_opportunities": 128640,
+    "sellable_seat_opportunities": 117232,
+    "sellable_rate": "0.9113184079601990049751243781",
+    "full_revenue": "52390520.00",
+    "full_average_price": "446.90",
+    "high": {
+      "revenue": "46096344.92",
+      "expected_tickets": "103692.9952",
+      "average_price": "444.55"
+    },
+    "low": {
+      "revenue": "28848337.96",
+      "expected_tickets": "64678.0960",
+      "average_price": "446.03"
+    },
+    "mid": {
+      "revenue": "37951452.76",
+      "expected_tickets": "85269.2928",
+      "average_price": "445.08"
+    }
+  },
+  "by_stage": {
+    "FINALS": {
+      "physical_seat_opportunities": 32160,
+      "sellable_seat_opportunities": 29308,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "16834400.00",
+      "full_average_price": "574.40",
+      "high": {
+        "revenue": "15234693.16",
+        "expected_tickets": "26736.0592",
+        "average_price": "569.82"
+      },
+      "low": {
+        "revenue": "9679091.48",
+        "expected_tickets": "16982.3344",
+        "average_price": "569.95"
+      },
+      "mid": {
+        "revenue": "12611214.64",
+        "expected_tickets": "22130.1336",
+        "average_price": "569.87"
+      }
+    },
+    "GROUP": {
+      "physical_seat_opportunities": 32160,
+      "sellable_seat_opportunities": 29308,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "11852040.00",
+      "full_average_price": "404.40",
+      "high": {
+        "revenue": "10256511.08",
+        "expected_tickets": "25652.312",
+        "average_price": "399.83"
+      },
+      "low": {
+        "revenue": "6359042.68",
+        "expected_tickets": "15898.5872",
+        "average_price": "399.98"
+      },
+      "mid": {
+        "revenue": "8416039.92",
+        "expected_tickets": "21046.3864",
+        "average_price": "399.88"
+      }
+    },
+    "PLAYOFF": {
+      "physical_seat_opportunities": 32160,
+      "sellable_seat_opportunities": 29308,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "14343220.00",
+      "full_average_price": "489.40",
+      "high": {
+        "revenue": "12699542.84",
+        "expected_tickets": "26194.1856",
+        "average_price": "484.82"
+      },
+      "low": {
+        "revenue": "7973007.88",
+        "expected_tickets": "16440.4608",
+        "average_price": "484.96"
+      },
+      "mid": {
+        "revenue": "10467568.00",
+        "expected_tickets": "21588.2600",
+        "average_price": "484.87"
+      }
+    },
+    "QUALIFYING": {
+      "physical_seat_opportunities": 32160,
+      "sellable_seat_opportunities": 29308,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "9360860.00",
+      "full_average_price": "319.40",
+      "high": {
+        "revenue": "7905597.84",
+        "expected_tickets": "25110.4384",
+        "average_price": "314.83"
+      },
+      "low": {
+        "revenue": "4837195.92",
+        "expected_tickets": "15356.7136",
+        "average_price": "314.99"
+      },
+      "mid": {
+        "revenue": "6456630.20",
+        "expected_tickets": "20504.5128",
+        "average_price": "314.89"
+      }
+    }
+  },
+  "by_tier": {
+    "BRONZE": {
+      "physical_seat_opportunities": 36480,
+      "sellable_seat_opportunities": 33232,
+      "sellable_rate": "0.9109649122807017543859649123",
+      "full_revenue": "11215800.00",
+      "full_average_price": "337.50",
+      "high": {
+        "revenue": "10121042.44",
+        "expected_tickets": "29792.1056",
+        "average_price": "339.72"
+      },
+      "low": {
+        "revenue": "6335569.04",
+        "expected_tickets": "18575.8880",
+        "average_price": "341.06"
+      },
+      "mid": {
+        "revenue": "8333457.76",
+        "expected_tickets": "24495.5584",
+        "average_price": "340.20"
+      }
+    },
+    "GOLD": {
+      "physical_seat_opportunities": 23040,
+      "sellable_seat_opportunities": 21008,
+      "sellable_rate": "0.9118055555555555555555555556",
+      "full_revenue": "13392600.00",
+      "full_average_price": "637.50",
+      "high": {
+        "revenue": "11580242.24",
+        "expected_tickets": "18102.1184",
+        "average_price": "639.72"
+      },
+      "low": {
+        "revenue": "7244932.16",
+        "expected_tickets": "11301.6320",
+        "average_price": "641.05"
+      },
+      "mid": {
+        "revenue": "9533012.48",
+        "expected_tickets": "14890.7776",
+        "average_price": "640.20"
+      }
+    },
+    "SILVER": {
+      "physical_seat_opportunities": 31360,
+      "sellable_seat_opportunities": 28576,
+      "sellable_rate": "0.9112244897959183673469387755",
+      "full_revenue": "13073520.00",
+      "full_average_price": "457.50",
+      "high": {
+        "revenue": "11548052.96",
+        "expected_tickets": "25119.7184",
+        "average_price": "459.72"
+      },
+      "low": {
+        "revenue": "7224638.36",
+        "expected_tickets": "15669.6320",
+        "average_price": "461.06"
+      },
+      "mid": {
+        "revenue": "9506440.52",
+        "expected_tickets": "20657.1776",
+        "average_price": "460.20"
+      }
+    },
+    "VALUE": {
+      "physical_seat_opportunities": 25600,
+      "sellable_seat_opportunities": 23312,
+      "sellable_rate": "0.910625",
+      "full_revenue": "5186920.00",
+      "full_average_price": "222.50",
+      "high": {
+        "revenue": "4787678.40",
+        "expected_tickets": "21304.640",
+        "average_price": "224.72"
+      },
+      "low": {
+        "revenue": "3001128.00",
+        "expected_tickets": "13275.200",
+        "average_price": "226.07"
+      },
+      "mid": {
+        "revenue": "3944029.60",
+        "expected_tickets": "17512.960",
+        "average_price": "225.21"
+      }
+    },
+    "VIP": {
+      "physical_seat_opportunities": 12160,
+      "sellable_seat_opportunities": 11104,
+      "sellable_rate": "0.9131578947368421052631578947",
+      "full_revenue": "9521680.00",
+      "full_average_price": "857.50",
+      "high": {
+        "revenue": "8059328.88",
+        "expected_tickets": "9374.4128",
+        "average_price": "859.72"
+      },
+      "low": {
+        "revenue": "5042070.40",
+        "expected_tickets": "5855.7440",
+        "average_price": "861.05"
+      },
+      "mid": {
+        "revenue": "6634512.40",
+        "expected_tickets": "7712.8192",
+        "average_price": "860.19"
+      }
+    }
+  },
+  "by_session": {
+    "S01": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2340215.00",
+      "full_average_price": "319.40",
+      "high": {
+        "revenue": "1976399.46",
+        "expected_tickets": "6277.6096",
+        "average_price": "314.83"
+      },
+      "low": {
+        "revenue": "1209298.98",
+        "expected_tickets": "3839.1784",
+        "average_price": "314.99"
+      },
+      "mid": {
+        "revenue": "1614157.55",
+        "expected_tickets": "5126.1282",
+        "average_price": "314.89"
+      }
+    },
+    "S02": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2340215.00",
+      "full_average_price": "319.40",
+      "high": {
+        "revenue": "1976399.46",
+        "expected_tickets": "6277.6096",
+        "average_price": "314.83"
+      },
+      "low": {
+        "revenue": "1209298.98",
+        "expected_tickets": "3839.1784",
+        "average_price": "314.99"
+      },
+      "mid": {
+        "revenue": "1614157.55",
+        "expected_tickets": "5126.1282",
+        "average_price": "314.89"
+      }
+    },
+    "S03": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2340215.00",
+      "full_average_price": "319.40",
+      "high": {
+        "revenue": "1976399.46",
+        "expected_tickets": "6277.6096",
+        "average_price": "314.83"
+      },
+      "low": {
+        "revenue": "1209298.98",
+        "expected_tickets": "3839.1784",
+        "average_price": "314.99"
+      },
+      "mid": {
+        "revenue": "1614157.55",
+        "expected_tickets": "5126.1282",
+        "average_price": "314.89"
+      }
+    },
+    "S04": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2340215.00",
+      "full_average_price": "319.40",
+      "high": {
+        "revenue": "1976399.46",
+        "expected_tickets": "6277.6096",
+        "average_price": "314.83"
+      },
+      "low": {
+        "revenue": "1209298.98",
+        "expected_tickets": "3839.1784",
+        "average_price": "314.99"
+      },
+      "mid": {
+        "revenue": "1614157.55",
+        "expected_tickets": "5126.1282",
+        "average_price": "314.89"
+      }
+    },
+    "S05": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2963010.00",
+      "full_average_price": "404.40",
+      "high": {
+        "revenue": "2564127.77",
+        "expected_tickets": "6413.078",
+        "average_price": "399.83"
+      },
+      "low": {
+        "revenue": "1589760.67",
+        "expected_tickets": "3974.6468",
+        "average_price": "399.98"
+      },
+      "mid": {
+        "revenue": "2104009.98",
+        "expected_tickets": "5261.5966",
+        "average_price": "399.88"
+      }
+    },
+    "S06": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2963010.00",
+      "full_average_price": "404.40",
+      "high": {
+        "revenue": "2564127.77",
+        "expected_tickets": "6413.078",
+        "average_price": "399.83"
+      },
+      "low": {
+        "revenue": "1589760.67",
+        "expected_tickets": "3974.6468",
+        "average_price": "399.98"
+      },
+      "mid": {
+        "revenue": "2104009.98",
+        "expected_tickets": "5261.5966",
+        "average_price": "399.88"
+      }
+    },
+    "S07": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2963010.00",
+      "full_average_price": "404.40",
+      "high": {
+        "revenue": "2564127.77",
+        "expected_tickets": "6413.078",
+        "average_price": "399.83"
+      },
+      "low": {
+        "revenue": "1589760.67",
+        "expected_tickets": "3974.6468",
+        "average_price": "399.98"
+      },
+      "mid": {
+        "revenue": "2104009.98",
+        "expected_tickets": "5261.5966",
+        "average_price": "399.88"
+      }
+    },
+    "S08": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "2963010.00",
+      "full_average_price": "404.40",
+      "high": {
+        "revenue": "2564127.77",
+        "expected_tickets": "6413.078",
+        "average_price": "399.83"
+      },
+      "low": {
+        "revenue": "1589760.67",
+        "expected_tickets": "3974.6468",
+        "average_price": "399.98"
+      },
+      "mid": {
+        "revenue": "2104009.98",
+        "expected_tickets": "5261.5966",
+        "average_price": "399.88"
+      }
+    },
+    "S09": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "3585805.00",
+      "full_average_price": "489.40",
+      "high": {
+        "revenue": "3174885.71",
+        "expected_tickets": "6548.5464",
+        "average_price": "484.82"
+      },
+      "low": {
+        "revenue": "1993251.97",
+        "expected_tickets": "4110.1152",
+        "average_price": "484.96"
+      },
+      "mid": {
+        "revenue": "2616892.00",
+        "expected_tickets": "5397.0650",
+        "average_price": "484.87"
+      }
+    },
+    "S10": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "3585805.00",
+      "full_average_price": "489.40",
+      "high": {
+        "revenue": "3174885.71",
+        "expected_tickets": "6548.5464",
+        "average_price": "484.82"
+      },
+      "low": {
+        "revenue": "1993251.97",
+        "expected_tickets": "4110.1152",
+        "average_price": "484.96"
+      },
+      "mid": {
+        "revenue": "2616892.00",
+        "expected_tickets": "5397.0650",
+        "average_price": "484.87"
+      }
+    },
+    "S11": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "3585805.00",
+      "full_average_price": "489.40",
+      "high": {
+        "revenue": "3174885.71",
+        "expected_tickets": "6548.5464",
+        "average_price": "484.82"
+      },
+      "low": {
+        "revenue": "1993251.97",
+        "expected_tickets": "4110.1152",
+        "average_price": "484.96"
+      },
+      "mid": {
+        "revenue": "2616892.00",
+        "expected_tickets": "5397.0650",
+        "average_price": "484.87"
+      }
+    },
+    "S12": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "3585805.00",
+      "full_average_price": "489.40",
+      "high": {
+        "revenue": "3174885.71",
+        "expected_tickets": "6548.5464",
+        "average_price": "484.82"
+      },
+      "low": {
+        "revenue": "1993251.97",
+        "expected_tickets": "4110.1152",
+        "average_price": "484.96"
+      },
+      "mid": {
+        "revenue": "2616892.00",
+        "expected_tickets": "5397.0650",
+        "average_price": "484.87"
+      }
+    },
+    "S13": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "4208600.00",
+      "full_average_price": "574.40",
+      "high": {
+        "revenue": "3808673.29",
+        "expected_tickets": "6684.0148",
+        "average_price": "569.82"
+      },
+      "low": {
+        "revenue": "2419772.87",
+        "expected_tickets": "4245.5836",
+        "average_price": "569.95"
+      },
+      "mid": {
+        "revenue": "3152803.66",
+        "expected_tickets": "5532.5334",
+        "average_price": "569.87"
+      }
+    },
+    "S14": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "4208600.00",
+      "full_average_price": "574.40",
+      "high": {
+        "revenue": "3808673.29",
+        "expected_tickets": "6684.0148",
+        "average_price": "569.82"
+      },
+      "low": {
+        "revenue": "2419772.87",
+        "expected_tickets": "4245.5836",
+        "average_price": "569.95"
+      },
+      "mid": {
+        "revenue": "3152803.66",
+        "expected_tickets": "5532.5334",
+        "average_price": "569.87"
+      }
+    },
+    "S15": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "4208600.00",
+      "full_average_price": "574.40",
+      "high": {
+        "revenue": "3808673.29",
+        "expected_tickets": "6684.0148",
+        "average_price": "569.82"
+      },
+      "low": {
+        "revenue": "2419772.87",
+        "expected_tickets": "4245.5836",
+        "average_price": "569.95"
+      },
+      "mid": {
+        "revenue": "3152803.66",
+        "expected_tickets": "5532.5334",
+        "average_price": "569.87"
+      }
+    },
+    "S16": {
+      "physical_seat_opportunities": 8040,
+      "sellable_seat_opportunities": 7327,
+      "sellable_rate": "0.9113184079601990049751243781",
+      "full_revenue": "4208600.00",
+      "full_average_price": "574.40",
+      "high": {
+        "revenue": "3808673.29",
+        "expected_tickets": "6684.0148",
+        "average_price": "569.82"
+      },
+      "low": {
+        "revenue": "2419772.87",
+        "expected_tickets": "4245.5836",
+        "average_price": "569.95"
+      },
+      "mid": {
+        "revenue": "3152803.66",
+        "expected_tickets": "5532.5334",
+        "average_price": "569.87"
+      }
+    }
+  },
+  "rows": [
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "730.00",
+      "full_revenue": "404420.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "429.0880",
+        "paid_rights_tickets": "24",
+        "tickets": "453.0880",
+        "revenue": "330754.24"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "253.5520",
+        "paid_rights_tickets": "24",
+        "tickets": "277.5520",
+        "revenue": "202612.96"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "346.1960",
+        "paid_rights_tickets": "24",
+        "tickets": "370.1960",
+        "revenue": "270243.08"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "730.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "108.4864",
+        "paid_rights_tickets": "6",
+        "tickets": "114.4864",
+        "revenue": "83575.07"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "64.1056",
+        "paid_rights_tickets": "6",
+        "tickets": "70.1056",
+        "revenue": "51177.09"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "87.5288",
+        "paid_rights_tickets": "6",
+        "tickets": "93.5288",
+        "revenue": "68276.02"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "510.00",
+      "full_revenue": "534990.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "829.6816",
+        "paid_rights_tickets": "46",
+        "tickets": "875.6816",
+        "revenue": "446597.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "490.2664",
+        "paid_rights_tickets": "46",
+        "tickets": "536.2664",
+        "revenue": "273495.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "669.4022",
+        "paid_rights_tickets": "46",
+        "tickets": "715.4022",
+        "revenue": "364855.12"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "510.00",
+      "full_revenue": "134640.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "209.2816",
+        "paid_rights_tickets": "11",
+        "tickets": "220.2816",
+        "revenue": "112343.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "123.6664",
+        "paid_rights_tickets": "11",
+        "tickets": "134.6664",
+        "revenue": "68679.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "168.8522",
+        "paid_rights_tickets": "11",
+        "tickets": "179.8522",
+        "revenue": "91724.62"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "330.00",
+      "full_revenue": "470910.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "1153.1520",
+        "paid_rights_tickets": "62",
+        "tickets": "1215.1520",
+        "revenue": "401000.16"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "681.4080",
+        "paid_rights_tickets": "62",
+        "tickets": "743.4080",
+        "revenue": "245324.64"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "930.3840",
+        "paid_rights_tickets": "62",
+        "tickets": "992.3840",
+        "revenue": "327486.72"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "330.00",
+      "full_revenue": "118470.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "290.6112",
+        "paid_rights_tickets": "15",
+        "tickets": "305.6112",
+        "revenue": "100851.70"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "171.7248",
+        "paid_rights_tickets": "15",
+        "tickets": "186.7248",
+        "revenue": "61619.18"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "234.4704",
+        "paid_rights_tickets": "15",
+        "tickets": "249.4704",
+        "revenue": "82325.23"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "210.00",
+      "full_revenue": "348810.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "1370.3536",
+        "paid_rights_tickets": "72",
+        "tickets": "1442.3536",
+        "revenue": "302894.26"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "809.7544",
+        "paid_rights_tickets": "72",
+        "tickets": "881.7544",
+        "revenue": "185168.42"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "1105.6262",
+        "paid_rights_tickets": "72",
+        "tickets": "1177.6262",
+        "revenue": "247301.50"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "210.00",
+      "full_revenue": "87360.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "343.2352",
+        "paid_rights_tickets": "18",
+        "tickets": "361.2352",
+        "revenue": "75859.39"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "202.8208",
+        "paid_rights_tickets": "18",
+        "tickets": "220.8208",
+        "revenue": "46372.37"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "276.9284",
+        "paid_rights_tickets": "18",
+        "tickets": "294.9284",
+        "revenue": "61934.96"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "95.00",
+      "full_revenue": "110675.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "980.320",
+        "paid_rights_tickets": "51",
+        "tickets": "1031.320",
+        "revenue": "97975.40"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "579.280",
+        "paid_rights_tickets": "51",
+        "tickets": "630.280",
+        "revenue": "59876.60"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "790.940",
+        "paid_rights_tickets": "51",
+        "tickets": "841.940",
+        "revenue": "79984.30"
+      }
+    },
+    {
+      "session_id": "S01",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "95.00",
+      "full_revenue": "27740.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "246.400",
+        "paid_rights_tickets": "12",
+        "tickets": "258.400",
+        "revenue": "24548.00"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "145.600",
+        "paid_rights_tickets": "12",
+        "tickets": "157.600",
+        "revenue": "14972.00"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "198.800",
+        "paid_rights_tickets": "12",
+        "tickets": "210.800",
+        "revenue": "20026.00"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "730.00",
+      "full_revenue": "404420.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "429.0880",
+        "paid_rights_tickets": "24",
+        "tickets": "453.0880",
+        "revenue": "330754.24"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "253.5520",
+        "paid_rights_tickets": "24",
+        "tickets": "277.5520",
+        "revenue": "202612.96"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "346.1960",
+        "paid_rights_tickets": "24",
+        "tickets": "370.1960",
+        "revenue": "270243.08"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "730.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "108.4864",
+        "paid_rights_tickets": "6",
+        "tickets": "114.4864",
+        "revenue": "83575.07"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "64.1056",
+        "paid_rights_tickets": "6",
+        "tickets": "70.1056",
+        "revenue": "51177.09"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "87.5288",
+        "paid_rights_tickets": "6",
+        "tickets": "93.5288",
+        "revenue": "68276.02"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "510.00",
+      "full_revenue": "534990.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "829.6816",
+        "paid_rights_tickets": "46",
+        "tickets": "875.6816",
+        "revenue": "446597.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "490.2664",
+        "paid_rights_tickets": "46",
+        "tickets": "536.2664",
+        "revenue": "273495.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "669.4022",
+        "paid_rights_tickets": "46",
+        "tickets": "715.4022",
+        "revenue": "364855.12"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "510.00",
+      "full_revenue": "134640.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "209.2816",
+        "paid_rights_tickets": "11",
+        "tickets": "220.2816",
+        "revenue": "112343.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "123.6664",
+        "paid_rights_tickets": "11",
+        "tickets": "134.6664",
+        "revenue": "68679.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "168.8522",
+        "paid_rights_tickets": "11",
+        "tickets": "179.8522",
+        "revenue": "91724.62"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "330.00",
+      "full_revenue": "470910.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "1153.1520",
+        "paid_rights_tickets": "62",
+        "tickets": "1215.1520",
+        "revenue": "401000.16"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "681.4080",
+        "paid_rights_tickets": "62",
+        "tickets": "743.4080",
+        "revenue": "245324.64"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "930.3840",
+        "paid_rights_tickets": "62",
+        "tickets": "992.3840",
+        "revenue": "327486.72"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "330.00",
+      "full_revenue": "118470.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "290.6112",
+        "paid_rights_tickets": "15",
+        "tickets": "305.6112",
+        "revenue": "100851.70"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "171.7248",
+        "paid_rights_tickets": "15",
+        "tickets": "186.7248",
+        "revenue": "61619.18"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "234.4704",
+        "paid_rights_tickets": "15",
+        "tickets": "249.4704",
+        "revenue": "82325.23"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "210.00",
+      "full_revenue": "348810.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "1370.3536",
+        "paid_rights_tickets": "72",
+        "tickets": "1442.3536",
+        "revenue": "302894.26"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "809.7544",
+        "paid_rights_tickets": "72",
+        "tickets": "881.7544",
+        "revenue": "185168.42"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "1105.6262",
+        "paid_rights_tickets": "72",
+        "tickets": "1177.6262",
+        "revenue": "247301.50"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "210.00",
+      "full_revenue": "87360.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "343.2352",
+        "paid_rights_tickets": "18",
+        "tickets": "361.2352",
+        "revenue": "75859.39"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "202.8208",
+        "paid_rights_tickets": "18",
+        "tickets": "220.8208",
+        "revenue": "46372.37"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "276.9284",
+        "paid_rights_tickets": "18",
+        "tickets": "294.9284",
+        "revenue": "61934.96"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "95.00",
+      "full_revenue": "110675.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "980.320",
+        "paid_rights_tickets": "51",
+        "tickets": "1031.320",
+        "revenue": "97975.40"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "579.280",
+        "paid_rights_tickets": "51",
+        "tickets": "630.280",
+        "revenue": "59876.60"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "790.940",
+        "paid_rights_tickets": "51",
+        "tickets": "841.940",
+        "revenue": "79984.30"
+      }
+    },
+    {
+      "session_id": "S02",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "95.00",
+      "full_revenue": "27740.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "246.400",
+        "paid_rights_tickets": "12",
+        "tickets": "258.400",
+        "revenue": "24548.00"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "145.600",
+        "paid_rights_tickets": "12",
+        "tickets": "157.600",
+        "revenue": "14972.00"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "198.800",
+        "paid_rights_tickets": "12",
+        "tickets": "210.800",
+        "revenue": "20026.00"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "730.00",
+      "full_revenue": "404420.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "429.0880",
+        "paid_rights_tickets": "24",
+        "tickets": "453.0880",
+        "revenue": "330754.24"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "253.5520",
+        "paid_rights_tickets": "24",
+        "tickets": "277.5520",
+        "revenue": "202612.96"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "346.1960",
+        "paid_rights_tickets": "24",
+        "tickets": "370.1960",
+        "revenue": "270243.08"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "730.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "108.4864",
+        "paid_rights_tickets": "6",
+        "tickets": "114.4864",
+        "revenue": "83575.07"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "64.1056",
+        "paid_rights_tickets": "6",
+        "tickets": "70.1056",
+        "revenue": "51177.09"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "87.5288",
+        "paid_rights_tickets": "6",
+        "tickets": "93.5288",
+        "revenue": "68276.02"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "510.00",
+      "full_revenue": "534990.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "829.6816",
+        "paid_rights_tickets": "46",
+        "tickets": "875.6816",
+        "revenue": "446597.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "490.2664",
+        "paid_rights_tickets": "46",
+        "tickets": "536.2664",
+        "revenue": "273495.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "669.4022",
+        "paid_rights_tickets": "46",
+        "tickets": "715.4022",
+        "revenue": "364855.12"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "510.00",
+      "full_revenue": "134640.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "209.2816",
+        "paid_rights_tickets": "11",
+        "tickets": "220.2816",
+        "revenue": "112343.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "123.6664",
+        "paid_rights_tickets": "11",
+        "tickets": "134.6664",
+        "revenue": "68679.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "168.8522",
+        "paid_rights_tickets": "11",
+        "tickets": "179.8522",
+        "revenue": "91724.62"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "330.00",
+      "full_revenue": "470910.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "1153.1520",
+        "paid_rights_tickets": "62",
+        "tickets": "1215.1520",
+        "revenue": "401000.16"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "681.4080",
+        "paid_rights_tickets": "62",
+        "tickets": "743.4080",
+        "revenue": "245324.64"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "930.3840",
+        "paid_rights_tickets": "62",
+        "tickets": "992.3840",
+        "revenue": "327486.72"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "330.00",
+      "full_revenue": "118470.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "290.6112",
+        "paid_rights_tickets": "15",
+        "tickets": "305.6112",
+        "revenue": "100851.70"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "171.7248",
+        "paid_rights_tickets": "15",
+        "tickets": "186.7248",
+        "revenue": "61619.18"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "234.4704",
+        "paid_rights_tickets": "15",
+        "tickets": "249.4704",
+        "revenue": "82325.23"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "210.00",
+      "full_revenue": "348810.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "1370.3536",
+        "paid_rights_tickets": "72",
+        "tickets": "1442.3536",
+        "revenue": "302894.26"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "809.7544",
+        "paid_rights_tickets": "72",
+        "tickets": "881.7544",
+        "revenue": "185168.42"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "1105.6262",
+        "paid_rights_tickets": "72",
+        "tickets": "1177.6262",
+        "revenue": "247301.50"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "210.00",
+      "full_revenue": "87360.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "343.2352",
+        "paid_rights_tickets": "18",
+        "tickets": "361.2352",
+        "revenue": "75859.39"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "202.8208",
+        "paid_rights_tickets": "18",
+        "tickets": "220.8208",
+        "revenue": "46372.37"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "276.9284",
+        "paid_rights_tickets": "18",
+        "tickets": "294.9284",
+        "revenue": "61934.96"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "95.00",
+      "full_revenue": "110675.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "980.320",
+        "paid_rights_tickets": "51",
+        "tickets": "1031.320",
+        "revenue": "97975.40"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "579.280",
+        "paid_rights_tickets": "51",
+        "tickets": "630.280",
+        "revenue": "59876.60"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "790.940",
+        "paid_rights_tickets": "51",
+        "tickets": "841.940",
+        "revenue": "79984.30"
+      }
+    },
+    {
+      "session_id": "S03",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "95.00",
+      "full_revenue": "27740.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "246.400",
+        "paid_rights_tickets": "12",
+        "tickets": "258.400",
+        "revenue": "24548.00"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "145.600",
+        "paid_rights_tickets": "12",
+        "tickets": "157.600",
+        "revenue": "14972.00"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "198.800",
+        "paid_rights_tickets": "12",
+        "tickets": "210.800",
+        "revenue": "20026.00"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "730.00",
+      "full_revenue": "404420.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "429.0880",
+        "paid_rights_tickets": "24",
+        "tickets": "453.0880",
+        "revenue": "330754.24"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "253.5520",
+        "paid_rights_tickets": "24",
+        "tickets": "277.5520",
+        "revenue": "202612.96"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "346.1960",
+        "paid_rights_tickets": "24",
+        "tickets": "370.1960",
+        "revenue": "270243.08"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "730.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.8096",
+        "paid_rights_rate": "1",
+        "public_tickets": "108.4864",
+        "paid_rights_tickets": "6",
+        "tickets": "114.4864",
+        "revenue": "83575.07"
+      },
+      "low": {
+        "public_rate": "0.4784",
+        "paid_rights_rate": "1",
+        "public_tickets": "64.1056",
+        "paid_rights_tickets": "6",
+        "tickets": "70.1056",
+        "revenue": "51177.09"
+      },
+      "mid": {
+        "public_rate": "0.6532",
+        "paid_rights_rate": "1",
+        "public_tickets": "87.5288",
+        "paid_rights_tickets": "6",
+        "tickets": "93.5288",
+        "revenue": "68276.02"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "510.00",
+      "full_revenue": "534990.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "829.6816",
+        "paid_rights_tickets": "46",
+        "tickets": "875.6816",
+        "revenue": "446597.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "490.2664",
+        "paid_rights_tickets": "46",
+        "tickets": "536.2664",
+        "revenue": "273495.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "669.4022",
+        "paid_rights_tickets": "46",
+        "tickets": "715.4022",
+        "revenue": "364855.12"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "510.00",
+      "full_revenue": "134640.00",
+      "high": {
+        "public_rate": "0.8272",
+        "paid_rights_rate": "1",
+        "public_tickets": "209.2816",
+        "paid_rights_tickets": "11",
+        "tickets": "220.2816",
+        "revenue": "112343.62"
+      },
+      "low": {
+        "public_rate": "0.4888",
+        "paid_rights_rate": "1",
+        "public_tickets": "123.6664",
+        "paid_rights_tickets": "11",
+        "tickets": "134.6664",
+        "revenue": "68679.86"
+      },
+      "mid": {
+        "public_rate": "0.6674",
+        "paid_rights_rate": "1",
+        "public_tickets": "168.8522",
+        "paid_rights_tickets": "11",
+        "tickets": "179.8522",
+        "revenue": "91724.62"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "330.00",
+      "full_revenue": "470910.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "1153.1520",
+        "paid_rights_tickets": "62",
+        "tickets": "1215.1520",
+        "revenue": "401000.16"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "681.4080",
+        "paid_rights_tickets": "62",
+        "tickets": "743.4080",
+        "revenue": "245324.64"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "930.3840",
+        "paid_rights_tickets": "62",
+        "tickets": "992.3840",
+        "revenue": "327486.72"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "330.00",
+      "full_revenue": "118470.00",
+      "high": {
+        "public_rate": "0.8448",
+        "paid_rights_rate": "1",
+        "public_tickets": "290.6112",
+        "paid_rights_tickets": "15",
+        "tickets": "305.6112",
+        "revenue": "100851.70"
+      },
+      "low": {
+        "public_rate": "0.4992",
+        "paid_rights_rate": "1",
+        "public_tickets": "171.7248",
+        "paid_rights_tickets": "15",
+        "tickets": "186.7248",
+        "revenue": "61619.18"
+      },
+      "mid": {
+        "public_rate": "0.6816",
+        "paid_rights_rate": "1",
+        "public_tickets": "234.4704",
+        "paid_rights_tickets": "15",
+        "tickets": "249.4704",
+        "revenue": "82325.23"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "210.00",
+      "full_revenue": "348810.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "1370.3536",
+        "paid_rights_tickets": "72",
+        "tickets": "1442.3536",
+        "revenue": "302894.26"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "809.7544",
+        "paid_rights_tickets": "72",
+        "tickets": "881.7544",
+        "revenue": "185168.42"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "1105.6262",
+        "paid_rights_tickets": "72",
+        "tickets": "1177.6262",
+        "revenue": "247301.50"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "210.00",
+      "full_revenue": "87360.00",
+      "high": {
+        "public_rate": "0.8624",
+        "paid_rights_rate": "1",
+        "public_tickets": "343.2352",
+        "paid_rights_tickets": "18",
+        "tickets": "361.2352",
+        "revenue": "75859.39"
+      },
+      "low": {
+        "public_rate": "0.5096",
+        "paid_rights_rate": "1",
+        "public_tickets": "202.8208",
+        "paid_rights_tickets": "18",
+        "tickets": "220.8208",
+        "revenue": "46372.37"
+      },
+      "mid": {
+        "public_rate": "0.6958",
+        "paid_rights_rate": "1",
+        "public_tickets": "276.9284",
+        "paid_rights_tickets": "18",
+        "tickets": "294.9284",
+        "revenue": "61934.96"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "95.00",
+      "full_revenue": "110675.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "980.320",
+        "paid_rights_tickets": "51",
+        "tickets": "1031.320",
+        "revenue": "97975.40"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "579.280",
+        "paid_rights_tickets": "51",
+        "tickets": "630.280",
+        "revenue": "59876.60"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "790.940",
+        "paid_rights_tickets": "51",
+        "tickets": "841.940",
+        "revenue": "79984.30"
+      }
+    },
+    {
+      "session_id": "S04",
+      "stage": "QUALIFYING",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "95.00",
+      "full_revenue": "27740.00",
+      "high": {
+        "public_rate": "0.880",
+        "paid_rights_rate": "1",
+        "public_tickets": "246.400",
+        "paid_rights_tickets": "12",
+        "tickets": "258.400",
+        "revenue": "24548.00"
+      },
+      "low": {
+        "public_rate": "0.520",
+        "paid_rights_rate": "1",
+        "public_tickets": "145.600",
+        "paid_rights_tickets": "12",
+        "tickets": "157.600",
+        "revenue": "14972.00"
+      },
+      "mid": {
+        "public_rate": "0.710",
+        "paid_rights_rate": "1",
+        "public_tickets": "198.800",
+        "paid_rights_tickets": "12",
+        "tickets": "210.800",
+        "revenue": "20026.00"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "815.00",
+      "full_revenue": "451510.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "438.840",
+        "paid_rights_tickets": "24",
+        "tickets": "462.840",
+        "revenue": "377214.60"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.3040",
+        "paid_rights_tickets": "24",
+        "tickets": "287.3040",
+        "revenue": "234152.76"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "355.9480",
+        "paid_rights_tickets": "24",
+        "tickets": "379.9480",
+        "revenue": "309657.62"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "815.00",
+      "full_revenue": "114100.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "110.952",
+        "paid_rights_tickets": "6",
+        "tickets": "116.952",
+        "revenue": "95315.88"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "66.5712",
+        "paid_rights_tickets": "6",
+        "tickets": "72.5712",
+        "revenue": "59145.53"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "89.9944",
+        "paid_rights_tickets": "6",
+        "tickets": "95.9944",
+        "revenue": "78235.44"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "595.00",
+      "full_revenue": "624155.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "848.538",
+        "paid_rights_tickets": "46",
+        "tickets": "894.538",
+        "revenue": "532250.11"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "509.1228",
+        "paid_rights_tickets": "46",
+        "tickets": "555.1228",
+        "revenue": "330298.07"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "688.2586",
+        "paid_rights_tickets": "46",
+        "tickets": "734.2586",
+        "revenue": "436883.87"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "595.00",
+      "full_revenue": "157080.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "214.038",
+        "paid_rights_tickets": "11",
+        "tickets": "225.038",
+        "revenue": "133897.61"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "128.4228",
+        "paid_rights_tickets": "11",
+        "tickets": "139.4228",
+        "revenue": "82956.57"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "173.6086",
+        "paid_rights_tickets": "11",
+        "tickets": "184.6086",
+        "revenue": "109842.12"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "415.00",
+      "full_revenue": "592205.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "1179.360",
+        "paid_rights_tickets": "62",
+        "tickets": "1241.360",
+        "revenue": "515164.40"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.6160",
+        "paid_rights_tickets": "62",
+        "tickets": "769.6160",
+        "revenue": "319390.64"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "956.5920",
+        "paid_rights_tickets": "62",
+        "tickets": "1018.5920",
+        "revenue": "422715.68"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "415.00",
+      "full_revenue": "148985.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "297.216",
+        "paid_rights_tickets": "15",
+        "tickets": "312.216",
+        "revenue": "129569.64"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3296",
+        "paid_rights_tickets": "15",
+        "tickets": "193.3296",
+        "revenue": "80231.78"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "241.0752",
+        "paid_rights_tickets": "15",
+        "tickets": "256.0752",
+        "revenue": "106271.21"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "295.00",
+      "full_revenue": "489995.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "1401.498",
+        "paid_rights_tickets": "72",
+        "tickets": "1473.498",
+        "revenue": "434681.91"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "840.8988",
+        "paid_rights_tickets": "72",
+        "tickets": "912.8988",
+        "revenue": "269305.15"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "1136.7706",
+        "paid_rights_tickets": "72",
+        "tickets": "1208.7706",
+        "revenue": "356587.33"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "295.00",
+      "full_revenue": "122720.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "351.036",
+        "paid_rights_tickets": "18",
+        "tickets": "369.036",
+        "revenue": "108865.62"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.6216",
+        "paid_rights_tickets": "18",
+        "tickets": "228.6216",
+        "revenue": "67443.37"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "284.7292",
+        "paid_rights_tickets": "18",
+        "tickets": "302.7292",
+        "revenue": "89305.11"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "180.00",
+      "full_revenue": "209700.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "1002.60",
+        "paid_rights_tickets": "51",
+        "tickets": "1053.60",
+        "revenue": "189648.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "601.560",
+        "paid_rights_tickets": "51",
+        "tickets": "652.560",
+        "revenue": "117460.80"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "813.220",
+        "paid_rights_tickets": "51",
+        "tickets": "864.220",
+        "revenue": "155559.60"
+      }
+    },
+    {
+      "session_id": "S05",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "180.00",
+      "full_revenue": "52560.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "252.00",
+        "paid_rights_tickets": "12",
+        "tickets": "264.00",
+        "revenue": "47520.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "151.200",
+        "paid_rights_tickets": "12",
+        "tickets": "163.200",
+        "revenue": "29376.00"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "204.400",
+        "paid_rights_tickets": "12",
+        "tickets": "216.400",
+        "revenue": "38952.00"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "815.00",
+      "full_revenue": "451510.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "438.840",
+        "paid_rights_tickets": "24",
+        "tickets": "462.840",
+        "revenue": "377214.60"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.3040",
+        "paid_rights_tickets": "24",
+        "tickets": "287.3040",
+        "revenue": "234152.76"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "355.9480",
+        "paid_rights_tickets": "24",
+        "tickets": "379.9480",
+        "revenue": "309657.62"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "815.00",
+      "full_revenue": "114100.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "110.952",
+        "paid_rights_tickets": "6",
+        "tickets": "116.952",
+        "revenue": "95315.88"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "66.5712",
+        "paid_rights_tickets": "6",
+        "tickets": "72.5712",
+        "revenue": "59145.53"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "89.9944",
+        "paid_rights_tickets": "6",
+        "tickets": "95.9944",
+        "revenue": "78235.44"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "595.00",
+      "full_revenue": "624155.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "848.538",
+        "paid_rights_tickets": "46",
+        "tickets": "894.538",
+        "revenue": "532250.11"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "509.1228",
+        "paid_rights_tickets": "46",
+        "tickets": "555.1228",
+        "revenue": "330298.07"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "688.2586",
+        "paid_rights_tickets": "46",
+        "tickets": "734.2586",
+        "revenue": "436883.87"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "595.00",
+      "full_revenue": "157080.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "214.038",
+        "paid_rights_tickets": "11",
+        "tickets": "225.038",
+        "revenue": "133897.61"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "128.4228",
+        "paid_rights_tickets": "11",
+        "tickets": "139.4228",
+        "revenue": "82956.57"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "173.6086",
+        "paid_rights_tickets": "11",
+        "tickets": "184.6086",
+        "revenue": "109842.12"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "415.00",
+      "full_revenue": "592205.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "1179.360",
+        "paid_rights_tickets": "62",
+        "tickets": "1241.360",
+        "revenue": "515164.40"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.6160",
+        "paid_rights_tickets": "62",
+        "tickets": "769.6160",
+        "revenue": "319390.64"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "956.5920",
+        "paid_rights_tickets": "62",
+        "tickets": "1018.5920",
+        "revenue": "422715.68"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "415.00",
+      "full_revenue": "148985.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "297.216",
+        "paid_rights_tickets": "15",
+        "tickets": "312.216",
+        "revenue": "129569.64"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3296",
+        "paid_rights_tickets": "15",
+        "tickets": "193.3296",
+        "revenue": "80231.78"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "241.0752",
+        "paid_rights_tickets": "15",
+        "tickets": "256.0752",
+        "revenue": "106271.21"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "295.00",
+      "full_revenue": "489995.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "1401.498",
+        "paid_rights_tickets": "72",
+        "tickets": "1473.498",
+        "revenue": "434681.91"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "840.8988",
+        "paid_rights_tickets": "72",
+        "tickets": "912.8988",
+        "revenue": "269305.15"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "1136.7706",
+        "paid_rights_tickets": "72",
+        "tickets": "1208.7706",
+        "revenue": "356587.33"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "295.00",
+      "full_revenue": "122720.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "351.036",
+        "paid_rights_tickets": "18",
+        "tickets": "369.036",
+        "revenue": "108865.62"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.6216",
+        "paid_rights_tickets": "18",
+        "tickets": "228.6216",
+        "revenue": "67443.37"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "284.7292",
+        "paid_rights_tickets": "18",
+        "tickets": "302.7292",
+        "revenue": "89305.11"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "180.00",
+      "full_revenue": "209700.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "1002.60",
+        "paid_rights_tickets": "51",
+        "tickets": "1053.60",
+        "revenue": "189648.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "601.560",
+        "paid_rights_tickets": "51",
+        "tickets": "652.560",
+        "revenue": "117460.80"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "813.220",
+        "paid_rights_tickets": "51",
+        "tickets": "864.220",
+        "revenue": "155559.60"
+      }
+    },
+    {
+      "session_id": "S06",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "180.00",
+      "full_revenue": "52560.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "252.00",
+        "paid_rights_tickets": "12",
+        "tickets": "264.00",
+        "revenue": "47520.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "151.200",
+        "paid_rights_tickets": "12",
+        "tickets": "163.200",
+        "revenue": "29376.00"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "204.400",
+        "paid_rights_tickets": "12",
+        "tickets": "216.400",
+        "revenue": "38952.00"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "815.00",
+      "full_revenue": "451510.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "438.840",
+        "paid_rights_tickets": "24",
+        "tickets": "462.840",
+        "revenue": "377214.60"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.3040",
+        "paid_rights_tickets": "24",
+        "tickets": "287.3040",
+        "revenue": "234152.76"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "355.9480",
+        "paid_rights_tickets": "24",
+        "tickets": "379.9480",
+        "revenue": "309657.62"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "815.00",
+      "full_revenue": "114100.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "110.952",
+        "paid_rights_tickets": "6",
+        "tickets": "116.952",
+        "revenue": "95315.88"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "66.5712",
+        "paid_rights_tickets": "6",
+        "tickets": "72.5712",
+        "revenue": "59145.53"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "89.9944",
+        "paid_rights_tickets": "6",
+        "tickets": "95.9944",
+        "revenue": "78235.44"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "595.00",
+      "full_revenue": "624155.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "848.538",
+        "paid_rights_tickets": "46",
+        "tickets": "894.538",
+        "revenue": "532250.11"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "509.1228",
+        "paid_rights_tickets": "46",
+        "tickets": "555.1228",
+        "revenue": "330298.07"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "688.2586",
+        "paid_rights_tickets": "46",
+        "tickets": "734.2586",
+        "revenue": "436883.87"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "595.00",
+      "full_revenue": "157080.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "214.038",
+        "paid_rights_tickets": "11",
+        "tickets": "225.038",
+        "revenue": "133897.61"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "128.4228",
+        "paid_rights_tickets": "11",
+        "tickets": "139.4228",
+        "revenue": "82956.57"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "173.6086",
+        "paid_rights_tickets": "11",
+        "tickets": "184.6086",
+        "revenue": "109842.12"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "415.00",
+      "full_revenue": "592205.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "1179.360",
+        "paid_rights_tickets": "62",
+        "tickets": "1241.360",
+        "revenue": "515164.40"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.6160",
+        "paid_rights_tickets": "62",
+        "tickets": "769.6160",
+        "revenue": "319390.64"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "956.5920",
+        "paid_rights_tickets": "62",
+        "tickets": "1018.5920",
+        "revenue": "422715.68"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "415.00",
+      "full_revenue": "148985.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "297.216",
+        "paid_rights_tickets": "15",
+        "tickets": "312.216",
+        "revenue": "129569.64"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3296",
+        "paid_rights_tickets": "15",
+        "tickets": "193.3296",
+        "revenue": "80231.78"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "241.0752",
+        "paid_rights_tickets": "15",
+        "tickets": "256.0752",
+        "revenue": "106271.21"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "295.00",
+      "full_revenue": "489995.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "1401.498",
+        "paid_rights_tickets": "72",
+        "tickets": "1473.498",
+        "revenue": "434681.91"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "840.8988",
+        "paid_rights_tickets": "72",
+        "tickets": "912.8988",
+        "revenue": "269305.15"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "1136.7706",
+        "paid_rights_tickets": "72",
+        "tickets": "1208.7706",
+        "revenue": "356587.33"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "295.00",
+      "full_revenue": "122720.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "351.036",
+        "paid_rights_tickets": "18",
+        "tickets": "369.036",
+        "revenue": "108865.62"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.6216",
+        "paid_rights_tickets": "18",
+        "tickets": "228.6216",
+        "revenue": "67443.37"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "284.7292",
+        "paid_rights_tickets": "18",
+        "tickets": "302.7292",
+        "revenue": "89305.11"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "180.00",
+      "full_revenue": "209700.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "1002.60",
+        "paid_rights_tickets": "51",
+        "tickets": "1053.60",
+        "revenue": "189648.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "601.560",
+        "paid_rights_tickets": "51",
+        "tickets": "652.560",
+        "revenue": "117460.80"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "813.220",
+        "paid_rights_tickets": "51",
+        "tickets": "864.220",
+        "revenue": "155559.60"
+      }
+    },
+    {
+      "session_id": "S07",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "180.00",
+      "full_revenue": "52560.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "252.00",
+        "paid_rights_tickets": "12",
+        "tickets": "264.00",
+        "revenue": "47520.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "151.200",
+        "paid_rights_tickets": "12",
+        "tickets": "163.200",
+        "revenue": "29376.00"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "204.400",
+        "paid_rights_tickets": "12",
+        "tickets": "216.400",
+        "revenue": "38952.00"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "815.00",
+      "full_revenue": "451510.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "438.840",
+        "paid_rights_tickets": "24",
+        "tickets": "462.840",
+        "revenue": "377214.60"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.3040",
+        "paid_rights_tickets": "24",
+        "tickets": "287.3040",
+        "revenue": "234152.76"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "355.9480",
+        "paid_rights_tickets": "24",
+        "tickets": "379.9480",
+        "revenue": "309657.62"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "815.00",
+      "full_revenue": "114100.00",
+      "high": {
+        "public_rate": "0.828",
+        "paid_rights_rate": "1",
+        "public_tickets": "110.952",
+        "paid_rights_tickets": "6",
+        "tickets": "116.952",
+        "revenue": "95315.88"
+      },
+      "low": {
+        "public_rate": "0.4968",
+        "paid_rights_rate": "1",
+        "public_tickets": "66.5712",
+        "paid_rights_tickets": "6",
+        "tickets": "72.5712",
+        "revenue": "59145.53"
+      },
+      "mid": {
+        "public_rate": "0.6716",
+        "paid_rights_rate": "1",
+        "public_tickets": "89.9944",
+        "paid_rights_tickets": "6",
+        "tickets": "95.9944",
+        "revenue": "78235.44"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "595.00",
+      "full_revenue": "624155.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "848.538",
+        "paid_rights_tickets": "46",
+        "tickets": "894.538",
+        "revenue": "532250.11"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "509.1228",
+        "paid_rights_tickets": "46",
+        "tickets": "555.1228",
+        "revenue": "330298.07"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "688.2586",
+        "paid_rights_tickets": "46",
+        "tickets": "734.2586",
+        "revenue": "436883.87"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "595.00",
+      "full_revenue": "157080.00",
+      "high": {
+        "public_rate": "0.846",
+        "paid_rights_rate": "1",
+        "public_tickets": "214.038",
+        "paid_rights_tickets": "11",
+        "tickets": "225.038",
+        "revenue": "133897.61"
+      },
+      "low": {
+        "public_rate": "0.5076",
+        "paid_rights_rate": "1",
+        "public_tickets": "128.4228",
+        "paid_rights_tickets": "11",
+        "tickets": "139.4228",
+        "revenue": "82956.57"
+      },
+      "mid": {
+        "public_rate": "0.6862",
+        "paid_rights_rate": "1",
+        "public_tickets": "173.6086",
+        "paid_rights_tickets": "11",
+        "tickets": "184.6086",
+        "revenue": "109842.12"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "415.00",
+      "full_revenue": "592205.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "1179.360",
+        "paid_rights_tickets": "62",
+        "tickets": "1241.360",
+        "revenue": "515164.40"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.6160",
+        "paid_rights_tickets": "62",
+        "tickets": "769.6160",
+        "revenue": "319390.64"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "956.5920",
+        "paid_rights_tickets": "62",
+        "tickets": "1018.5920",
+        "revenue": "422715.68"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "415.00",
+      "full_revenue": "148985.00",
+      "high": {
+        "public_rate": "0.864",
+        "paid_rights_rate": "1",
+        "public_tickets": "297.216",
+        "paid_rights_tickets": "15",
+        "tickets": "312.216",
+        "revenue": "129569.64"
+      },
+      "low": {
+        "public_rate": "0.5184",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3296",
+        "paid_rights_tickets": "15",
+        "tickets": "193.3296",
+        "revenue": "80231.78"
+      },
+      "mid": {
+        "public_rate": "0.7008",
+        "paid_rights_rate": "1",
+        "public_tickets": "241.0752",
+        "paid_rights_tickets": "15",
+        "tickets": "256.0752",
+        "revenue": "106271.21"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "295.00",
+      "full_revenue": "489995.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "1401.498",
+        "paid_rights_tickets": "72",
+        "tickets": "1473.498",
+        "revenue": "434681.91"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "840.8988",
+        "paid_rights_tickets": "72",
+        "tickets": "912.8988",
+        "revenue": "269305.15"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "1136.7706",
+        "paid_rights_tickets": "72",
+        "tickets": "1208.7706",
+        "revenue": "356587.33"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "295.00",
+      "full_revenue": "122720.00",
+      "high": {
+        "public_rate": "0.882",
+        "paid_rights_rate": "1",
+        "public_tickets": "351.036",
+        "paid_rights_tickets": "18",
+        "tickets": "369.036",
+        "revenue": "108865.62"
+      },
+      "low": {
+        "public_rate": "0.5292",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.6216",
+        "paid_rights_tickets": "18",
+        "tickets": "228.6216",
+        "revenue": "67443.37"
+      },
+      "mid": {
+        "public_rate": "0.7154",
+        "paid_rights_rate": "1",
+        "public_tickets": "284.7292",
+        "paid_rights_tickets": "18",
+        "tickets": "302.7292",
+        "revenue": "89305.11"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "180.00",
+      "full_revenue": "209700.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "1002.60",
+        "paid_rights_tickets": "51",
+        "tickets": "1053.60",
+        "revenue": "189648.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "601.560",
+        "paid_rights_tickets": "51",
+        "tickets": "652.560",
+        "revenue": "117460.80"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "813.220",
+        "paid_rights_tickets": "51",
+        "tickets": "864.220",
+        "revenue": "155559.60"
+      }
+    },
+    {
+      "session_id": "S08",
+      "stage": "GROUP",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "180.00",
+      "full_revenue": "52560.00",
+      "high": {
+        "public_rate": "0.90",
+        "paid_rights_rate": "1",
+        "public_tickets": "252.00",
+        "paid_rights_tickets": "12",
+        "tickets": "264.00",
+        "revenue": "47520.00"
+      },
+      "low": {
+        "public_rate": "0.540",
+        "paid_rights_rate": "1",
+        "public_tickets": "151.200",
+        "paid_rights_tickets": "12",
+        "tickets": "163.200",
+        "revenue": "29376.00"
+      },
+      "mid": {
+        "public_rate": "0.730",
+        "paid_rights_rate": "1",
+        "public_tickets": "204.400",
+        "paid_rights_tickets": "12",
+        "tickets": "216.400",
+        "revenue": "38952.00"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "900.00",
+      "full_revenue": "498600.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "448.5920",
+        "paid_rights_tickets": "24",
+        "tickets": "472.5920",
+        "revenue": "425332.80"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "273.0560",
+        "paid_rights_tickets": "24",
+        "tickets": "297.0560",
+        "revenue": "267350.40"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "365.7000",
+        "paid_rights_tickets": "24",
+        "tickets": "389.7000",
+        "revenue": "350730.00"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "900.00",
+      "full_revenue": "126000.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "113.4176",
+        "paid_rights_tickets": "6",
+        "tickets": "119.4176",
+        "revenue": "107475.84"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "69.0368",
+        "paid_rights_tickets": "6",
+        "tickets": "75.0368",
+        "revenue": "67533.12"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "92.4600",
+        "paid_rights_tickets": "6",
+        "tickets": "98.4600",
+        "revenue": "88614.00"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "680.00",
+      "full_revenue": "713320.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "867.3944",
+        "paid_rights_tickets": "46",
+        "tickets": "913.3944",
+        "revenue": "621108.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "527.9792",
+        "paid_rights_tickets": "46",
+        "tickets": "573.9792",
+        "revenue": "390305.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.1150",
+        "paid_rights_tickets": "46",
+        "tickets": "753.1150",
+        "revenue": "512118.20"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "680.00",
+      "full_revenue": "179520.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.7944",
+        "paid_rights_tickets": "11",
+        "tickets": "229.7944",
+        "revenue": "156260.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "133.1792",
+        "paid_rights_tickets": "11",
+        "tickets": "144.1792",
+        "revenue": "98041.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3650",
+        "paid_rights_tickets": "11",
+        "tickets": "189.3650",
+        "revenue": "128768.20"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "500.00",
+      "full_revenue": "713500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "1205.5680",
+        "paid_rights_tickets": "62",
+        "tickets": "1267.5680",
+        "revenue": "633784.00"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "733.8240",
+        "paid_rights_tickets": "62",
+        "tickets": "795.8240",
+        "revenue": "397912.00"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "982.8000",
+        "paid_rights_tickets": "62",
+        "tickets": "1044.8000",
+        "revenue": "522400.00"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "500.00",
+      "full_revenue": "179500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "303.8208",
+        "paid_rights_tickets": "15",
+        "tickets": "318.8208",
+        "revenue": "159410.40"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "184.9344",
+        "paid_rights_tickets": "15",
+        "tickets": "199.9344",
+        "revenue": "99967.20"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "247.6800",
+        "paid_rights_tickets": "15",
+        "tickets": "262.6800",
+        "revenue": "131340.00"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "380.00",
+      "full_revenue": "631180.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "1432.6424",
+        "paid_rights_tickets": "72",
+        "tickets": "1504.6424",
+        "revenue": "571764.11"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "872.0432",
+        "paid_rights_tickets": "72",
+        "tickets": "944.0432",
+        "revenue": "358736.42"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "1167.9150",
+        "paid_rights_tickets": "72",
+        "tickets": "1239.9150",
+        "revenue": "471167.70"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "380.00",
+      "full_revenue": "158080.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "358.8368",
+        "paid_rights_tickets": "18",
+        "tickets": "376.8368",
+        "revenue": "143197.98"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.4224",
+        "paid_rights_tickets": "18",
+        "tickets": "236.4224",
+        "revenue": "89840.51"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "292.5300",
+        "paid_rights_tickets": "18",
+        "tickets": "310.5300",
+        "revenue": "118001.40"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "265.00",
+      "full_revenue": "308725.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "1024.880",
+        "paid_rights_tickets": "51",
+        "tickets": "1075.880",
+        "revenue": "285108.20"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "623.840",
+        "paid_rights_tickets": "51",
+        "tickets": "674.840",
+        "revenue": "178832.60"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "835.500",
+        "paid_rights_tickets": "51",
+        "tickets": "886.500",
+        "revenue": "234922.50"
+      }
+    },
+    {
+      "session_id": "S09",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "265.00",
+      "full_revenue": "77380.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "257.600",
+        "paid_rights_tickets": "12",
+        "tickets": "269.600",
+        "revenue": "71444.00"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "156.800",
+        "paid_rights_tickets": "12",
+        "tickets": "168.800",
+        "revenue": "44732.00"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.000",
+        "paid_rights_tickets": "12",
+        "tickets": "222.000",
+        "revenue": "58830.00"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "900.00",
+      "full_revenue": "498600.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "448.5920",
+        "paid_rights_tickets": "24",
+        "tickets": "472.5920",
+        "revenue": "425332.80"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "273.0560",
+        "paid_rights_tickets": "24",
+        "tickets": "297.0560",
+        "revenue": "267350.40"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "365.7000",
+        "paid_rights_tickets": "24",
+        "tickets": "389.7000",
+        "revenue": "350730.00"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "900.00",
+      "full_revenue": "126000.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "113.4176",
+        "paid_rights_tickets": "6",
+        "tickets": "119.4176",
+        "revenue": "107475.84"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "69.0368",
+        "paid_rights_tickets": "6",
+        "tickets": "75.0368",
+        "revenue": "67533.12"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "92.4600",
+        "paid_rights_tickets": "6",
+        "tickets": "98.4600",
+        "revenue": "88614.00"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "680.00",
+      "full_revenue": "713320.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "867.3944",
+        "paid_rights_tickets": "46",
+        "tickets": "913.3944",
+        "revenue": "621108.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "527.9792",
+        "paid_rights_tickets": "46",
+        "tickets": "573.9792",
+        "revenue": "390305.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.1150",
+        "paid_rights_tickets": "46",
+        "tickets": "753.1150",
+        "revenue": "512118.20"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "680.00",
+      "full_revenue": "179520.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.7944",
+        "paid_rights_tickets": "11",
+        "tickets": "229.7944",
+        "revenue": "156260.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "133.1792",
+        "paid_rights_tickets": "11",
+        "tickets": "144.1792",
+        "revenue": "98041.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3650",
+        "paid_rights_tickets": "11",
+        "tickets": "189.3650",
+        "revenue": "128768.20"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "500.00",
+      "full_revenue": "713500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "1205.5680",
+        "paid_rights_tickets": "62",
+        "tickets": "1267.5680",
+        "revenue": "633784.00"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "733.8240",
+        "paid_rights_tickets": "62",
+        "tickets": "795.8240",
+        "revenue": "397912.00"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "982.8000",
+        "paid_rights_tickets": "62",
+        "tickets": "1044.8000",
+        "revenue": "522400.00"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "500.00",
+      "full_revenue": "179500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "303.8208",
+        "paid_rights_tickets": "15",
+        "tickets": "318.8208",
+        "revenue": "159410.40"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "184.9344",
+        "paid_rights_tickets": "15",
+        "tickets": "199.9344",
+        "revenue": "99967.20"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "247.6800",
+        "paid_rights_tickets": "15",
+        "tickets": "262.6800",
+        "revenue": "131340.00"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "380.00",
+      "full_revenue": "631180.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "1432.6424",
+        "paid_rights_tickets": "72",
+        "tickets": "1504.6424",
+        "revenue": "571764.11"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "872.0432",
+        "paid_rights_tickets": "72",
+        "tickets": "944.0432",
+        "revenue": "358736.42"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "1167.9150",
+        "paid_rights_tickets": "72",
+        "tickets": "1239.9150",
+        "revenue": "471167.70"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "380.00",
+      "full_revenue": "158080.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "358.8368",
+        "paid_rights_tickets": "18",
+        "tickets": "376.8368",
+        "revenue": "143197.98"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.4224",
+        "paid_rights_tickets": "18",
+        "tickets": "236.4224",
+        "revenue": "89840.51"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "292.5300",
+        "paid_rights_tickets": "18",
+        "tickets": "310.5300",
+        "revenue": "118001.40"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "265.00",
+      "full_revenue": "308725.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "1024.880",
+        "paid_rights_tickets": "51",
+        "tickets": "1075.880",
+        "revenue": "285108.20"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "623.840",
+        "paid_rights_tickets": "51",
+        "tickets": "674.840",
+        "revenue": "178832.60"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "835.500",
+        "paid_rights_tickets": "51",
+        "tickets": "886.500",
+        "revenue": "234922.50"
+      }
+    },
+    {
+      "session_id": "S10",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "265.00",
+      "full_revenue": "77380.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "257.600",
+        "paid_rights_tickets": "12",
+        "tickets": "269.600",
+        "revenue": "71444.00"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "156.800",
+        "paid_rights_tickets": "12",
+        "tickets": "168.800",
+        "revenue": "44732.00"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.000",
+        "paid_rights_tickets": "12",
+        "tickets": "222.000",
+        "revenue": "58830.00"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "900.00",
+      "full_revenue": "498600.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "448.5920",
+        "paid_rights_tickets": "24",
+        "tickets": "472.5920",
+        "revenue": "425332.80"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "273.0560",
+        "paid_rights_tickets": "24",
+        "tickets": "297.0560",
+        "revenue": "267350.40"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "365.7000",
+        "paid_rights_tickets": "24",
+        "tickets": "389.7000",
+        "revenue": "350730.00"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "900.00",
+      "full_revenue": "126000.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "113.4176",
+        "paid_rights_tickets": "6",
+        "tickets": "119.4176",
+        "revenue": "107475.84"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "69.0368",
+        "paid_rights_tickets": "6",
+        "tickets": "75.0368",
+        "revenue": "67533.12"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "92.4600",
+        "paid_rights_tickets": "6",
+        "tickets": "98.4600",
+        "revenue": "88614.00"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "680.00",
+      "full_revenue": "713320.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "867.3944",
+        "paid_rights_tickets": "46",
+        "tickets": "913.3944",
+        "revenue": "621108.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "527.9792",
+        "paid_rights_tickets": "46",
+        "tickets": "573.9792",
+        "revenue": "390305.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.1150",
+        "paid_rights_tickets": "46",
+        "tickets": "753.1150",
+        "revenue": "512118.20"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "680.00",
+      "full_revenue": "179520.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.7944",
+        "paid_rights_tickets": "11",
+        "tickets": "229.7944",
+        "revenue": "156260.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "133.1792",
+        "paid_rights_tickets": "11",
+        "tickets": "144.1792",
+        "revenue": "98041.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3650",
+        "paid_rights_tickets": "11",
+        "tickets": "189.3650",
+        "revenue": "128768.20"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "500.00",
+      "full_revenue": "713500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "1205.5680",
+        "paid_rights_tickets": "62",
+        "tickets": "1267.5680",
+        "revenue": "633784.00"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "733.8240",
+        "paid_rights_tickets": "62",
+        "tickets": "795.8240",
+        "revenue": "397912.00"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "982.8000",
+        "paid_rights_tickets": "62",
+        "tickets": "1044.8000",
+        "revenue": "522400.00"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "500.00",
+      "full_revenue": "179500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "303.8208",
+        "paid_rights_tickets": "15",
+        "tickets": "318.8208",
+        "revenue": "159410.40"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "184.9344",
+        "paid_rights_tickets": "15",
+        "tickets": "199.9344",
+        "revenue": "99967.20"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "247.6800",
+        "paid_rights_tickets": "15",
+        "tickets": "262.6800",
+        "revenue": "131340.00"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "380.00",
+      "full_revenue": "631180.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "1432.6424",
+        "paid_rights_tickets": "72",
+        "tickets": "1504.6424",
+        "revenue": "571764.11"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "872.0432",
+        "paid_rights_tickets": "72",
+        "tickets": "944.0432",
+        "revenue": "358736.42"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "1167.9150",
+        "paid_rights_tickets": "72",
+        "tickets": "1239.9150",
+        "revenue": "471167.70"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "380.00",
+      "full_revenue": "158080.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "358.8368",
+        "paid_rights_tickets": "18",
+        "tickets": "376.8368",
+        "revenue": "143197.98"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.4224",
+        "paid_rights_tickets": "18",
+        "tickets": "236.4224",
+        "revenue": "89840.51"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "292.5300",
+        "paid_rights_tickets": "18",
+        "tickets": "310.5300",
+        "revenue": "118001.40"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "265.00",
+      "full_revenue": "308725.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "1024.880",
+        "paid_rights_tickets": "51",
+        "tickets": "1075.880",
+        "revenue": "285108.20"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "623.840",
+        "paid_rights_tickets": "51",
+        "tickets": "674.840",
+        "revenue": "178832.60"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "835.500",
+        "paid_rights_tickets": "51",
+        "tickets": "886.500",
+        "revenue": "234922.50"
+      }
+    },
+    {
+      "session_id": "S11",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "265.00",
+      "full_revenue": "77380.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "257.600",
+        "paid_rights_tickets": "12",
+        "tickets": "269.600",
+        "revenue": "71444.00"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "156.800",
+        "paid_rights_tickets": "12",
+        "tickets": "168.800",
+        "revenue": "44732.00"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.000",
+        "paid_rights_tickets": "12",
+        "tickets": "222.000",
+        "revenue": "58830.00"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "900.00",
+      "full_revenue": "498600.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "448.5920",
+        "paid_rights_tickets": "24",
+        "tickets": "472.5920",
+        "revenue": "425332.80"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "273.0560",
+        "paid_rights_tickets": "24",
+        "tickets": "297.0560",
+        "revenue": "267350.40"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "365.7000",
+        "paid_rights_tickets": "24",
+        "tickets": "389.7000",
+        "revenue": "350730.00"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "900.00",
+      "full_revenue": "126000.00",
+      "high": {
+        "public_rate": "0.8464",
+        "paid_rights_rate": "1",
+        "public_tickets": "113.4176",
+        "paid_rights_tickets": "6",
+        "tickets": "119.4176",
+        "revenue": "107475.84"
+      },
+      "low": {
+        "public_rate": "0.5152",
+        "paid_rights_rate": "1",
+        "public_tickets": "69.0368",
+        "paid_rights_tickets": "6",
+        "tickets": "75.0368",
+        "revenue": "67533.12"
+      },
+      "mid": {
+        "public_rate": "0.6900",
+        "paid_rights_rate": "1",
+        "public_tickets": "92.4600",
+        "paid_rights_tickets": "6",
+        "tickets": "98.4600",
+        "revenue": "88614.00"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "680.00",
+      "full_revenue": "713320.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "867.3944",
+        "paid_rights_tickets": "46",
+        "tickets": "913.3944",
+        "revenue": "621108.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "527.9792",
+        "paid_rights_tickets": "46",
+        "tickets": "573.9792",
+        "revenue": "390305.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "707.1150",
+        "paid_rights_tickets": "46",
+        "tickets": "753.1150",
+        "revenue": "512118.20"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "680.00",
+      "full_revenue": "179520.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.7944",
+        "paid_rights_tickets": "11",
+        "tickets": "229.7944",
+        "revenue": "156260.19"
+      },
+      "low": {
+        "public_rate": "0.5264",
+        "paid_rights_rate": "1",
+        "public_tickets": "133.1792",
+        "paid_rights_tickets": "11",
+        "tickets": "144.1792",
+        "revenue": "98041.86"
+      },
+      "mid": {
+        "public_rate": "0.7050",
+        "paid_rights_rate": "1",
+        "public_tickets": "178.3650",
+        "paid_rights_tickets": "11",
+        "tickets": "189.3650",
+        "revenue": "128768.20"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "500.00",
+      "full_revenue": "713500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "1205.5680",
+        "paid_rights_tickets": "62",
+        "tickets": "1267.5680",
+        "revenue": "633784.00"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "733.8240",
+        "paid_rights_tickets": "62",
+        "tickets": "795.8240",
+        "revenue": "397912.00"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "982.8000",
+        "paid_rights_tickets": "62",
+        "tickets": "1044.8000",
+        "revenue": "522400.00"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "500.00",
+      "full_revenue": "179500.00",
+      "high": {
+        "public_rate": "0.8832",
+        "paid_rights_rate": "1",
+        "public_tickets": "303.8208",
+        "paid_rights_tickets": "15",
+        "tickets": "318.8208",
+        "revenue": "159410.40"
+      },
+      "low": {
+        "public_rate": "0.5376",
+        "paid_rights_rate": "1",
+        "public_tickets": "184.9344",
+        "paid_rights_tickets": "15",
+        "tickets": "199.9344",
+        "revenue": "99967.20"
+      },
+      "mid": {
+        "public_rate": "0.7200",
+        "paid_rights_rate": "1",
+        "public_tickets": "247.6800",
+        "paid_rights_tickets": "15",
+        "tickets": "262.6800",
+        "revenue": "131340.00"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "380.00",
+      "full_revenue": "631180.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "1432.6424",
+        "paid_rights_tickets": "72",
+        "tickets": "1504.6424",
+        "revenue": "571764.11"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "872.0432",
+        "paid_rights_tickets": "72",
+        "tickets": "944.0432",
+        "revenue": "358736.42"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "1167.9150",
+        "paid_rights_tickets": "72",
+        "tickets": "1239.9150",
+        "revenue": "471167.70"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "380.00",
+      "full_revenue": "158080.00",
+      "high": {
+        "public_rate": "0.9016",
+        "paid_rights_rate": "1",
+        "public_tickets": "358.8368",
+        "paid_rights_tickets": "18",
+        "tickets": "376.8368",
+        "revenue": "143197.98"
+      },
+      "low": {
+        "public_rate": "0.5488",
+        "paid_rights_rate": "1",
+        "public_tickets": "218.4224",
+        "paid_rights_tickets": "18",
+        "tickets": "236.4224",
+        "revenue": "89840.51"
+      },
+      "mid": {
+        "public_rate": "0.7350",
+        "paid_rights_rate": "1",
+        "public_tickets": "292.5300",
+        "paid_rights_tickets": "18",
+        "tickets": "310.5300",
+        "revenue": "118001.40"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "265.00",
+      "full_revenue": "308725.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "1024.880",
+        "paid_rights_tickets": "51",
+        "tickets": "1075.880",
+        "revenue": "285108.20"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "623.840",
+        "paid_rights_tickets": "51",
+        "tickets": "674.840",
+        "revenue": "178832.60"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "835.500",
+        "paid_rights_tickets": "51",
+        "tickets": "886.500",
+        "revenue": "234922.50"
+      }
+    },
+    {
+      "session_id": "S12",
+      "stage": "PLAYOFF",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "265.00",
+      "full_revenue": "77380.00",
+      "high": {
+        "public_rate": "0.920",
+        "paid_rights_rate": "1",
+        "public_tickets": "257.600",
+        "paid_rights_tickets": "12",
+        "tickets": "269.600",
+        "revenue": "71444.00"
+      },
+      "low": {
+        "public_rate": "0.560",
+        "paid_rights_rate": "1",
+        "public_tickets": "156.800",
+        "paid_rights_tickets": "12",
+        "tickets": "168.800",
+        "revenue": "44732.00"
+      },
+      "mid": {
+        "public_rate": "0.750",
+        "paid_rights_rate": "1",
+        "public_tickets": "210.000",
+        "paid_rights_tickets": "12",
+        "tickets": "222.000",
+        "revenue": "58830.00"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "985.00",
+      "full_revenue": "545690.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "458.3440",
+        "paid_rights_tickets": "24",
+        "tickets": "482.3440",
+        "revenue": "475108.84"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "282.8080",
+        "paid_rights_tickets": "24",
+        "tickets": "306.8080",
+        "revenue": "302205.88"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "375.4520",
+        "paid_rights_tickets": "24",
+        "tickets": "399.4520",
+        "revenue": "393460.22"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "985.00",
+      "full_revenue": "137900.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "115.8832",
+        "paid_rights_tickets": "6",
+        "tickets": "121.8832",
+        "revenue": "120054.95"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "71.5024",
+        "paid_rights_tickets": "6",
+        "tickets": "77.5024",
+        "revenue": "76339.86"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "94.9256",
+        "paid_rights_tickets": "6",
+        "tickets": "100.9256",
+        "revenue": "99411.72"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "765.00",
+      "full_revenue": "802485.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "886.2508",
+        "paid_rights_tickets": "46",
+        "tickets": "932.2508",
+        "revenue": "713171.86"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "546.8356",
+        "paid_rights_tickets": "46",
+        "tickets": "592.8356",
+        "revenue": "453519.23"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "725.9714",
+        "paid_rights_tickets": "46",
+        "tickets": "771.9714",
+        "revenue": "590558.12"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "765.00",
+      "full_revenue": "201960.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "223.5508",
+        "paid_rights_tickets": "11",
+        "tickets": "234.5508",
+        "revenue": "179431.36"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "137.9356",
+        "paid_rights_tickets": "11",
+        "tickets": "148.9356",
+        "revenue": "113935.73"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "183.1214",
+        "paid_rights_tickets": "11",
+        "tickets": "194.1214",
+        "revenue": "148502.87"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "585.00",
+      "full_revenue": "834795.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "1231.7760",
+        "paid_rights_tickets": "62",
+        "tickets": "1293.7760",
+        "revenue": "756858.96"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "760.0320",
+        "paid_rights_tickets": "62",
+        "tickets": "822.0320",
+        "revenue": "480888.72"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "1009.0080",
+        "paid_rights_tickets": "62",
+        "tickets": "1071.0080",
+        "revenue": "626539.68"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "585.00",
+      "full_revenue": "210015.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "310.4256",
+        "paid_rights_tickets": "15",
+        "tickets": "325.4256",
+        "revenue": "190373.98"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "191.5392",
+        "paid_rights_tickets": "15",
+        "tickets": "206.5392",
+        "revenue": "120825.43"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "254.2848",
+        "paid_rights_tickets": "15",
+        "tickets": "269.2848",
+        "revenue": "157531.61"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "465.00",
+      "full_revenue": "772365.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "1463.7868",
+        "paid_rights_tickets": "72",
+        "tickets": "1535.7868",
+        "revenue": "714140.86"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "903.1876",
+        "paid_rights_tickets": "72",
+        "tickets": "975.1876",
+        "revenue": "453462.23"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "1199.0594",
+        "paid_rights_tickets": "72",
+        "tickets": "1271.0594",
+        "revenue": "591042.62"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "465.00",
+      "full_revenue": "193440.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "366.6376",
+        "paid_rights_tickets": "18",
+        "tickets": "384.6376",
+        "revenue": "178856.48"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "226.2232",
+        "paid_rights_tickets": "18",
+        "tickets": "244.2232",
+        "revenue": "113563.79"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "300.3308",
+        "paid_rights_tickets": "18",
+        "tickets": "318.3308",
+        "revenue": "148023.82"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "350.00",
+      "full_revenue": "407750.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "1047.160",
+        "paid_rights_tickets": "51",
+        "tickets": "1098.160",
+        "revenue": "384356.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "646.120",
+        "paid_rights_tickets": "51",
+        "tickets": "697.120",
+        "revenue": "243992.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "857.780",
+        "paid_rights_tickets": "51",
+        "tickets": "908.780",
+        "revenue": "318073.00"
+      }
+    },
+    {
+      "session_id": "S13",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "350.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.200",
+        "paid_rights_tickets": "12",
+        "tickets": "275.200",
+        "revenue": "96320.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "162.400",
+        "paid_rights_tickets": "12",
+        "tickets": "174.400",
+        "revenue": "61040.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "215.600",
+        "paid_rights_tickets": "12",
+        "tickets": "227.600",
+        "revenue": "79660.00"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "985.00",
+      "full_revenue": "545690.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "458.3440",
+        "paid_rights_tickets": "24",
+        "tickets": "482.3440",
+        "revenue": "475108.84"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "282.8080",
+        "paid_rights_tickets": "24",
+        "tickets": "306.8080",
+        "revenue": "302205.88"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "375.4520",
+        "paid_rights_tickets": "24",
+        "tickets": "399.4520",
+        "revenue": "393460.22"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "985.00",
+      "full_revenue": "137900.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "115.8832",
+        "paid_rights_tickets": "6",
+        "tickets": "121.8832",
+        "revenue": "120054.95"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "71.5024",
+        "paid_rights_tickets": "6",
+        "tickets": "77.5024",
+        "revenue": "76339.86"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "94.9256",
+        "paid_rights_tickets": "6",
+        "tickets": "100.9256",
+        "revenue": "99411.72"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "765.00",
+      "full_revenue": "802485.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "886.2508",
+        "paid_rights_tickets": "46",
+        "tickets": "932.2508",
+        "revenue": "713171.86"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "546.8356",
+        "paid_rights_tickets": "46",
+        "tickets": "592.8356",
+        "revenue": "453519.23"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "725.9714",
+        "paid_rights_tickets": "46",
+        "tickets": "771.9714",
+        "revenue": "590558.12"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "765.00",
+      "full_revenue": "201960.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "223.5508",
+        "paid_rights_tickets": "11",
+        "tickets": "234.5508",
+        "revenue": "179431.36"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "137.9356",
+        "paid_rights_tickets": "11",
+        "tickets": "148.9356",
+        "revenue": "113935.73"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "183.1214",
+        "paid_rights_tickets": "11",
+        "tickets": "194.1214",
+        "revenue": "148502.87"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "585.00",
+      "full_revenue": "834795.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "1231.7760",
+        "paid_rights_tickets": "62",
+        "tickets": "1293.7760",
+        "revenue": "756858.96"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "760.0320",
+        "paid_rights_tickets": "62",
+        "tickets": "822.0320",
+        "revenue": "480888.72"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "1009.0080",
+        "paid_rights_tickets": "62",
+        "tickets": "1071.0080",
+        "revenue": "626539.68"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "585.00",
+      "full_revenue": "210015.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "310.4256",
+        "paid_rights_tickets": "15",
+        "tickets": "325.4256",
+        "revenue": "190373.98"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "191.5392",
+        "paid_rights_tickets": "15",
+        "tickets": "206.5392",
+        "revenue": "120825.43"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "254.2848",
+        "paid_rights_tickets": "15",
+        "tickets": "269.2848",
+        "revenue": "157531.61"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "465.00",
+      "full_revenue": "772365.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "1463.7868",
+        "paid_rights_tickets": "72",
+        "tickets": "1535.7868",
+        "revenue": "714140.86"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "903.1876",
+        "paid_rights_tickets": "72",
+        "tickets": "975.1876",
+        "revenue": "453462.23"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "1199.0594",
+        "paid_rights_tickets": "72",
+        "tickets": "1271.0594",
+        "revenue": "591042.62"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "465.00",
+      "full_revenue": "193440.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "366.6376",
+        "paid_rights_tickets": "18",
+        "tickets": "384.6376",
+        "revenue": "178856.48"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "226.2232",
+        "paid_rights_tickets": "18",
+        "tickets": "244.2232",
+        "revenue": "113563.79"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "300.3308",
+        "paid_rights_tickets": "18",
+        "tickets": "318.3308",
+        "revenue": "148023.82"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "350.00",
+      "full_revenue": "407750.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "1047.160",
+        "paid_rights_tickets": "51",
+        "tickets": "1098.160",
+        "revenue": "384356.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "646.120",
+        "paid_rights_tickets": "51",
+        "tickets": "697.120",
+        "revenue": "243992.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "857.780",
+        "paid_rights_tickets": "51",
+        "tickets": "908.780",
+        "revenue": "318073.00"
+      }
+    },
+    {
+      "session_id": "S14",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "350.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.200",
+        "paid_rights_tickets": "12",
+        "tickets": "275.200",
+        "revenue": "96320.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "162.400",
+        "paid_rights_tickets": "12",
+        "tickets": "174.400",
+        "revenue": "61040.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "215.600",
+        "paid_rights_tickets": "12",
+        "tickets": "227.600",
+        "revenue": "79660.00"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "985.00",
+      "full_revenue": "545690.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "458.3440",
+        "paid_rights_tickets": "24",
+        "tickets": "482.3440",
+        "revenue": "475108.84"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "282.8080",
+        "paid_rights_tickets": "24",
+        "tickets": "306.8080",
+        "revenue": "302205.88"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "375.4520",
+        "paid_rights_tickets": "24",
+        "tickets": "399.4520",
+        "revenue": "393460.22"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "985.00",
+      "full_revenue": "137900.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "115.8832",
+        "paid_rights_tickets": "6",
+        "tickets": "121.8832",
+        "revenue": "120054.95"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "71.5024",
+        "paid_rights_tickets": "6",
+        "tickets": "77.5024",
+        "revenue": "76339.86"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "94.9256",
+        "paid_rights_tickets": "6",
+        "tickets": "100.9256",
+        "revenue": "99411.72"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "765.00",
+      "full_revenue": "802485.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "886.2508",
+        "paid_rights_tickets": "46",
+        "tickets": "932.2508",
+        "revenue": "713171.86"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "546.8356",
+        "paid_rights_tickets": "46",
+        "tickets": "592.8356",
+        "revenue": "453519.23"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "725.9714",
+        "paid_rights_tickets": "46",
+        "tickets": "771.9714",
+        "revenue": "590558.12"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "765.00",
+      "full_revenue": "201960.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "223.5508",
+        "paid_rights_tickets": "11",
+        "tickets": "234.5508",
+        "revenue": "179431.36"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "137.9356",
+        "paid_rights_tickets": "11",
+        "tickets": "148.9356",
+        "revenue": "113935.73"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "183.1214",
+        "paid_rights_tickets": "11",
+        "tickets": "194.1214",
+        "revenue": "148502.87"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "585.00",
+      "full_revenue": "834795.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "1231.7760",
+        "paid_rights_tickets": "62",
+        "tickets": "1293.7760",
+        "revenue": "756858.96"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "760.0320",
+        "paid_rights_tickets": "62",
+        "tickets": "822.0320",
+        "revenue": "480888.72"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "1009.0080",
+        "paid_rights_tickets": "62",
+        "tickets": "1071.0080",
+        "revenue": "626539.68"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "585.00",
+      "full_revenue": "210015.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "310.4256",
+        "paid_rights_tickets": "15",
+        "tickets": "325.4256",
+        "revenue": "190373.98"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "191.5392",
+        "paid_rights_tickets": "15",
+        "tickets": "206.5392",
+        "revenue": "120825.43"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "254.2848",
+        "paid_rights_tickets": "15",
+        "tickets": "269.2848",
+        "revenue": "157531.61"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "465.00",
+      "full_revenue": "772365.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "1463.7868",
+        "paid_rights_tickets": "72",
+        "tickets": "1535.7868",
+        "revenue": "714140.86"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "903.1876",
+        "paid_rights_tickets": "72",
+        "tickets": "975.1876",
+        "revenue": "453462.23"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "1199.0594",
+        "paid_rights_tickets": "72",
+        "tickets": "1271.0594",
+        "revenue": "591042.62"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "465.00",
+      "full_revenue": "193440.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "366.6376",
+        "paid_rights_tickets": "18",
+        "tickets": "384.6376",
+        "revenue": "178856.48"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "226.2232",
+        "paid_rights_tickets": "18",
+        "tickets": "244.2232",
+        "revenue": "113563.79"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "300.3308",
+        "paid_rights_tickets": "18",
+        "tickets": "318.3308",
+        "revenue": "148023.82"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "350.00",
+      "full_revenue": "407750.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "1047.160",
+        "paid_rights_tickets": "51",
+        "tickets": "1098.160",
+        "revenue": "384356.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "646.120",
+        "paid_rights_tickets": "51",
+        "tickets": "697.120",
+        "revenue": "243992.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "857.780",
+        "paid_rights_tickets": "51",
+        "tickets": "908.780",
+        "revenue": "318073.00"
+      }
+    },
+    {
+      "session_id": "S15",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "350.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.200",
+        "paid_rights_tickets": "12",
+        "tickets": "275.200",
+        "revenue": "96320.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "162.400",
+        "paid_rights_tickets": "12",
+        "tickets": "174.400",
+        "revenue": "61040.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "215.600",
+        "paid_rights_tickets": "12",
+        "tickets": "227.600",
+        "revenue": "79660.00"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VIP",
+      "physical_capacity": 608,
+      "sellable_capacity": 554,
+      "paid_rights": 24,
+      "public_capacity": 530,
+      "price": "985.00",
+      "full_revenue": "545690.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "458.3440",
+        "paid_rights_tickets": "24",
+        "tickets": "482.3440",
+        "revenue": "475108.84"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "282.8080",
+        "paid_rights_tickets": "24",
+        "tickets": "306.8080",
+        "revenue": "302205.88"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "375.4520",
+        "paid_rights_tickets": "24",
+        "tickets": "399.4520",
+        "revenue": "393460.22"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VIP",
+      "physical_capacity": 152,
+      "sellable_capacity": 140,
+      "paid_rights": 6,
+      "public_capacity": 134,
+      "price": "985.00",
+      "full_revenue": "137900.00",
+      "high": {
+        "public_rate": "0.8648",
+        "paid_rights_rate": "1",
+        "public_tickets": "115.8832",
+        "paid_rights_tickets": "6",
+        "tickets": "121.8832",
+        "revenue": "120054.95"
+      },
+      "low": {
+        "public_rate": "0.5336",
+        "paid_rights_rate": "1",
+        "public_tickets": "71.5024",
+        "paid_rights_tickets": "6",
+        "tickets": "77.5024",
+        "revenue": "76339.86"
+      },
+      "mid": {
+        "public_rate": "0.7084",
+        "paid_rights_rate": "1",
+        "public_tickets": "94.9256",
+        "paid_rights_tickets": "6",
+        "tickets": "100.9256",
+        "revenue": "99411.72"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "GOLD",
+      "physical_capacity": 1152,
+      "sellable_capacity": 1049,
+      "paid_rights": 46,
+      "public_capacity": 1003,
+      "price": "765.00",
+      "full_revenue": "802485.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "886.2508",
+        "paid_rights_tickets": "46",
+        "tickets": "932.2508",
+        "revenue": "713171.86"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "546.8356",
+        "paid_rights_tickets": "46",
+        "tickets": "592.8356",
+        "revenue": "453519.23"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "725.9714",
+        "paid_rights_tickets": "46",
+        "tickets": "771.9714",
+        "revenue": "590558.12"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "GOLD",
+      "physical_capacity": 288,
+      "sellable_capacity": 264,
+      "paid_rights": 11,
+      "public_capacity": 253,
+      "price": "765.00",
+      "full_revenue": "201960.00",
+      "high": {
+        "public_rate": "0.8836",
+        "paid_rights_rate": "1",
+        "public_tickets": "223.5508",
+        "paid_rights_tickets": "11",
+        "tickets": "234.5508",
+        "revenue": "179431.36"
+      },
+      "low": {
+        "public_rate": "0.5452",
+        "paid_rights_rate": "1",
+        "public_tickets": "137.9356",
+        "paid_rights_tickets": "11",
+        "tickets": "148.9356",
+        "revenue": "113935.73"
+      },
+      "mid": {
+        "public_rate": "0.7238",
+        "paid_rights_rate": "1",
+        "public_tickets": "183.1214",
+        "paid_rights_tickets": "11",
+        "tickets": "194.1214",
+        "revenue": "148502.87"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "SILVER",
+      "physical_capacity": 1568,
+      "sellable_capacity": 1427,
+      "paid_rights": 62,
+      "public_capacity": 1365,
+      "price": "585.00",
+      "full_revenue": "834795.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "1231.7760",
+        "paid_rights_tickets": "62",
+        "tickets": "1293.7760",
+        "revenue": "756858.96"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "760.0320",
+        "paid_rights_tickets": "62",
+        "tickets": "822.0320",
+        "revenue": "480888.72"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "1009.0080",
+        "paid_rights_tickets": "62",
+        "tickets": "1071.0080",
+        "revenue": "626539.68"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "SILVER",
+      "physical_capacity": 392,
+      "sellable_capacity": 359,
+      "paid_rights": 15,
+      "public_capacity": 344,
+      "price": "585.00",
+      "full_revenue": "210015.00",
+      "high": {
+        "public_rate": "0.9024",
+        "paid_rights_rate": "1",
+        "public_tickets": "310.4256",
+        "paid_rights_tickets": "15",
+        "tickets": "325.4256",
+        "revenue": "190373.98"
+      },
+      "low": {
+        "public_rate": "0.5568",
+        "paid_rights_rate": "1",
+        "public_tickets": "191.5392",
+        "paid_rights_tickets": "15",
+        "tickets": "206.5392",
+        "revenue": "120825.43"
+      },
+      "mid": {
+        "public_rate": "0.7392",
+        "paid_rights_rate": "1",
+        "public_tickets": "254.2848",
+        "paid_rights_tickets": "15",
+        "tickets": "269.2848",
+        "revenue": "157531.61"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "BRONZE",
+      "physical_capacity": 1824,
+      "sellable_capacity": 1661,
+      "paid_rights": 72,
+      "public_capacity": 1589,
+      "price": "465.00",
+      "full_revenue": "772365.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "1463.7868",
+        "paid_rights_tickets": "72",
+        "tickets": "1535.7868",
+        "revenue": "714140.86"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "903.1876",
+        "paid_rights_tickets": "72",
+        "tickets": "975.1876",
+        "revenue": "453462.23"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "1199.0594",
+        "paid_rights_tickets": "72",
+        "tickets": "1271.0594",
+        "revenue": "591042.62"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "BRONZE",
+      "physical_capacity": 456,
+      "sellable_capacity": 416,
+      "paid_rights": 18,
+      "public_capacity": 398,
+      "price": "465.00",
+      "full_revenue": "193440.00",
+      "high": {
+        "public_rate": "0.9212",
+        "paid_rights_rate": "1",
+        "public_tickets": "366.6376",
+        "paid_rights_tickets": "18",
+        "tickets": "384.6376",
+        "revenue": "178856.48"
+      },
+      "low": {
+        "public_rate": "0.5684",
+        "paid_rights_rate": "1",
+        "public_tickets": "226.2232",
+        "paid_rights_tickets": "18",
+        "tickets": "244.2232",
+        "revenue": "113563.79"
+      },
+      "mid": {
+        "public_rate": "0.7546",
+        "paid_rights_rate": "1",
+        "public_tickets": "300.3308",
+        "paid_rights_tickets": "18",
+        "tickets": "318.3308",
+        "revenue": "148023.82"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "MAIN",
+      "tier": "VALUE",
+      "physical_capacity": 1280,
+      "sellable_capacity": 1165,
+      "paid_rights": 51,
+      "public_capacity": 1114,
+      "price": "350.00",
+      "full_revenue": "407750.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "1047.160",
+        "paid_rights_tickets": "51",
+        "tickets": "1098.160",
+        "revenue": "384356.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "646.120",
+        "paid_rights_tickets": "51",
+        "tickets": "697.120",
+        "revenue": "243992.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "857.780",
+        "paid_rights_tickets": "51",
+        "tickets": "908.780",
+        "revenue": "318073.00"
+      }
+    },
+    {
+      "session_id": "S16",
+      "stage": "FINALS",
+      "zone_id": "SIDE",
+      "tier": "VALUE",
+      "physical_capacity": 320,
+      "sellable_capacity": 292,
+      "paid_rights": 12,
+      "public_capacity": 280,
+      "price": "350.00",
+      "full_revenue": "102200.00",
+      "high": {
+        "public_rate": "0.940",
+        "paid_rights_rate": "1",
+        "public_tickets": "263.200",
+        "paid_rights_tickets": "12",
+        "tickets": "275.200",
+        "revenue": "96320.00"
+      },
+      "low": {
+        "public_rate": "0.580",
+        "paid_rights_rate": "1",
+        "public_tickets": "162.400",
+        "paid_rights_tickets": "12",
+        "tickets": "174.400",
+        "revenue": "61040.00"
+      },
+      "mid": {
+        "public_rate": "0.770",
+        "paid_rights_rate": "1",
+        "public_tickets": "215.600",
+        "paid_rights_tickets": "12",
+        "tickets": "227.600",
+        "revenue": "79660.00"
+      }
+    }
+  ],
+  "sensitivity": {
+    "price_plus_1_percent": {
+      "mid_revenue": "38330967.32",
+      "delta": "379514.56",
+      "assumption": "需求不变；不是价格弹性预测"
+    },
+    "public_sellthrough_plus_1_percentage_point": {
+      "mid_revenue": "38452688.76",
+      "delta": "501236.00",
+      "assumption": "有效公开池售罄率+0.01，上限1；付费权益率不变"
+    }
+  },
+  "products": [
+    {
+      "product_id": "SINGLE-DEMO",
+      "product_type": "SINGLE",
+      "ticket_quantity": 1,
+      "included_sessions": [
+        {
+          "session_id": "S01",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        }
+      ],
+      "ticket_face_value": "730.00",
+      "price": "730.00",
+      "non_ticket_or_discount": "0.00"
+    },
+    {
+      "product_id": "PASS-DEMO",
+      "product_type": "PASS",
+      "ticket_quantity": 16,
+      "included_sessions": [
+        {
+          "session_id": "S01",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S02",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S03",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S04",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S05",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S06",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S07",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S08",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S09",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S10",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S11",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S12",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S13",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S14",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S15",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        },
+        {
+          "session_id": "S16",
+          "ticket_quantity": 1,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        }
+      ],
+      "ticket_face_value": "13720.00",
+      "price": "13720.00",
+      "non_ticket_or_discount": "0.00"
+    },
+    {
+      "product_id": "TRAVEL-TWIN-DEMO",
+      "product_type": "TRAVEL",
+      "ticket_quantity": 2,
+      "included_sessions": [
+        {
+          "session_id": "S15",
+          "ticket_quantity": 2,
+          "tier": "VIP",
+          "zone_id": "MAIN"
+        }
+      ],
+      "ticket_face_value": "1970.00",
+      "price": "2828.00",
+      "non_ticket_or_discount": "858.00"
+    }
+  ],
+  "notes": [
+    "满售/情景收入是门票面值容量/需求模型，不是实际销售、结算或利润。",
+    "付费权益保留在可售总池；情景中按独立履约率计收入，公开池扣除同一预留，避免双计或漏计。",
+    "q=场次售罄率×票档系数；付费权益率独立设置。预期票张可为小数，不是已售门票。",
+    "通票/旅行包提供占票映射和价格拆解；不把套餐营业额叠加到已含这些座席的容量收入。",
+    "每个座区场次收入四舍五入到2位，再汇总；平均票价使用同一汇总收入/预期票张。",
+    "可售率分母是跨场次座席机会，不是场馆独立座位数；零分母输出null。"
+  ]
+}

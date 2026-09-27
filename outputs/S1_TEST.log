@@ -1,0 +1,16 @@
+test_demo_shape (tests.test_s0.ModelTests.test_demo_shape) ... ok
+test_dependency_cycle (tests.test_s0.ModelTests.test_dependency_cycle) ... ok
+test_derived_and_paid_rights (tests.test_s0.ModelTests.test_derived_and_paid_rights) ... ok
+test_invalid_key_type_and_missing (tests.test_s0.ModelTests.test_invalid_key_type_and_missing) ... ok
+test_product_mapping (tests.test_s0.ModelTests.test_product_mapping) ... ok
+test_sqlite_roundtrip (tests.test_s0.ModelTests.test_sqlite_roundtrip) ... ok
+test_one_price_updates_all (tests.test_s1.RevenueTests.test_one_price_updates_all) ... ok
+test_one_seat_updates_all (tests.test_s1.RevenueTests.test_one_seat_updates_all) ... ok
+test_paid_rights_not_lost (tests.test_s1.RevenueTests.test_paid_rights_not_lost) ... ok
+test_recompute_and_rollups (tests.test_s1.RevenueTests.test_recompute_and_rollups) ... ok
+test_scenario_order (tests.test_s1.RevenueTests.test_scenario_order) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.091s
+
+OK
