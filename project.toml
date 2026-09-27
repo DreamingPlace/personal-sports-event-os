@@ -1,0 +1,28 @@
+[project]
+id = "GRM-2027-FICTION"
+name = "2027 Global Racket Masters"
+timezone = "UTC"
+version = "demo-a-v11"
+synthetic = true
+status = "APPROVED"
+approval_ref = "SYNTHETIC-APPROVAL-A"
+
+[modules]
+"core.schedule" = true
+"core.venue" = true
+"demand.multiplicative" = true
+"finance.revenue" = true
+"product.pass" = true
+"product.travel" = true
+"project.decisions" = true
+"project.tasks" = true
+"quality.declarations" = true
+"ticketing.identity" = true
+"ticketing.inventory" = true
+"ticketing.launch" = true
+"ticketing.pricing" = true
+"ticketing.refund" = true
+"ticketing.rights" = true
+"ticketing.rights_return" = true
+"ticketing.seating" = true
+"ticketing.transfer" = true

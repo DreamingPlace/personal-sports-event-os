@@ -1,0 +1,93 @@
+test_demo_shape (test_s0.ModelTests.test_demo_shape) ... ok
+test_dependency_cycle (test_s0.ModelTests.test_dependency_cycle) ... ok
+test_derived_and_paid_rights (test_s0.ModelTests.test_derived_and_paid_rights) ... ok
+test_invalid_key_type_and_missing (test_s0.ModelTests.test_invalid_key_type_and_missing) ... ok
+test_product_mapping (test_s0.ModelTests.test_product_mapping) ... ok
+test_sqlite_roundtrip (test_s0.ModelTests.test_sqlite_roundtrip) ... ok
+test_one_price_updates_all (test_s1.RevenueTests.test_one_price_updates_all) ... ok
+test_one_seat_updates_all (test_s1.RevenueTests.test_one_seat_updates_all) ... ok
+test_paid_rights_not_lost (test_s1.RevenueTests.test_paid_rights_not_lost) ... ok
+test_recompute_and_rollups (test_s1.RevenueTests.test_recompute_and_rollups) ... ok
+test_scenario_order (test_s1.RevenueTests.test_scenario_order) ... ok
+test_draft_can_preview_not_release (test_s2.GateSmokeTests.test_draft_can_preview_not_release) ... ok
+test_findings_have_contract (test_s2.GateSmokeTests.test_findings_have_contract) ... ok
+test_malformed_rule_blocks_not_crashes (test_s2.GateSmokeTests.test_malformed_rule_blocks_not_crashes) ... ok
+test_valid_demo_passes_release (test_s2.GateSmokeTests.test_valid_demo_passes_release) ... ok
+test_xlsx_readonly_arithmetic_and_contract (test_s2.GateSmokeTests.test_xlsx_readonly_arithmetic_and_contract) ... ok
+test_approved_with_draft_rule (test_s3.EdgeTests.test_approved_with_draft_rule) ... ok
+test_deduction_duplicate (test_s3.EdgeTests.test_deduction_duplicate) ... ok
+test_duplicate_json_keys_rejected (test_s3.EdgeTests.test_duplicate_json_keys_rejected) ... ok
+test_inconsistent_versions (test_s3.EdgeTests.test_inconsistent_versions) ... ok
+test_mismatched_inventory_times (test_s3.EdgeTests.test_mismatched_inventory_times) ... ok
+test_missing_cell_reference (test_s3.EdgeTests.test_missing_cell_reference) ... ok
+test_negative_and_over_capacity (test_s3.EdgeTests.test_negative_and_over_capacity) ... ok
+test_no_silent_nan_boolean_or_fractional_count (test_s3.EdgeTests.test_no_silent_nan_boolean_or_fractional_count) ... ok
+test_outputs_different_snapshot (test_s3.EdgeTests.test_outputs_different_snapshot) ... ok
+test_paid_rights_sold_not_lost (test_s3.EdgeTests.test_paid_rights_sold_not_lost) ... ok
+test_percentage_120 (test_s3.EdgeTests.test_percentage_120) ... ok
+test_refund_gap (test_s3.EdgeTests.test_refund_gap) ... ok
+test_required_rate_no_silent_default (test_s3.EdgeTests.test_required_rate_no_silent_default) ... ok
+test_same_name_different_content (test_s3.EdgeTests.test_same_name_different_content) ... ok
+test_scenarios_order (test_s3.EdgeTests.test_scenarios_order) ... ok
+test_stale_hardcoded_summary (test_s3.EdgeTests.test_stale_hardcoded_summary) ... ok
+test_time_order_and_preparation (test_s3.EdgeTests.test_time_order_and_preparation) ... ok
+test_unit_warning_and_old_year_noncritical (test_s3.EdgeTests.test_unit_warning_and_old_year_noncritical) ... ok
+test_errors_and_blank (test_s3.ExcelEdgeTests.test_errors_and_blank) ... ok
+test_hardcoded_contract_mismatch (test_s3.ExcelEdgeTests.test_hardcoded_contract_mismatch) ... ok
+test_percent_and_parentheses (test_s3.ExcelEdgeTests.test_percent_and_parentheses) ... ok
+test_TEST_001 (test_s3.HistoricalRegressionTests.test_TEST_001)
+合成单元格公式 =A1+#REF! → BLOCK ... ok
+test_TEST_002 (test_s3.HistoricalRegressionTests.test_TEST_002)
+2027赛事关键标题含2026年 → BLOCK ... ok
+test_TEST_003 (test_s3.HistoricalRegressionTests.test_TEST_003)
+分项100+200+300，声明总计650 → BLOCK ... ok
+test_TEST_004 (test_s3.HistoricalRegressionTests.test_TEST_004)
+测试专用：VIP 16×1080=17280；通票声明等于总和却写19980 → BLOCK ... ok
+test_TEST_005 (test_s3.HistoricalRegressionTests.test_TEST_005)
+库存原已闭合，再新增售出1张，超出可售总池 → BLOCK ... ok
+test_TEST_006 (test_s3.HistoricalRegressionTests.test_TEST_006)
+双人共房产品声明1间，成本计费2间 → BLOCK ... ok
+test_TEST_007 (test_s3.HistoricalRegressionTests.test_TEST_007)
+声称成本加10%，实际按成本/0.9报价 → BLOCK ... ok
+test_TEST_008 (test_s3.HistoricalRegressionTests.test_TEST_008)
+第二退款窗口提前一天开始，与首窗重叠 → BLOCK ... ok
+test_TEST_009 (test_s3.HistoricalRegressionTests.test_TEST_009)
+同一metric_id分别标为订单和票张 → WARNING ... ok
+test_TEST_010 (test_s3.HistoricalRegressionTests.test_TEST_010)
+PUBLISHED price_version缺少approval_ref → BLOCK ... ok
+test_identical (test_s4.DiffTests.test_identical) ... ok
+test_numeric_confirmed_and_unknown (test_s4.DiffTests.test_numeric_confirmed_and_unknown) ... ok
+test_reordering_not_change (test_s4.DiffTests.test_reordering_not_change) ... ok
+test_seating_derived_and_product_add_delete (test_s4.DiffTests.test_seating_derived_and_product_add_delete) ... ok
+test_text_replacement_no_semantic_claim (test_s4.DiffTests.test_text_replacement_no_semantic_claim) ... ok
+test_unconfirmed_never_promoted (test_s4.DiffTests.test_unconfirmed_never_promoted) ... ok
+test_block_writes_nothing (test_s5.SnapshotTests.test_block_writes_nothing) ... ok
+test_immutable_and_repeatable (test_s5.SnapshotTests.test_immutable_and_repeatable) ... ok
+test_metadata_tamper (test_s5.SnapshotTests.test_metadata_tamper) ... ok
+test_release_single_snapshot_and_idempotent (test_s5.SnapshotTests.test_release_single_snapshot_and_idempotent) ... ok
+test_tamper_blocks_export (test_s5.SnapshotTests.test_tamper_blocks_export) ... ok
+test_warning_requires_ack (test_s5.SnapshotTests.test_warning_requires_ack) ... ok
+test_block_cannot_publish (test_s6.CLITests.test_block_cannot_publish) ... ok
+test_escape_and_usb_prohibited (test_s6.CLITests.test_escape_and_usb_prohibited) ... ok
+test_full_cli_workflow (test_s6.CLITests.test_full_cli_workflow) ... ok
+test_json_edit_not_silently_authoritative (test_s6.CLITests.test_json_edit_not_silently_authoritative) ... ok
+test_warning_not_blocked_validate_but_requires_snapshot_ack (test_s6.CLITests.test_warning_not_blocked_validate_but_requires_snapshot_ack) ... ok
+test_derived_product_price_updates (test_s7.FinalAcceptanceTests.test_derived_product_price_updates) ... ok
+test_missing_or_competing_rules_block_release (test_s7.FinalAcceptanceTests.test_missing_or_competing_rules_block_release) ... ok
+test_nonnumeric_summary_pointer_blocks (test_s7.FinalAcceptanceTests.test_nonnumeric_summary_pointer_blocks) ... ok
+test_schema_and_demo_no_actual_data (test_s7.FinalAcceptanceTests.test_schema_and_demo_no_actual_data) ... ok
+test_unrepresentable_money_and_boolean_const_fail_closed (test_s7.FinalAcceptanceTests.test_unrepresentable_money_and_boolean_const_fail_closed) ... ok
+test_version_b_all_categories_and_passes (test_s7.FinalAcceptanceTests.test_version_b_all_categories_and_passes) ... ok
+test_version_labels_cannot_be_reused_for_different_content (test_s7.FinalAcceptanceTests.test_version_labels_cannot_be_reused_for_different_content) ... ok
+test_zero_capacity_and_zero_demand (test_s7.FinalAcceptanceTests.test_zero_capacity_and_zero_demand) ... ok
+test_expired_rules (test_v11_fixes.BusinessFixes.test_expired_rules) ... ok
+test_price_class (test_v11_fixes.BusinessFixes.test_price_class) ... ok
+test_product_order (test_v11_fixes.BusinessFixes.test_product_order) ... ok
+test_rights_strategies (test_v11_fixes.BusinessFixes.test_rights_strategies) ... ok
+test_split_zone_invariant (test_v11_fixes.BusinessFixes.test_split_zone_invariant) ... ok
+test_travel_null (test_v11_fixes.BusinessFixes.test_travel_null) ... ok
+
+----------------------------------------------------------------------
+Ran 78 tests in 2.147s
+
+OK

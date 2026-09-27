@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product_type": {
+            "enum": [
+              "SINGLE",
+              "PASS",
+              "TRAVEL"
+            ]
+          },
+          "included_sessions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "zone_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tier": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ticket_quantity": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000000000000
+                }
+              },
+              "required": [
+                "session_id",
+                "zone_id",
+                "tier",
+                "ticket_quantity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "price": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1000000000000
+          },
+          "price_claim": {
+            "enum": [
+              "INDEPENDENT",
+              "SUM_FACE_PRICES"
+            ]
+          }
+        },
+        "required": [
+          "product_id",
+          "product_type",
+          "included_sessions",
+          "price",
+          "price_claim"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

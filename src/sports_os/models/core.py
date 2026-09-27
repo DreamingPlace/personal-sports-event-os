@@ -77,6 +77,9 @@ def occupancy(product, units=1):
         raise ModelError("产品份数必须为非负整数")
     return {seating_key(c):c["ticket_quantity"]*units for c in product["included_sessions"]}
 
+def price_key(row):
+    return (row['session_id'], row.get('price_class_id', row['tier']))
+
 def assert_model(data):
     _shape(data,SCHEMA,"$")
     try:
@@ -85,7 +88,7 @@ def assert_model(data):
         raise ModelError("未知赛事时区") from e
     keys = {
         "sessions":lambda r:r["session_id"], "seating":seating_key,
-        "prices":lambda r:(r["session_id"],r["tier"]),
+        "prices":price_key,
         "inventory":lambda r:r["inventory_id"], "products":lambda r:r["product_id"],
         "rules":lambda r:r["rule_id"], "tasks":lambda r:r["task_id"],
         "decisions":lambda r:r["decision_id"],
@@ -99,13 +102,13 @@ def assert_model(data):
             raise ModelError(f"{group}: 不能为空")
     sessions = {r["session_id"] for r in data["sessions"]}
     seats = {seating_key(r) for r in data["seating"]}
-    prices = {(r["session_id"],r["tier"]) for r in data["prices"]}
+    prices = {price_key(r) for r in data["prices"]}
     for s in data["sessions"]:
         if s["event_id"] != data["event"]["event_id"]:
             raise ModelError("session.event_id 外键不存在")
         moment(s["start_time"]); moment(s["end_time"])
     for s in data["seating"]:
-        if s["session_id"] not in sessions or (s["session_id"],s["tier"]) not in prices:
+        if s["session_id"] not in sessions or price_key(s) not in prices:
             raise ModelError("seating: 场次或票价外键不存在")
     for p in data["prices"]:
         if p["session_id"] not in sessions:

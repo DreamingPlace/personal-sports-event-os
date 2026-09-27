@@ -6,3 +6,7 @@ __pycache__/
 data/event.sqlite-journal
 data/event.sqlite-wal
 data/event.sqlite-shm
+
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

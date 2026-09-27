@@ -1,0 +1,220 @@
+{
+  "content_hash": "14ff8e97ac095ec8056ca4ddc6fa964eccb6286138103079ff85617f7c103f98",
+  "created_at": "2026-09-27T07:37:30.255336+00:00",
+  "format_version": "1.1",
+  "module_index": {
+    "core.schedule": {
+      "content_hash": "58ba8d36b01b7580840c16ad24c86be5875c819556c9979d55c876d7f73a053e",
+      "module_version": "1.1.0",
+      "schema_version": "1"
+    },
+    "core.venue": {
+      "content_hash": "ac8e414e991386e7e22944c835e6614fdb8e30d7a8b82e537c7def73a8088a7f",
+      "module_version": "1.1.0",
+      "schema_version": "1"
+    },
+    "project.tasks": {
+      "content_hash": "21ea50a2c0bb317f461cc8dbce076c82e0efa960471c100ef4c97c27e3623917",
+      "module_version": "1.1.0",
+      "schema_version": "1"
+    }
+  },
+  "project": {
+    "evidence": [
+      {
+        "confirmed": false,
+        "kind": "migration",
+        "source_ref": "synthetic-v1.0:5d0c88136b2d6d1cf3f018bb79578dd84dab64915c5010d30e0ddb3d1f090c44"
+      }
+    ],
+    "format_version": "1.1",
+    "manifest": {
+      "modules": {
+        "core.schedule": true,
+        "core.venue": true,
+        "project.tasks": true
+      },
+      "project": {
+        "approval_ref": "SYNTHETIC-APPROVAL-A",
+        "id": "GRM-2027-FICTION",
+        "name": "2027 Global Racket Masters",
+        "status": "APPROVED",
+        "synthetic": true,
+        "timezone": "UTC",
+        "version": "demo-a-v11"
+      }
+    },
+    "modules": {
+      "core.schedule": {
+        "approval_ref": "SYNTHETIC-APPROVAL-A",
+        "data_version": "demo-a",
+        "module_version": "1.1.0",
+        "payload": {
+          "rows": [
+            {
+              "end_time": "2027-07-10T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S01",
+              "stage": "QUALIFYING",
+              "start_time": "2027-07-10T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-10T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S02",
+              "stage": "QUALIFYING",
+              "start_time": "2027-07-10T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-11T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S03",
+              "stage": "QUALIFYING",
+              "start_time": "2027-07-11T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-11T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S04",
+              "stage": "QUALIFYING",
+              "start_time": "2027-07-11T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-12T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S05",
+              "stage": "GROUP",
+              "start_time": "2027-07-12T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-12T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S06",
+              "stage": "GROUP",
+              "start_time": "2027-07-12T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-13T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S07",
+              "stage": "GROUP",
+              "start_time": "2027-07-13T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-13T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S08",
+              "stage": "GROUP",
+              "start_time": "2027-07-13T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-14T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S09",
+              "stage": "PLAYOFF",
+              "start_time": "2027-07-14T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-14T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S10",
+              "stage": "PLAYOFF",
+              "start_time": "2027-07-14T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-15T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S11",
+              "stage": "PLAYOFF",
+              "start_time": "2027-07-15T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-15T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S12",
+              "stage": "PLAYOFF",
+              "start_time": "2027-07-15T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-16T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S13",
+              "stage": "FINALS",
+              "start_time": "2027-07-16T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-16T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S14",
+              "stage": "FINALS",
+              "start_time": "2027-07-16T17:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-17T13:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S15",
+              "stage": "FINALS",
+              "start_time": "2027-07-17T10:00:00+00:00"
+            },
+            {
+              "end_time": "2027-07-17T20:00:00+00:00",
+              "event_id": "GRM-2027-FICTION",
+              "session_id": "S16",
+              "stage": "FINALS",
+              "start_time": "2027-07-17T17:00:00+00:00"
+            }
+          ],
+          "sales_end": "2027-07-17T20:00:00+00:00",
+          "sales_start": "2027-05-01T00:00:00+00:00"
+        },
+        "schema_version": "1",
+        "status": "APPROVED"
+      },
+      "core.venue": {
+        "approval_ref": "SYNTHETIC-APPROVAL-A",
+        "data_version": "demo-a",
+        "module_version": "1.1.0",
+        "payload": {
+          "rows": [
+            {
+              "name": "Fictional Aurora Arena",
+              "timezone": "UTC",
+              "venue_id": "SYNTHETIC-VENUE"
+            }
+          ]
+        },
+        "schema_version": "1",
+        "status": "APPROVED"
+      },
+      "project.tasks": {
+        "approval_ref": "SYNTHETIC-APPROVAL-A",
+        "data_version": "demo-a",
+        "module_version": "1.1.0",
+        "payload": {
+          "rows": [
+            {
+              "acceptance": "Plan reference checked",
+              "depends_on": [],
+              "due_at": "2027-04-20T00:00:00+00:00",
+              "owner_role": "VENUE_REVIEWER",
+              "phase": "PRE_EVENT",
+              "proof": "SYNTHETIC-PROOF-1",
+              "status": "DONE",
+              "task_id": "T1",
+              "title": "Review synthetic seating plan"
+            }
+          ]
+        },
+        "schema_version": "1",
+        "status": "APPROVED"
+      }
+    }
+  },
+  "quality_gate": {
+    "findings": [],
+    "status": "PASS"
+  },
+  "record_hash": "6526e82a20cfc0f3aac26d9907b4a7627c0d40cac449b42d2fb63853c5ec562d",
+  "snapshot_id": "SN11-14ff8e97ac095ec8056ca4dd",
+  "warnings_acknowledged": false
+}

@@ -1,176 +1,344 @@
-# DATA_DICTIONARY
+# DATA_DICTIONARY v1.1
 
-所有输入仅允许合成数据。schema_version固定1.0，synthetic必须为布尔true；未知字段拒绝，数值不接受字符串、布尔值、NaN或Infinity。源字段使用JSON数字，运算使用Decimal，输出金额以十进制字符串保留精度；不是把文本当数值来源。
+## Project Manifest (project.toml)
 
-## 根字段
+`[project]`: id、name、timezone（IANA）、version、synthetic（必须true）、status（DRAFT/APPROVED/PUBLISHED）、approval_ref（DRAFT可空）。Kernel不强制year/venue/session/ticket字段。
 
-data_version、price_version、rules_version标识各自批准集合；status为DRAFT/APPROVED/PUBLISHED/RETIRED；approval_ref为人工提供的引用，未批准可为null。snapshot_id在工作数据为null，冻结后生成。quality_evidence只用于检查外部声明，不驱动收入。
+`[modules]`: module_id → true/false。没有启用任何业务模块也合法。批准的裸Kernel项目可snapshot。
 
-## 字段清单
+## ModuleState（SQLite / working-project.json）
 
-以下清单与运行时schema来自同一份代码；完整机器定义见data/schemas/event-master.schema.json。
+`module_version` 是插件实现版本；`schema_version` 是payload格式版本；`data_version` 是业务输入批准版本。三者不能混用。
 
-### event
+`payload`仅按该模块schema验证；`status`和`approval_ref`标识该模块工作态。内容hash包含这些字段，不仅包含payload。
 
-|字段|类型／枚举|必填|
+JSON文件用 `format_version=1.1`、manifest、modules字典、evidence数组。每个modules条目包含上述状态字段。disabled条目可以保留但不参与活动版本。project.toml没有TOML null，未批准approval_ref用空字符串。
+
+## 业务键与单位
+
+- Schedule：session_id；时间包含UTC偏移。可选sales_start/sales_end必须成对。
+- Seating：session_id + zone_id + tier；price_class_id关联价格。容量按票张（跨场次汇总为座席机会，不是物理场馆独立座位）。
+- Pricing：session_id + price_class_id；价格单元为DEMO_CURRENCY/张，最多2位小数。
+- Inventory：inventory_id；quantity为票张；每容量池互斥状态合计等于sellable_capacity，as_of一致。渠道只能分配，不能重复计同一批票。
+- Rights：session_id + zone_id + tier；quantity为票张；strategy/value定义有效价；expected_fulfillment按scenario给[0,1]比例。免费权益仍在Seating扣减，付费权益由本模块输出。
+- Product：product_id；included_sessions内按容量键唯一；ticket_quantity为每份产品在该场次座区消耗的票张，不是订单/份/人数。
+- Travel：guests为人；room_quantity/expected_rooms为房；nights为每房夜数；room_cost为每房每晚成本；service_per_guest按人；other_cost按份；quoted_non_ticket为每份非票报价。
+- Rules：rule_id；各模块独立数据版本；时间为半开有效期，每模块定义自己的业务覆盖期。
+- Task：task_id；depends_on按task_id，不能循环；owner_role不用实名。
+- Decision：decision_id；明确changed_paths与来源、批准角色，不自动推测变化动机。
+- Demand：scenario名称不限于low/mid/high。multiplicative使用session_rates/tier_rates；direct使用逐池session_id/zone_id/tier/rate行。
+
+数值输入是JSON有限数字，计数非负整数，不接受bool冒充数字。官方模块非负金额/计数上限1e12，用于限制原型计算范围。运行输出Decimal转为精确十进制字符串；金额仅在展示时舍入，不能回灌显示结果。
+
+Provider使用元组业务键；应用JSON序列化时编码成JSON数组形式的字符串键，例如 `["S01","MAIN","VIP"]`，避免分隔符歧义；service内保持元组。
+
+## Evidence / Provenance
+
+每条必须有非空source_ref。明确变化原因可以提供module_id、changed_paths（模块diff内的精确路径）、reason、confirmed、approved_by_role。
+
+confirmed=true且角色明确才显示“已确认原因（输入证据）”；否则显示“推测原因（输入提供，未确认）”。无精确匹配证据就写“无直接证据”。不代表系统认证了来源内容。
+
+## Snapshot
+
+format_version、snapshot_id（SN11-）、created_at、content_hash、record_hash、warnings_acknowledged、quality_gate、完整project和module_index。module_index记录每个启用模块module_version/schema_version/content_hash；project保留模块data_version/approval_ref。历史快照不靠后来工作配置重建。
+
+## 各模块payload字段（由运行时schema生成）
+
+完整机器定义位于data/schemas/modules/。下表展开嵌套结构；标记required的字段在其父对象出现时必须提供。不是一个所有模块必填的总schema。
+
+
+### core.schedule
+
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|event_id|string|是|
-|event_name|string|是|
-|year|integer|是|
-|venue|string|是|
-|timezone|string|是|
-|status|DRAFT, APPROVED, PUBLISHED, RETIRED|是|
+|rows|array|是|
+|rows[].session_id|string|是|
+|rows[].event_id|string|是|
+|rows[].stage|string|是|
+|rows[].start_time|string|是|
+|rows[].end_time|string|是|
+|sales_start|string|否|
+|sales_end|string|否|
 
-### sessions
+### core.venue
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|session_id|string|是|
-|event_id|string|是|
-|stage|string|是|
-|start_time|string|是|
-|end_time|string|是|
+|rows|array|是|
+|rows[].venue_id|string|是|
+|rows[].name|string|是|
+|rows[].timezone|string|是|
 
-### seating
+### demand.direct
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|session_id|string|是|
-|zone_id|string|是|
-|tier|string|是|
-|visibility|CLEAR, RESTRICTED|是|
-|physical_capacity|integer|是|
-|functional_hold|integer|是|
-|broadcast_hold|integer|是|
-|free_rights|integer|是|
-|other_hold|integer|是|
-|paid_rights|integer|是|
-|deduction_refs|object|是|
+|scenarios|object|是|
+|scenarios.{key}[].session_id|string|是|
+|scenarios.{key}[].zone_id|string|是|
+|scenarios.{key}[].tier|string|是|
+|scenarios.{key}[].rate|number|是|
 
-### prices
+### demand.multiplicative
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|price_version|string|是|
-|session_id|string|是|
-|tier|string|是|
-|price|number|是|
-|status|DRAFT, APPROVED, PUBLISHED, RETIRED|是|
-|valid_from|string|是|
-|approval_ref|['string', 'null']|是|
+|scenarios|object|是|
+|scenarios.{key}.session_rates|object|是|
+|scenarios.{key}.tier_rates|object|是|
 
-### inventory
+### finance.revenue
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|inventory_id|string|是|
-|session_id|string|是|
-|zone_id|string|是|
-|tier|string|是|
-|channel|string|是|
-|status|AVAILABLE, SOLD, LOCKED, PAID_RESERVED|是|
-|allocation_type|PUBLIC, PAID_RIGHTS|是|
-|quantity|integer|是|
-|as_of|string|是|
-|source_ref|string|是|
+|（空payload）|object|—|
 
-### products
+### product.pass
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|product_id|string|是|
-|product_type|SINGLE, PASS, TRAVEL|是|
-|included_sessions|array|是|
-|price|['number', 'null']|是|
-|price_claim|INDEPENDENT, SUM_FACE_PRICES|是|
-|travel|object|否|
+|rows|array|是|
+|rows[].product_id|string|是|
+|rows[].product_type|['SINGLE', 'PASS', 'TRAVEL']|是|
+|rows[].included_sessions|array|是|
+|rows[].included_sessions[].session_id|string|是|
+|rows[].included_sessions[].zone_id|string|是|
+|rows[].included_sessions[].tier|string|是|
+|rows[].included_sessions[].ticket_quantity|integer|是|
+|rows[].price|['number', 'null']|是|
+|rows[].price_claim|['INDEPENDENT', 'SUM_FACE_PRICES']|是|
 
-### rules
+### product.travel
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|rule_id|string|是|
-|rule_type|refund, transfer, identity, rights_return, launch|是|
-|version|string|是|
-|content|object|是|
-|valid_from|string|是|
-|valid_to|string|是|
-|status|DRAFT, APPROVED, PUBLISHED, RETIRED|是|
-|approval_ref|['string', 'null']|是|
+|rows|array|是|
+|rows[].product_id|string|是|
+|rows[].product_type|['SINGLE', 'PASS', 'TRAVEL']|是|
+|rows[].included_sessions|array|是|
+|rows[].included_sessions[].session_id|string|是|
+|rows[].included_sessions[].zone_id|string|是|
+|rows[].included_sessions[].tier|string|是|
+|rows[].included_sessions[].ticket_quantity|integer|是|
+|rows[].price|['number', 'null']|是|
+|rows[].price_claim|['INDEPENDENT', 'SUM_FACE_PRICES']|是|
+|rows[].travel|object|是|
+|rows[].travel.guests|integer|是|
+|rows[].travel.expected_rooms|integer|是|
+|rows[].travel.room_quantity|integer|是|
+|rows[].travel.nights|integer|是|
+|rows[].travel.room_cost|number|是|
+|rows[].travel.service_per_guest|number|是|
+|rows[].travel.other_cost|number|是|
+|rows[].travel.pricing_method|['markup', 'margin']|是|
+|rows[].travel.actual_method|['markup', 'margin']|是|
+|rows[].travel.rate|number|是|
+|rows[].travel.quoted_non_ticket|number|是|
 
-### tasks
+### project.decisions
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|task_id|string|是|
-|title|string|是|
-|owner_role|string|是|
-|due_at|string|是|
-|depends_on|array|是|
-|status|TODO, DOING, DONE|是|
-|acceptance|string|是|
-|proof|['string', 'null']|是|
-|phase|PRE_EVENT, DURING_EVENT, POST_EVENT|是|
+|rows|array|是|
+|rows[].decision_id|string|是|
+|rows[].issue|string|是|
+|rows[].options|array|是|
+|rows[].decision|string|是|
+|rows[].reason|string|是|
+|rows[].approved_by_role|string|是|
+|rows[].effective_at|string|是|
+|rows[].source_ref|string|是|
+|rows[].confirmed|boolean|是|
+|rows[].changed_paths|array|是|
 
-### decisions
+### project.tasks
 
-|字段|类型／枚举|必填|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|decision_id|string|是|
-|issue|string|是|
-|options|array|是|
-|decision|string|是|
-|reason|string|是|
-|approved_by_role|string|是|
-|effective_at|string|是|
-|source_ref|string|是|
-|confirmed|boolean|是|
-|changed_paths|array|是|
+|rows|array|是|
+|rows[].task_id|string|是|
+|rows[].title|string|是|
+|rows[].owner_role|string|是|
+|rows[].due_at|string|是|
+|rows[].depends_on|array|是|
+|rows[].status|['TODO', 'DOING', 'DONE']|是|
+|rows[].acceptance|string|是|
+|rows[].proof|['string', 'null']|是|
+|rows[].phase|['PRE_EVENT', 'DURING_EVENT', 'POST_EVENT']|是|
 
-## 业务键与派生字段
+### quality.declarations
 
-|对象|业务键／来源|说明|
+|字段|类型/枚举|父对象内必填|
 |---|---|---|
-|Event|event_id|一个工作库当前维护一个赛事；不做多租户|
-|Session|session_id，外键event_id|时间必须ISO8601带UTC偏移；按Event.timezone判断年度|
-|Seating|session_id + zone_id + tier|物理容量是该场该座区票档的容量；同场跨座区可累加|
-|sellable_capacity|physical_capacity−functional_hold−broadcast_hold−free_rights−other_hold|派生函数和SQL视图提供，不允许重复手填|
-|paid_rights|付费权益分配数量|仍在sellable内，不作为扣减项；公开池=可售−付费权益|
-|deduction_refs|四类扣减各自的来源ID列表|正数扣减需要来源；同一池内重复ID阻断。仅凭不同ID无法认定物理席完全不重叠|
-|Price|session_id + tier|当前数据只持有一个生效price_version；每档价适用于同场所有该票档座区|
-|Inventory|inventory_id，关联座区键|allocation_type分PUBLIC/PAID_RIGHTS；SOLD、LOCKED、AVAILABLE、PAID_RESERVED是互斥状态|
-|Product|product_id|included_sessions是映射数组：每项明确session_id、zone_id、tier、ticket_quantity|
-|ticket_quantity|SUM(included_sessions.ticket_quantity)|SQL产品视图与收入输出提供；表示每份产品占用的票张，不是人数|
-|price_claim|INDEPENDENT / SUM_FACE_PRICES|后者price=null时自动求和；提供数字时属于需核验的总和声明|
-|Rule|rule_id及全局rules_version|content随rule_type使用受控结构；不是任意无法检查的长文本|
-|Task|task_id，depends_on引用task_id|禁止循环；DONE必须有proof；owner_role而非人员信息|
-|Decision|decision_id，changed_paths|精确绑定被改字段；confirmed及来源／角色齐全才标输入已确认原因|
+|cells|array|是|
+|cells[].source|string|是|
+|cells[].value|['string', 'number', 'null']|是|
+|totals|array|是|
+|totals[].source|string|是|
+|totals[].components|array|是|
+|totals[].declared|number|是|
+|summaries|array|是|
+|summaries[].source|string|是|
+|summaries[].metric|string|是|
+|summaries[].value|number|是|
+|summaries[].mode|['FORMULA', 'HARDCODED']|是|
+|percentages|array|是|
+|percentages[].source|string|是|
+|percentages[].values|array|是|
+|percentages[].expected|number|是|
+|metrics|array|是|
+|metrics[].metric_id|string|是|
+|metrics[].unit|string|是|
+|metrics[].source|string|是|
+|documents|array|是|
+|documents[].source|string|是|
+|documents[].text|string|是|
+|documents[].critical|boolean|是|
+|named_models|array|是|
+|named_models[].name|string|是|
+|named_models[].content|string|是|
+|named_models[].source|string|是|
+|output_refs|array|是|
+|output_refs[].source|string|是|
+|output_refs[].snapshot_id|string|是|
 
-## 需求与费用口径
+### ticketing.identity
 
-- scenarios.low/mid/high均完整包含每场session_rates、每档tier_rates及paid_rights_rate。
-- public_q=session_rate×tier_rate，每个因子在[0,1]；付费权益q独立。
-- 同一场次座区：公开预期票=(sellable−paid_rights)×public_q，权益预期票=paid_rights×paid_rights_rate。
-- “可售率”按跨场座席机会计算，不把16场席位总量说成场馆容量。
-- “平均票价”=同口径收入÷同口径预计票张；0分母为null，不伪造0元均价。
-- 金额单位为DEMO_CURRENCY；没有合同费率、税务、结算或银行到账数据。
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].rule_id|string|是|
+|rows[].version|string|是|
+|rows[].content|object|是|
+|rows[].content.mode|string|是|
+|rows[].valid_from|string|是|
+|rows[].valid_to|string|是|
+|rows[].status|['DRAFT', 'APPROVED', 'PUBLISHED', 'RETIRED']|是|
+|rows[].approval_ref|['string', 'null']|是|
 
-## 旅行包
+### ticketing.inventory
 
-guests按人，room_quantity/expected_rooms按房，nights按房晚，room_cost按房晚成本，service_per_guest按人。成本=房数×房晚×房成本＋人数×每人服务成本＋other_cost。
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].inventory_id|string|是|
+|rows[].session_id|string|是|
+|rows[].zone_id|string|是|
+|rows[].tier|string|是|
+|rows[].channel|string|是|
+|rows[].status|['AVAILABLE', 'SOLD', 'LOCKED', 'PAID_RESERVED']|是|
+|rows[].allocation_type|['PUBLIC', 'PAID_RIGHTS']|是|
+|rows[].quantity|integer|是|
+|rows[].as_of|string|是|
+|rows[].source_ref|string|是|
 
-expected_rooms表达产品已声明的房间配置；不假定所有双人包一定一间。演示包明确一间，若实际计费两间则BLOCK。报价字段是输入供应报价，必须与所选markup/margin方法核对；不将其当利润。
+### ticketing.launch
 
-## 规则内容
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].rule_id|string|是|
+|rows[].version|string|是|
+|rows[].content|object|是|
+|rows[].content.denominator|PUBLIC_POOL|是|
+|rows[].content.rounds|array|是|
+|rows[].content.rounds[].at|string|是|
+|rows[].content.rounds[].fraction|number|是|
+|rows[].valid_from|string|是|
+|rows[].valid_to|string|是|
+|rows[].status|['DRAFT', 'APPROVED', 'PUBLISHED', 'RETIRED']|是|
+|rows[].approval_ref|['string', 'null']|是|
 
-当前v1为一个赛事一套全局规则；批准版本要求以下五类各一条，不支持同类多套按产品／渠道分域规则。
+### ticketing.pricing
 
-- refund：coverage_start/end、windows[]的start/end/fee_rate；半开区间[start,end)，边界相接不是重叠。
-- launch：denominator固定PUBLIC_POOL；rounds[]的at/fraction，三轮是演示数据配置，引擎支持其他轮数；共同分母比例合计必须1。
-- transfer：allowed布尔值。
-- identity：mode文字标识，不保存个人身份信息。
-- rights_return：hours_before非负整数。
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].session_id|string|是|
+|rows[].price_class_id|string|是|
+|rows[].price|number|是|
+|rows[].price_version|string|是|
+|rows[].status|['DRAFT', 'APPROVED', 'PUBLISHED', 'RETIRED']|是|
+|rows[].valid_from|string|是|
+|rows[].approval_ref|['string', 'null']|是|
 
-## 数据不是从哪里来
+### ticketing.refund
 
-本项目不包含公司名称、合作方原稿、真实观众、订单、身份证、手机号或银行账户。固定门票数与价格全部为合成；回归TEST-004按用户指定的合成错误数值独立构造，不参与演示经营结果。
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].rule_id|string|是|
+|rows[].version|string|是|
+|rows[].content|object|是|
+|rows[].content.coverage_start|string|是|
+|rows[].content.coverage_end|string|是|
+|rows[].content.windows|array|是|
+|rows[].content.windows[].start|string|是|
+|rows[].content.windows[].end|string|是|
+|rows[].content.windows[].fee_rate|number|是|
+|rows[].valid_from|string|是|
+|rows[].valid_to|string|是|
+|rows[].status|['DRAFT', 'APPROVED', 'PUBLISHED', 'RETIRED']|是|
+|rows[].approval_ref|['string', 'null']|是|
+
+### ticketing.rights
+
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].session_id|string|是|
+|rows[].zone_id|string|是|
+|rows[].tier|string|是|
+|rows[].quantity|integer|是|
+|rows[].strategy|['FACE_VALUE', 'FIXED_PRICE', 'DISCOUNT_RATE']|是|
+|rows[].value|number|是|
+|rows[].expected_fulfillment|object|是|
+
+### ticketing.rights_return
+
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].rule_id|string|是|
+|rows[].version|string|是|
+|rows[].content|object|是|
+|rows[].content.hours_before|integer|是|
+|rows[].valid_from|string|是|
+|rows[].valid_to|string|是|
+|rows[].status|['DRAFT', 'APPROVED', 'PUBLISHED', 'RETIRED']|是|
+|rows[].approval_ref|['string', 'null']|是|
+
+### ticketing.seating
+
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].session_id|string|是|
+|rows[].zone_id|string|是|
+|rows[].tier|string|是|
+|rows[].price_class_id|string|是|
+|rows[].physical_capacity|integer|是|
+|rows[].visibility|['CLEAR', 'RESTRICTED']|是|
+|rows[].functional_hold|integer|是|
+|rows[].broadcast_hold|integer|是|
+|rows[].free_rights|integer|是|
+|rows[].other_hold|integer|是|
+|rows[].deduction_refs|object|是|
+|rows[].deduction_refs.functional_hold|array|是|
+|rows[].deduction_refs.broadcast_hold|array|是|
+|rows[].deduction_refs.free_rights|array|是|
+|rows[].deduction_refs.other_hold|array|是|
+
+### ticketing.transfer
+
+|字段|类型/枚举|父对象内必填|
+|---|---|---|
+|rows|array|是|
+|rows[].rule_id|string|是|
+|rows[].version|string|是|
+|rows[].content|object|是|
+|rows[].content.allowed|boolean|是|
+|rows[].valid_from|string|是|
+|rows[].valid_to|string|是|
+|rows[].status|['DRAFT', 'APPROVED', 'PUBLISHED', 'RETIRED']|是|
+|rows[].approval_ref|['string', 'null']|是|

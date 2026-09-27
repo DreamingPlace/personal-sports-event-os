@@ -1,0 +1,1633 @@
+{
+  "added_modules": [],
+  "business": {
+    "product.pass": [
+      {
+        "fact_kind": "文件事实",
+        "new": "[不存在]",
+        "old": {
+          "included_sessions": [
+            {
+              "session_id": "S01",
+              "ticket_quantity": 1,
+              "tier": "VIP",
+              "zone_id": "MAIN"
+            }
+          ],
+          "price": null,
+          "price_claim": "SUM_FACE_PRICES",
+          "product_id": "SINGLE-DEMO",
+          "product_type": "SINGLE"
+        },
+        "path": "/SINGLE-DEMO",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": {
+          "included_sessions": [
+            {
+              "session_id": "S15",
+              "ticket_quantity": 1,
+              "tier": "GOLD",
+              "zone_id": "MAIN"
+            },
+            {
+              "session_id": "S16",
+              "ticket_quantity": 1,
+              "tier": "GOLD",
+              "zone_id": "MAIN"
+            }
+          ],
+          "price": null,
+          "price_claim": "SUM_FACE_PRICES",
+          "product_id": "WEEKEND-PASS-DEMO",
+          "product_type": "PASS"
+        },
+        "old": "[不存在]",
+        "path": "/WEEKEND-PASS-DEMO",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "project.decisions": [
+      {
+        "fact_kind": "文件事实",
+        "new": {
+          "approved_by_role": "DEMO_REVIEWER",
+          "changed_paths": [
+            "prices/S01/VIP/price"
+          ],
+          "confirmed": true,
+          "decision": "Test increment",
+          "decision_id": "D-DEMO-1",
+          "effective_at": "2027-05-01T00:00:00+00:00",
+          "issue": "Synthetic price scenario",
+          "options": [
+            "Keep price",
+            "Test increment"
+          ],
+          "reason": "Fictional demand experiment",
+          "source_ref": "SYNTHETIC-DECISION-1"
+        },
+        "old": "[不存在]",
+        "path": "/D-DEMO-1",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "quality.declarations": [
+      {
+        "fact_kind": "文件事实",
+        "new": [
+          {
+            "critical": true,
+            "source": "demo/title",
+            "text": "2027 Global Racket Masters\nSynthetic revised plan; reasons need evidence."
+          }
+        ],
+        "old": [
+          {
+            "critical": true,
+            "source": "demo/title",
+            "text": "2027 Global Racket Masters"
+          }
+        ],
+        "path": "/documents",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.identity": [
+      {
+        "fact_kind": "文件事实",
+        "new": "rules-b",
+        "old": "rules-a",
+        "path": "/R-identity/version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.inventory": [
+      {
+        "fact_kind": "数值变化",
+        "new": 542,
+        "old": 530,
+        "path": "/S01-VIP-MAIN-AVAILABLE/quantity",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.launch": [
+      {
+        "fact_kind": "文件事实",
+        "new": [
+          {
+            "at": "2027-05-30T09:00:00+00:00",
+            "fraction": 0.3
+          },
+          {
+            "at": "2027-06-12T09:00:00+00:00",
+            "fraction": 0.4
+          },
+          {
+            "at": "2027-06-24T09:00:00+00:00",
+            "fraction": 0.3
+          }
+        ],
+        "old": [
+          {
+            "at": "2027-06-01T09:00:00+00:00",
+            "fraction": 0.25
+          },
+          {
+            "at": "2027-06-12T09:00:00+00:00",
+            "fraction": 0.45
+          },
+          {
+            "at": "2027-06-24T09:00:00+00:00",
+            "fraction": 0.3
+          }
+        ],
+        "path": "/R-launch/content/rounds",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "rules-b",
+        "old": "rules-a",
+        "path": "/R-launch/version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.pricing": [
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S01/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S01/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S01/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S01/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "数值变化",
+        "new": 765,
+        "old": 730,
+        "path": "/S01/VIP/price",
+        "reasons": [
+          {
+            "kind": "已确认原因（输入证据）",
+            "reason": "Fictional demand experiment",
+            "source_ref": "SYNTHETIC-DECISION-1"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S01/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S02/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S02/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S02/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S02/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S02/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S03/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S03/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S03/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S03/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S03/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S04/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S04/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S04/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S04/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S04/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S05/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S05/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S05/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S05/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S05/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S06/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S06/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S06/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S06/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S06/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S07/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S07/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S07/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S07/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S07/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S08/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S08/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S08/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S08/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S08/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S09/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S09/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S09/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S09/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S09/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S10/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S10/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S10/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S10/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S10/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S11/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S11/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S11/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S11/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S11/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S12/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S12/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S12/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S12/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S12/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S13/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S13/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S13/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S13/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S13/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S14/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S14/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S14/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S14/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S14/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S15/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S15/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S15/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S15/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S15/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S16/BRONZE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S16/GOLD/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S16/SILVER/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S16/VALUE/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "prices-b",
+        "old": "prices-a",
+        "path": "/S16/VIP/price_version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.refund": [
+      {
+        "fact_kind": "文件事实",
+        "new": "rules-b",
+        "old": "rules-a",
+        "path": "/R-refund/version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.rights_return": [
+      {
+        "fact_kind": "数值变化",
+        "new": 72,
+        "old": 60,
+        "path": "/R-rights_return/content/hours_before",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "文件事实",
+        "new": "rules-b",
+        "old": "rules-a",
+        "path": "/R-rights_return/version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.seating": [
+      {
+        "fact_kind": "数值变化",
+        "new": 620,
+        "old": 608,
+        "path": "/S01/MAIN/VIP/physical_capacity",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      },
+      {
+        "fact_kind": "数值变化",
+        "new": 566,
+        "old": 554,
+        "path": "/S01/MAIN/VIP/sellable_capacity",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ],
+    "ticketing.transfer": [
+      {
+        "fact_kind": "文件事实",
+        "new": "rules-b",
+        "old": "rules-a",
+        "path": "/R-transfer/version",
+        "reasons": [
+          {
+            "kind": "无直接证据",
+            "reason": "原因无法由输入直接确认"
+          }
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "模块提供确定性事实差异；没有证据不推测动机。"
+  ],
+  "metadata": [
+    {
+      "fact_kind": "文件事实",
+      "new": "demo-b-v11",
+      "old": "demo-a-v11",
+      "path": "manifest/project/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/core.schedule/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/core.venue/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/demand.multiplicative/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/finance.revenue/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/product.pass/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/product.travel/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/project.decisions/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/project.tasks/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/quality.declarations/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "rules-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "rules-a"
+      ],
+      "path": "modules/ticketing.identity/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/ticketing.inventory/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "rules-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "rules-a"
+      ],
+      "path": "modules/ticketing.launch/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "prices-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "prices-a"
+      ],
+      "path": "modules/ticketing.pricing/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "rules-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "rules-a"
+      ],
+      "path": "modules/ticketing.refund/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/ticketing.rights/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "rules-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "rules-a"
+      ],
+      "path": "modules/ticketing.rights_return/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "demo-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "demo-a"
+      ],
+      "path": "modules/ticketing.seating/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    },
+    {
+      "fact_kind": "文件事实",
+      "new": [
+        "1.1.0",
+        "1",
+        "rules-b"
+      ],
+      "old": [
+        "1.1.0",
+        "1",
+        "rules-a"
+      ],
+      "path": "modules/ticketing.transfer/version",
+      "reasons": [
+        {
+          "kind": "无直接证据",
+          "reason": "原因无法由输入直接确认"
+        }
+      ]
+    }
+  ],
+  "removed_modules": [],
+  "snapshot_metadata": []
+}

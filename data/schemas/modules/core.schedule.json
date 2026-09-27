@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "stage": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_time": {
+            "type": "string",
+            "minLength": 1
+          },
+          "end_time": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "session_id",
+          "event_id",
+          "stage",
+          "start_time",
+          "end_time"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sales_start": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sales_end": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

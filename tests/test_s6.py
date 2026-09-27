@@ -4,7 +4,7 @@ from tests.cases import case_data
 
 class CLITests(unittest.TestCase):
     def run_cli(self,root,*args):
-        return subprocess.run([sys.executable,'-m','sports_os',*args,'--workspace',str(root)],text=True,capture_output=True)
+        return subprocess.run([sys.executable,'-m','sports_os','--legacy',*args,'--workspace',str(root)],text=True,capture_output=True)
     def test_full_cli_workflow(self):
         with tempfile.TemporaryDirectory() as t:
             root=Path(t)

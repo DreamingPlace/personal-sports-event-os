@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "price_class_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000000000
+          },
+          "price_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "APPROVED",
+              "PUBLISHED",
+              "RETIRED"
+            ]
+          },
+          "valid_from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approval_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "session_id",
+          "price_class_id",
+          "price",
+          "price_version",
+          "status",
+          "valid_from",
+          "approval_ref"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

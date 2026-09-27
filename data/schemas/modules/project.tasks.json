@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "due_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "status": {
+            "enum": [
+              "TODO",
+              "DOING",
+              "DONE"
+            ]
+          },
+          "acceptance": {
+            "type": "string",
+            "minLength": 1
+          },
+          "proof": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phase": {
+            "enum": [
+              "PRE_EVENT",
+              "DURING_EVENT",
+              "POST_EVENT"
+            ]
+          }
+        },
+        "required": [
+          "task_id",
+          "title",
+          "owner_role",
+          "due_at",
+          "depends_on",
+          "status",
+          "acceptance",
+          "proof",
+          "phase"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

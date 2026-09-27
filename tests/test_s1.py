@@ -10,7 +10,7 @@ class RevenueTests(unittest.TestCase):
         expected=sum(sellable(s)*prices[s['session_id'],s['tier']] for s in d['seating'])
         self.assertEqual(Decimal(r['totals']['full_revenue']),expected)
         for group in ['by_stage','by_tier','by_session']:
-            self.assertEqual(sum(Decimal(x['mid']['revenue']) for x in r[group].values()),Decimal(r['totals']['mid']['revenue']))
+            self.assertEqual(sum(Decimal(x['mid']['revenue_exact']) for x in r[group].values()),Decimal(r['totals']['mid']['revenue_exact']))
     def test_one_price_updates_all(self):
         d=make_demo();before=calculate(d);p=d['prices'][0];p['price']+=11;after=calculate(d)
         seats=sum(sellable(s) for s in d['seating'] if s['session_id']==p['session_id'] and s['tier']==p['tier'])

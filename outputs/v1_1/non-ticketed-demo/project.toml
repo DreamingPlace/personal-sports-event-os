@@ -1,0 +1,13 @@
+[project]
+id = "GRM-2027-FICTION"
+name = "2027 Global Racket Masters"
+timezone = "UTC"
+version = "demo-a-v11"
+synthetic = true
+status = "APPROVED"
+approval_ref = "SYNTHETIC-APPROVAL-A"
+
+[modules]
+"core.schedule" = true
+"core.venue" = true
+"project.tasks" = true

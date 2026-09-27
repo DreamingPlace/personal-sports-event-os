@@ -64,4 +64,9 @@ SCHEMA = obj(dict(
     scenarios=obj({k:SCENARIO for k in ("low","mid","high")}),
     quality_evidence=EVIDENCE
 ))
+# Optional v1.1 bridge fields; legacy documents remain valid.
+SEATING['properties']['price_class_id'] = S
+PRICE['properties']['price_class_id'] = S
+SEATING['properties']['paid_rights_pricing'] = obj(dict(
+    strategy={'enum':['FACE_VALUE','FIXED_PRICE','DISCOUNT_RATE']}, value=N))
 SCHEMA.update({"$schema":"https://json-schema.org/draft/2020-12/schema", "title":"Synthetic Event Master v1"})

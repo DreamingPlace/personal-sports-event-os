@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "personal-sports-event-os"
-version = "1.0.0"
+version = "1.1.0"
 description = "Offline synthetic sports-event modeling and release quality gates"
 requires-python = ">=3.11"
 dependencies = []
@@ -18,3 +18,24 @@ sports-os = "sports_os.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+
+[project.entry-points."sports_os.modules"]
+"core.schedule" = "sports_os.modules.schedule:Schedule"
+"core.venue" = "sports_os.modules.venue:Venue"
+"ticketing.seating" = "sports_os.modules.seating:Seating"
+"ticketing.pricing" = "sports_os.modules.pricing:Pricing"
+"ticketing.inventory" = "sports_os.modules.inventory:Inventory"
+"ticketing.rights" = "sports_os.modules.rights:Rights"
+"ticketing.refund" = "sports_os.modules.refund:Refund"
+"ticketing.launch" = "sports_os.modules.launch:Launch"
+"ticketing.identity" = "sports_os.modules.identity:Identity"
+"ticketing.transfer" = "sports_os.modules.transfer:Transfer"
+"ticketing.rights_return" = "sports_os.modules.rights_return:RightsReturn"
+"finance.revenue" = "sports_os.modules.revenue:Revenue"
+"product.pass" = "sports_os.modules.products:Pass"
+"product.travel" = "sports_os.modules.travel:Travel"
+"project.tasks" = "sports_os.modules.tasks:Tasks"
+"project.decisions" = "sports_os.modules.decisions:Decisions"
+"demand.multiplicative" = "sports_os.modules.demand:MultiplicativeDemandModel"
+"demand.direct" = "sports_os.modules.demand:DirectDemandModel"
+"quality.declarations" = "sports_os.modules.quality:QualityDeclarations"

@@ -1,0 +1,159 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product_type": {
+            "enum": [
+              "SINGLE",
+              "PASS",
+              "TRAVEL"
+            ]
+          },
+          "included_sessions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "session_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "zone_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tier": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ticket_quantity": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000000000000
+                }
+              },
+              "required": [
+                "session_id",
+                "zone_id",
+                "tier",
+                "ticket_quantity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "price": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1000000000000
+          },
+          "price_claim": {
+            "enum": [
+              "INDEPENDENT",
+              "SUM_FACE_PRICES"
+            ]
+          },
+          "travel": {
+            "type": "object",
+            "properties": {
+              "guests": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "expected_rooms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "room_quantity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "nights": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "room_cost": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "service_per_guest": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "other_cost": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000000
+              },
+              "pricing_method": {
+                "enum": [
+                  "markup",
+                  "margin"
+                ]
+              },
+              "actual_method": {
+                "enum": [
+                  "markup",
+                  "margin"
+                ]
+              },
+              "rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "quoted_non_ticket": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000000
+              }
+            },
+            "required": [
+              "guests",
+              "expected_rooms",
+              "room_quantity",
+              "nights",
+              "room_cost",
+              "service_per_guest",
+              "other_cost",
+              "pricing_method",
+              "actual_method",
+              "rate",
+              "quoted_non_ticket"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "product_id",
+          "product_type",
+          "included_sessions",
+          "price",
+          "price_claim",
+          "travel"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

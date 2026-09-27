@@ -1,0 +1,54 @@
+test_MOD_001_kernel_schedule (tests.test_v11_modular.ModularTests.test_MOD_001_kernel_schedule)
+MOD-001: Kernel+Schedule，无票务 → PASS ... ok
+test_MOD_002_no_travel_validator (tests.test_v11_modular.ModularTests.test_MOD_002_no_travel_validator)
+MOD-002: 禁用Travel → validator绝不运行 ... ok
+test_MOD_003_free_event_snapshot (tests.test_v11_modular.ModularTests.test_MOD_003_free_event_snapshot)
+MOD-003: 免费群众赛事 → validate/snapshot成功 ... ok
+test_MOD_004_missing_travel_dependency (tests.test_v11_modular.ModularTests.test_MOD_004_missing_travel_dependency)
+MOD-004: Travel缺Pricing → BLOCK ... ok
+test_MOD_005_disabled_payload_quarantined (tests.test_v11_modular.ModularTests.test_MOD_005_disabled_payload_quarantined)
+MOD-005: 保留损坏的禁用payload，不执行/不冻结 ... ok
+test_MOD_006_cycle (tests.test_v11_modular.ModularTests.test_MOD_006_cycle)
+MOD-006: 模块依赖环 → BLOCK ... ok
+test_MOD_007_price_class (tests.test_v11_modular.ModularTests.test_MOD_007_price_class)
+MOD-007: 同tier不同zone不同price_class → 分别按价计算 ... ok
+test_MOD_008_rights_discount (tests.test_v11_modular.ModularTests.test_MOD_008_rights_discount)
+MOD-008: 权益8折 → 采用有效单价，非公开价 ... ok
+test_MOD_009_travel_missing_price (tests.test_v11_modular.ModularTests.test_MOD_009_travel_missing_price)
+MOD-009: Travel含非票成本但price=null → BLOCK，不能snapshot ... ok
+test_MOD_010_rule_expiry (tests.test_v11_modular.ModularTests.test_MOD_010_rule_expiry)
+MOD-010: 所有规则模块适用期检查 → 过期BLOCK ... ok
+test_MOD_011_zone_split (tests.test_v11_modular.ModularTests.test_MOD_011_zone_split)
+MOD-011: 经济事实不变，zone拆分 → 精确总收入完全不变 ... ok
+test_MOD_012_product_order (tests.test_v11_modular.ModularTests.test_MOD_012_product_order)
+MOD-012: 产品included_sessions仅重排 → 无业务差异 ... ok
+test_MOD_013_only_active_findings (tests.test_v11_modular.ModularTests.test_MOD_013_only_active_findings)
+MOD-013: Disabled未知模块坏payload → 不产生Finding ... ok
+test_MOD_014_snapshot_enable (tests.test_v11_modular.ModularTests.test_MOD_014_snapshot_enable)
+MOD-014: snapshot后启用新模块 → 历史记录字节/索引不变 ... ok
+test_MOD_015_upgrade_without_migration (tests.test_v11_modular.ModularTests.test_MOD_015_upgrade_without_migration)
+MOD-015: 插件升级无migration → BLOCK，不静默解释 ... ok
+test_MOD_016_migration (tests.test_v11_modular.ModularTests.test_MOD_016_migration)
+MOD-016: v1.0迁移 → 与修正舍入后的模型精确对账 ... ok
+test_demand_missing_conflicting_and_unknown (tests.test_v11_modular.ModularTests.test_demand_missing_conflicting_and_unknown) ... ok
+test_disable_rights_requires_inventory_reconciliation (tests.test_v11_modular.ModularTests.test_disable_rights_requires_inventory_reconciliation) ... ok
+test_external_entrypoint_discovery (tests.test_v11_modular.ModularTests.test_external_entrypoint_discovery)
+实际通过临时独立distribution元数据发现插件，不改Kernel注册表。 ... ok
+test_fresh_cli (tests.test_v11_modular.ModularTests.test_fresh_cli) ... ok
+test_kernel_business_independence (tests.test_v11_modular.ModularTests.test_kernel_business_independence) ... ok
+test_manifest_roundtrip (tests.test_v11_modular.ModularTests.test_manifest_roundtrip) ... ok
+test_old_snapshot_not_relabelled (tests.test_v11_modular.ModularTests.test_old_snapshot_not_relabelled) ... ok
+test_profiles_not_runtime_modes (tests.test_v11_modular.ModularTests.test_profiles_not_runtime_modes) ... ok
+test_replace_demand (tests.test_v11_modular.ModularTests.test_replace_demand) ... ok
+test_revenue_and_inventory_independent (tests.test_v11_modular.ModularTests.test_revenue_and_inventory_independent) ... ok
+test_rights_fixed_price (tests.test_v11_modular.ModularTests.test_rights_fixed_price) ... ok
+test_schema_missing_false_nan_unknown (tests.test_v11_modular.ModularTests.test_schema_missing_false_nan_unknown) ... ok
+test_snapshot_integrity_and_immutable (tests.test_v11_modular.ModularTests.test_snapshot_integrity_and_immutable) ... ok
+test_travel_closure_and_no_double_count (tests.test_v11_modular.ModularTests.test_travel_closure_and_no_double_count) ... ok
+test_version_reuse_blocks (tests.test_v11_modular.ModularTests.test_version_reuse_blocks) ... ok
+test_working_hash_tamper (tests.test_v11_modular.ModularTests.test_working_hash_tamper) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 2.078s
+
+OK

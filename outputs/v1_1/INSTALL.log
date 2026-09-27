@@ -1,0 +1,18 @@
+WARNING: The directory '<HOME>/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Obtaining file://<PROJECT>
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: personal-sports-event-os
+  Building editable for personal-sports-event-os (pyproject.toml): started
+  Building editable for personal-sports-event-os (pyproject.toml): finished with status 'done'
+  Created wheel for personal-sports-event-os: filename=personal_sports_event_os-1.1.0-0.editable-py3-none-any.whl size=2128 sha256=e0f95246dfaf0824414d6dcbcfefbf2bf8c0568903a0a499a35a90906748192b
+  Stored in directory: /private/var/folders/6g/23hz4ln9361f8nvtsr9rt8c00000gn/T/pip-ephem-wheel-cache-5j0tsejg/wheels/ce/9f/0b/a30c0833532a3070a1c61373cef5b28fc5ae87a924d761a8ac
+Successfully built personal-sports-event-os
+Installing collected packages: personal-sports-event-os
+  Attempting uninstall: personal-sports-event-os
+    Found existing installation: personal-sports-event-os 1.0.0
+    Uninstalling personal-sports-event-os-1.0.0:
+      Successfully uninstalled personal-sports-event-os-1.0.0
+Successfully installed personal-sports-event-os-1.1.0

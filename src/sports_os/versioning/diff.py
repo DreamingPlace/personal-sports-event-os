@@ -1,6 +1,7 @@
 from difflib import SequenceMatcher
 import json
 from ..models import assert_model, sellable
+from ..models.core import price_key
 
 MISSING='[不存在]'
 LABELS={'price':'价格变化','seating':'座席变化','inventory':'库存规则／数量',
@@ -15,7 +16,9 @@ def _leaves(value,path):
         out={}
         for i,v in enumerate(value):out.update(_leaves(v,path+'/'+str(i)))
         return out
-    # Product mappings remain explicit list facts; no guessed identity matching.
+    if isinstance(value,list) and path.endswith('/included_sessions'):
+        value=sorted(value,key=lambda c:(c['session_id'],c['zone_id'],c['tier']))
+    # Mappings use stable business identity, not array position.
     return {path:value}
 
 def _reason(path,data):
@@ -51,7 +54,7 @@ def compare(a,b,label_a=None,label_b=None):
         return result
     assert_model(a);assert_model(b)
     keys={
-        'prices':lambda x:f"{x['session_id']}/{x['tier']}",
+        'prices':lambda x:"/".join(price_key(x)),
         'seating':lambda x:f"{x['session_id']}/{x['zone_id']}/{x['tier']}",
         'inventory':lambda x:x['inventory_id'],'products':lambda x:x['product_id'],
         'rules':lambda x:x['rule_id'],'sessions':lambda x:x['session_id'],
