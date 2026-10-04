@@ -12,3 +12,16 @@ data/event.sqlite-shm
 *.sqlite-shm
 
 build/
+
+# Desktop dependencies, generated native artifacts and local design tools
+apps/desktop/node_modules/
+apps/desktop/dist/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/binaries/
+apps/desktop/test-results/
+apps/desktop/playwright-report/
+apps/desktop/*.tsbuildinfo
+.agents/
+.codex/
+
+apps/desktop/src-tauri/gen/

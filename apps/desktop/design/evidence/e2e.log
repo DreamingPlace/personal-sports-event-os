@@ -1,0 +1,11 @@
+$ playwright test
+
+Running 3 tests using 1 worker
+
+(node:9414) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/desktop.spec.ts:66:1 › blank wizard, dynamic module navigation, dependency errors, keyboard dialog (2.9s)
+  ✓  2 tests/desktop.spec.ts:97:1 › complete approved draft gate revenue snapshot diff reopen flow with a11y (6.8s)
+  ✓  3 tests/desktop.spec.ts:192:1 › backend unavailable and reconnect affordance (951ms)
+
+  3 passed (11.0s)

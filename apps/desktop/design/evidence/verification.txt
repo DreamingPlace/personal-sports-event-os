@@ -1,0 +1,12 @@
+2026-10-05 Asia/Singapore
+Backend: python -m unittest discover -s tests — 193 PASS (180 baseline + 13 protocol), 13.487s.
+Frontend: pnpm test — 10 PASS, 86ms test time.
+Lint: tsc --noEmit + ESLint — exit 0.
+Cargo: cargo check — Finished dev profile, exit 0.
+Tauri dev: actual macOS window/process started; native testing then used packaged tauri://localhost release app.
+Tauri build: release bundle Sports Event OS.app, 33.21 MiB, exit 0.
+Packaged native UI: create Demo, first snapshot, price 730→731, APPROVED→DRAFT,
+BLOCK freeze, preview PASS, backend Revenue 52391214, explicit synthetic module/project approval,
+second snapshot, diff, quit/reopen, both snapshots retained, READ ONLY old snapshot Revenue 52390520.
+End-to-end Chromium adapts only directory dialog/Tauri transport; actual frozen sidecar provides business DTOs.
+See e2e.log, packaged-smoke.json, detector.json, hook-check.json.

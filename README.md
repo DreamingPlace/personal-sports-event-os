@@ -150,3 +150,8 @@ python -m sports_os --legacy validate
 - 单用户SQLite；不支持并发编辑协调、分布式权限、插件安全沙箱或真实现场安全判断。
 
 文档：[本轮加固](V1_1_1_HARDENING.md) · [架构](docs/ARCHITECTURE.md) · [迁移](V1_1_MIGRATION.md) · [数据字典](docs/DATA_DICTIONARY.md) · [业务规则](docs/BUSINESS_RULES.md) · [测试](V1_1_1_TEST_REPORT.md)
+
+
+## Desktop v0.1（macOS / 合成数据）
+
+桌面入口、构建与测试命令见 [apps/desktop/README.md](apps/desktop/README.md)。流程见 [DESKTOP_USER_FLOW.md](DESKTOP_USER_FLOW.md)，实际验收结果见 [DESKTOP_V0_1_TEST_REPORT.md](DESKTOP_V0_1_TEST_REPORT.md)。Kernel v1.1.1 保持冻结。

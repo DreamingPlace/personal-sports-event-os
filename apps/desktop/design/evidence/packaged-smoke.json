@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "binary": "$REPO/apps/desktop/src-tauri/target/release/bundle/macos/Sports Event OS.app/Contents/MacOS/sports-os-sidecar",
+  "runtime_path": "/nonexistent",
+  "registry_count": 19,
+  "checks": [
+    "empty PATH / Registry 19",
+    "create Demo",
+    "edit / APPROVED -> DRAFT",
+    "BLOCK forbids snapshot",
+    "preview Quality Gate",
+    "working vs frozen Revenue",
+    "manual module/project approval",
+    "second snapshot",
+    "original snapshot unchanged",
+    "both diff modes",
+    "process restart/open retains approval and both snapshots"
+  ]
+}

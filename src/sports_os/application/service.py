@@ -137,6 +137,72 @@ class ApplicationService:
                 state.payload=module.prepare_revision(state.payload,state.data_version)
         return self._configuration_changed(out)
 
+    def get_module_schema(self,module_id):
+        return deepcopy(self.registry.get(module_id).schema())
+
+    @staticmethod
+    def empty_payload(schema):
+        """Editor scaffolding, not business defaults; incomplete facts remain BLOCK."""
+        if 'const' in schema:return deepcopy(schema['const'])
+        if 'enum' in schema:return deepcopy(schema['enum'][0])
+        kind=schema.get('type','object')
+        if isinstance(kind,list):
+            if 'null' in kind:return None
+            kind=kind[0]
+        if kind=='object':return {k:ApplicationService.empty_payload(v) for k,v in schema.get('properties',{}).items() if k in schema.get('required',[])}
+        if kind=='array':return []
+        if kind=='boolean':return False
+        if kind in ('number','integer'):return schema.get('minimum',0)
+        return ''
+
+    def create_workspace(self,identity,modules):
+        if self.store.path.exists() or safe_path(self.root,'project.toml').exists() or safe_path(self.root,'data/desktop-draft.json').exists():
+            raise KernelError('目录已有项目，拒绝覆盖；请选择空项目目录')
+        project=self.create_project(identity,modules=modules)
+        for key in self.registry.order(project.enabled):
+            project=self.enable_module(project,key,self.empty_payload(self.get_module_schema(key)))
+        self.save_desktop_draft(project)
+        return project
+
+    def save_desktop_draft(self,project):
+        """Persist incomplete DRAFT separately; never weakens save/release gates."""
+        from ..kernel.data import _shape
+        from ..kernel.gate import MANIFEST
+        _shape(project.manifest,MANIFEST,'manifest')
+        if project.manifest['project']['status']!='DRAFT':raise KernelError('未完成草稿必须为DRAFT')
+        record=project.to_dict();body=dict(project=record,content_hash=digest(record))
+        self.write_artifact('data/desktop-draft.json',self.json_text(body))
+
+    def open_desktop_project(self):
+        from ..kernel.data import load_json
+        path=safe_path(self.root,'data/desktop-draft.json')
+        if not path.exists():return self.open_project()
+        body=load_json(path)
+        if digest(body['project'])!=body['content_hash']:raise KernelError('草稿hash不符')
+        project=Project.from_dict(body['project'])
+        if project.manifest['project']['status']!='DRAFT':raise KernelError('草稿不能声称已批准')
+        return project
+
+    def persist_desktop_project(self,project):
+        gate=self.validate_project(project)
+        if gate.status=='BLOCK':
+            self.save_desktop_draft(project)
+            return dict(storage='DRAFT_FILE',quality=gate.to_dict())
+        self.save_project(project)
+        path=safe_path(self.root,'data/desktop-draft.json')
+        if path.exists():path.unlink()
+        return dict(storage='SQLITE',quality=gate.to_dict())
+
+    def calculate_snapshot_module(self,project,snapshot_id,module_id):
+        record=self.get_snapshot(project,snapshot_id)
+        verify_snapshot(record)
+        return self.calculate_module(Project.from_dict(record['project']),module_id)
+
+    def get_snapshot(self,project,snapshot_id):
+        for record in self.list_snapshots(project.manifest['project']['id']):
+            if record['snapshot_id']==snapshot_id:return record
+        raise KernelError('快照不存在')
+
     def get_module_data(self,project,module_id):
         return deepcopy(project.states[module_id].payload)
 
