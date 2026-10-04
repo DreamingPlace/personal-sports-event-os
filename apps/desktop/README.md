@@ -1,4 +1,4 @@
-# Sports Event OS Desktop 0.1
+# Sports Event OS Desktop 0.1.1
 
 macOS Apple Silicon，Tauri 2 + React + persistent frozen Python sidecar。中文 UI / 原名技术字段。仅合成数据。
 
@@ -19,7 +19,29 @@ pnpm --dir apps/desktop tauri dev
 pnpm --dir apps/desktop tauri build
 ```
 
-生成 `apps/desktop/src-tauri/target/release/bundle/macos/Sports Event OS.app`。可复制到用户 Applications 文件夹；当前未 notarize，跨机器分发须遵循正常 macOS Gatekeeper 流程，不关闭系统保护。未验证 Intel / Windows / Linux。
+生成 `apps/desktop/src-tauri/target/release/bundle/macos/Sports Event OS.app`。0.1.0 存在资源签名未封装缺陷，不再推荐下载。0.1.1 修复完整 bundle / sidecar 签名，但仍只是 **ad-hoc 签名的未公证测试版**，不是免确认安装的正式发行版。未验证 Intel / Windows / Linux。
+
+## 下载与首次打开
+
+只使用本仓库 `desktop-v0.1.1` Release 的 ZIP 和 SHA256SUMS.txt。终端在下载目录执行 `shasum -a 256 -c SHA256SUMS.txt`，必须显示 OK。解压到与旧版不同的目录；退出旧程序后打开新版，不要覆盖项目数据目录。
+
+如果系统提示“无法验证开发者”或“Apple 无法检查是否包含恶意软件”，仅在你确认来源并愿意运行此测试版时，按 [Apple 官方说明](https://support.apple.com/en-us/102445) 到系统设置 → 隐私与安全性 → 仍要打开，手动批准这一应用。不要关闭 Gatekeeper、不要执行 `xattr -cr` 或移除 quarantine。若仍显示“已损坏”或恶意软件警告，停止打开，保留提示供排查，不要强行绕过。
+
+ad-hoc 不验证发布者身份，SHA256 也不能替代 Apple 公证。无提示的标准分发需要 Developer ID Application 签名、Apple 公证及 stapled ticket，当前没有可用证书，发行资格检查仍为 BLOCK。
+
+## 打包门禁
+
+```bash
+python apps/desktop/scripts/package_macos.py \
+  'apps/desktop/src-tauri/target/release/bundle/macos/Sports Event OS.app' \
+  '../desktop-v0.1.1/Sports-Event-OS-Desktop-0.1.1-macos-arm64.zip'
+```
+
+必须先通过资源封装与严格签名校验、真实冻结 sidecar smoke，再创建 ZIP；解压后重新校验整个 bundle 和每个 MacOS 二进制，失败不生成发行 ZIP，也不覆盖已有 ZIP。输出 SHA256。该门禁的 PASS **仅代表包完整性和本地运行能力**。
+
+正式分发另需 `syspolicy_check distribution '…/Sports Event OS.app'`、`spctl --assess --type execute --verbose=4 '…/Sports Event OS.app'`，以及启用正常 Gatekeeper 的独立机器浏览器下载测试。`override=security disabled` 不可算验收通过。只读检查系统策略，不自动修改它。
+
+Tauri 使用 `signingIdentity: "-"` 进行完整 ad-hoc 签名。保留 hardened runtime，仅通过 Entitlements.plist 添加 frozen Python 必需的 `com.apple.security.cs.disable-library-validation`：内嵌 ad-hoc dylib 没有 Team ID，默认 library validation 会拒绝加载。Tauri 将该文件应用于 app 与 sidecar；没有添加 JIT、调试或 unsigned executable memory 权限，没有修改系统安全设置。正式证书流水线必须同步签署 PyInstaller 内嵌 dylib，并重新评估是否可以去掉这一例外。
 
 ## 回归
 

@@ -1,5 +1,7 @@
 # Desktop v0.1 验收报告
 
+> **2026-10-05 更正：0.1.0 下载发行验收不通过。** 本报告的本机功能测试仍有效，但之前没有执行严格 bundle 签名和浏览器下载首次启动验收。用户下载后出现“已损坏”；原构建与下载副本均报 `code has no resources but signature indicates they must be present`。下方历史 PASS 仅适用于已列出的本机功能范围，不代表可分发性。0.1.1 修复和未公证边界见 `DESKTOP_V0_1_1_PACKAGING_REPORT.md`。
+
 - Desktop version: **0.1.0**
 - Base commit: `bd99376568d007b13e81e99d939afe2b72cde835`
 - New commit: 本报告随 Desktop 实现提交；以该提交的 Git SHA / GitHub 链接为准，最终交付消息给出确切 SHA。
@@ -50,5 +52,5 @@
 - No AI / real company data / ApplicationService bypass / frontend business formula: **PASS**
 - P0 Logic: **0 observed**
 - P1 Logic: **0 observed in tested single-writer synthetic scope**
-- **DESKTOP_V0_1 = PASS**
-- Recommended next: **DESKTOP_V0_2_REAL_LOCAL**（下一阶段需重新审定真实数据边界；本版仍只允许合成数据）
+- **DESKTOP_V0_1_LOCAL_FUNCTIONAL = PASS；DESKTOP_V0_1_DOWNLOAD_DISTRIBUTION = FAIL**
+- Recommended next: 先完成签名、公证和正常 Gatekeeper 下载验收；不据本机功能测试扩展真实数据范围。

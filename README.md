@@ -1,6 +1,8 @@
 # Sports Event OS Modular Kernel v1.1.1
 
-离线、确定性、完全合成数据的个人赛事工具。**Kernel 不认识票价、座席、退款或旅行包**；业务由可独立安装的 Python 模块提供。无 GUI、AI、网络平台连接、自动定价或真实库存操作。
+离线、确定性、完全合成数据的个人赛事工具。**Kernel 不认识票价、座席、退款或旅行包**；业务由可独立安装的 Python 模块提供。核心不依赖 GUI；无 AI、网络平台连接、自动定价或真实库存操作。
+
+可选桌面端见 [Desktop README](apps/desktop/README.md)。**0.1.0 下载包存在签名缺陷，停止使用；0.1.1 为修复签名的未公证 macOS Apple Silicon 测试版，不是免确认的正式发行版。** 详情见 [打包修复报告](DESKTOP_V0_1_1_PACKAGING_REPORT.md)。
 
 ## 安装与测试
 
