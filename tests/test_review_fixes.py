@@ -116,5 +116,77 @@ class CollectedFindingsTests(Base):
         self.assertEqual(finding.source, 'ticketing.inventory/rows/0/quantity')
 
 
+
+class UnifiedStorageTests(Base):
+    def setUp(self):
+        super().setUp()
+        self.app.demo()
+
+    def blocking_edit(self, app):
+        project = app.open_project()
+        return app.apply_changeset(project, 'ticketing.pricing', [dict(path=['rows', 0, 'price'], value=10.001)])
+
+    def test_cli_and_desktop_open_the_same_working_copy(self):
+        desktop = ApplicationService(self.root)
+        result = desktop.persist_desktop_project(self.blocking_edit(desktop))
+        self.assertEqual(result['storage'], 'DRAFT')
+        cli = ApplicationService(self.root).open_project()
+        self.assertEqual(cli.states['ticketing.pricing'].payload['rows'][0]['price'], 10.001)
+        self.assertEqual(self.app.validate_project(cli).status, 'BLOCK')
+        self.assertFalse((self.root / 'data/desktop-draft.json').exists())
+
+    def test_stale_copy_cannot_overwrite_newer_save(self):
+        from sports_os.kernel.store import ConflictError
+        first, second = ApplicationService(self.root), ApplicationService(self.root)
+        a, b = first.open_project(), second.open_project()
+        first.save_project(self.edit_price(a, 731))
+        with self.assertRaises(ConflictError):
+            second.save_project(self.edit_price(b, 732))
+        self.assertEqual(ApplicationService(self.root).open_project().states['ticketing.pricing'].payload['rows'][0]['price'], 731)
+
+    def test_saved_copy_keeps_writing_after_its_own_save(self):
+        app = ApplicationService(self.root)
+        p = app.open_project()
+        app.save_project(p := self.edit_price(p, 731))
+        app.save_project(self.edit_price(p, 732))
+
+    def test_valid_save_clears_draft_and_discard_restores_saved(self):
+        app = ApplicationService(self.root)
+        app.persist_desktop_project(self.blocking_edit(app))
+        self.assertTrue(app.has_draft())
+        restored = app.discard_draft()
+        self.assertFalse(app.has_draft())
+        self.assertEqual(restored.states['ticketing.pricing'].payload['rows'][0]['price'], 730)
+        draft = self.blocking_edit(app)
+        app.persist_desktop_project(draft)
+        fixed = app.apply_changeset(draft, 'ticketing.pricing', [dict(path=['rows', 0, 'price'], value=735)])
+        self.assertEqual(app.persist_desktop_project(fixed)['storage'], 'SAVED')
+        self.assertFalse(app.has_draft())
+
+    def test_legacy_draft_file_is_moved_into_the_store(self):
+        from sports_os.kernel.data import digest
+        app = ApplicationService(self.root)
+        draft = self.blocking_edit(app)
+        record = draft.to_dict()
+        (self.root / 'data/desktop-draft.json').write_text(app.json_text(dict(project=record, content_hash=digest(record))))
+        opened = ApplicationService(self.root).open_project()
+        self.assertEqual(opened.to_dict(), record)
+        self.assertFalse((self.root / 'data/desktop-draft.json').exists())
+        self.assertTrue(app.has_draft())
+
+    def test_desktop_reports_conflict_and_keeps_session(self):
+        import json
+        from sports_os.desktop.server import DesktopSession
+        session = DesktopSession()
+        call = lambda i, method, **params: session.handle(json.dumps(dict(id=str(i), method=method, params=params)))
+        self.assertTrue(call(1, 'open_project', workspace=str(self.root))['ok'])
+        before = session.project.to_dict()
+        other = ApplicationService(self.root)
+        other.save_project(self.edit_price(other.open_project(), 731))
+        response = call(2, 'apply_changeset', module_id='ticketing.pricing', changes=[dict(path=['rows', 0, 'price'], value=732)])
+        self.assertEqual(response['error']['code'], 'CONFLICT')
+        self.assertEqual(session.project.to_dict(), before)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -10,6 +10,7 @@ from ..application import ApplicationService
 from ..application.manifest import PROFILES
 from ..kernel.data import KernelError,canonical
 from ..kernel.snapshot import ReleaseBlocked
+from ..kernel.store import ConflictError
 from .protocol import decode,ProtocolError,MAX_LINE
 
 
@@ -24,9 +25,10 @@ class DesktopSession:
         self.require_project()
         gate=self.app.validate_project(self.project)
         release=self.app.validate_project(self.project,True)
-        paths=[self.app.store.path,self.app.root/'data/desktop-draft.json',self.app.root/'project.toml']
+        paths=[self.app.store.path,self.app.root/'project.toml']
         modified=max((p.stat().st_mtime for p in paths if p.exists()),default=0)
-        return dict(project=self.project.to_dict(),workspace=str(self.app.root),modified_at=datetime.fromtimestamp(modified,timezone.utc).isoformat(),quality=gate.to_dict(),
+        return dict(project=self.project.to_dict(),workspace=str(self.app.root),modified_at=datetime.fromtimestamp(modified,timezone.utc).isoformat(),
+                    draft=self.app.has_draft(),revision=self.project.base_revision,quality=gate.to_dict(),
                     release_quality=release.to_dict(),modules=self.app.list_modules())
 
     def dispatch(self,method,p):
@@ -43,7 +45,7 @@ class DesktopSession:
                 if set(identity)-{'id','name','timezone'}:raise ProtocolError('PROTOCOL','identity仅允许id/name/timezone')
                 project=app.create_workspace(identity,p.get('modules',[]))
             elif method=='create_demo':
-                if app.store.path.exists() or (app.root/'data/desktop-draft.json').exists():raise KernelError('目录已存在项目，Demo不得覆盖')
+                if not app.store.is_empty() or (app.root/app.LEGACY_DRAFT).exists():raise KernelError('目录已存在项目，Demo不得覆盖')
                 project=app.demo()
             else:project=app.open_desktop_project()
             self.app=app;self.project=project
@@ -57,6 +59,8 @@ class DesktopSession:
         if method=='calculate_module':
             if p.get('snapshot_id'):return self.app.calculate_snapshot_module(self.project,p['snapshot_id'],p['module_id'])
             return self.app.calculate_module(self.project,p['module_id'])
+        if method=='discard_draft':
+            self.project=self.app.discard_draft();return self.state()
         if method=='save_project':
             self.app.persist_desktop_project(self.project);return self.state()
         if method in ('enable_module','disable_module','update_module_data','apply_changeset','approve_module','approve_project'):
@@ -98,7 +102,8 @@ class DesktopSession:
             except ProtocolError as exc:return dict(id=rid,ok=False,error=dict(code=exc.code,message=str(exc),details=exc.details))
             except Exception as exc:
                 code='UNEXPECTED'
-                if isinstance(exc,ReleaseBlocked):code='SNAPSHOT'
+                if isinstance(exc,ConflictError):code='CONFLICT'
+                elif isinstance(exc,ReleaseBlocked):code='SNAPSHOT'
                 elif isinstance(exc,(KeyError,TypeError)):code='PROTOCOL'
                 elif isinstance(exc,KernelError):
                     code='VALIDATION_BLOCK'

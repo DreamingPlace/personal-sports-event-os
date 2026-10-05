@@ -46,7 +46,11 @@ class ApplicationService:
             if target.exists():
                 from ..kernel.data import load_json
                 if canonical(load_json(target))!=canonical(p.to_dict()):raise KernelError('拒绝覆盖已修改Demo')
-        if self.store.path.exists() and self.store.load().to_dict()!=projects[0].to_dict():raise KernelError('工作数据已修改，拒绝覆盖')
+        if self.store.has_draft():raise KernelError('工作区有未完成草稿，拒绝覆盖')
+        if not self.store.is_empty():
+            current=self.store.load()
+            if current.to_dict()!=projects[0].to_dict():raise KernelError('工作数据已修改，拒绝覆盖')
+            projects[0].base_revision=current.base_revision
         for name,p in zip(('version_a','version_b'),projects):
             gate=self.validate_project(p,True)
             if gate.status=='BLOCK':raise KernelError(canonical(gate.to_dict()))
@@ -65,8 +69,26 @@ class ApplicationService:
         # Only modules supply payload schemas; kernel/project creation never invents business input.
         return project
 
+    LEGACY_DRAFT='data/desktop-draft.json'
+
+    def _adopt_legacy_draft(self):
+        """v1.1.1 desktop kept drafts in a separate JSON file; move it into the store once."""
+        from ..kernel.data import load_json
+        path=safe_path(self.root,self.LEGACY_DRAFT)
+        if not path.exists():return
+        body=load_json(path)
+        if digest(body['project'])!=body['content_hash']:raise KernelError('草稿hash不符')
+        project=Project.from_dict(body['project'])
+        if project.manifest['project']['status']!='DRAFT':raise KernelError('草稿不能声称已批准')
+        if self.store.has_draft():raise KernelError('同时存在旧草稿文件和工作库草稿；请备份后删除其中一个：'+str(path))
+        self.store.save_draft(project);path.unlink()
+
     def open_project(self):
-        project=self.store.load();path=safe_path(self.root,'project.toml')
+        """Open the single working copy: an incomplete draft if one exists, otherwise the saved project."""
+        self._adopt_legacy_draft()
+        project=self.store.load_working()
+        if self.store.has_draft():return project
+        path=safe_path(self.root,'project.toml')
         if path.exists():
             manifest=parse_manifest(path)
             if manifest['project']['id']!=project.manifest['project']['id']:
@@ -156,7 +178,7 @@ class ApplicationService:
         return ''
 
     def create_workspace(self,identity,modules):
-        if self.store.path.exists() or safe_path(self.root,'project.toml').exists() or safe_path(self.root,'data/desktop-draft.json').exists():
+        if not self.store.is_empty() or safe_path(self.root,'project.toml').exists() or safe_path(self.root,self.LEGACY_DRAFT).exists():
             raise KernelError('目录已有项目，拒绝覆盖；请选择空项目目录')
         project=self.create_project(identity,modules=modules)
         for key in self.registry.order(project.enabled):
@@ -165,33 +187,30 @@ class ApplicationService:
         return project
 
     def save_desktop_draft(self,project):
-        """Persist incomplete DRAFT separately; never weakens save/release gates."""
+        """Persist an incomplete DRAFT in the working store; never weakens save/release gates."""
         from ..kernel.data import _shape
         from ..kernel.gate import MANIFEST
         _shape(project.manifest,MANIFEST,'manifest')
-        if project.manifest['project']['status']!='DRAFT':raise KernelError('未完成草稿必须为DRAFT')
-        record=project.to_dict();body=dict(project=record,content_hash=digest(record))
-        self.write_artifact('data/desktop-draft.json',self.json_text(body))
+        self.store.save_draft(project)
 
     def open_desktop_project(self):
-        from ..kernel.data import load_json
-        path=safe_path(self.root,'data/desktop-draft.json')
-        if not path.exists():return self.open_project()
-        body=load_json(path)
-        if digest(body['project'])!=body['content_hash']:raise KernelError('草稿hash不符')
-        project=Project.from_dict(body['project'])
-        if project.manifest['project']['status']!='DRAFT':raise KernelError('草稿不能声称已批准')
-        return project
+        """Kept for protocol compatibility; the desktop and CLI open the same working copy."""
+        return self.open_project()
+
+    def has_draft(self):return self.store.has_draft()
+
+    def discard_draft(self):
+        """Drop incomplete edits and return to the last saved project."""
+        self.store.discard_draft()
+        return self.open_project()
 
     def persist_desktop_project(self,project):
         gate=self.validate_project(project)
         if gate.status=='BLOCK':
             self.save_desktop_draft(project)
-            return dict(storage='DRAFT_FILE',quality=gate.to_dict())
+            return dict(storage='DRAFT',quality=gate.to_dict())
         self.save_project(project)
-        path=safe_path(self.root,'data/desktop-draft.json')
-        if path.exists():path.unlink()
-        return dict(storage='SQLITE',quality=gate.to_dict())
+        return dict(storage='SAVED',quality=gate.to_dict())
 
     def calculate_snapshot_module(self,project,snapshot_id,module_id):
         record=self.get_snapshot(project,snapshot_id)

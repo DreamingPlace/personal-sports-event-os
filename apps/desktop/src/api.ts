@@ -13,6 +13,10 @@ export type Gate = { status: string; findings: Finding[] };
 export type Workspace = {
   workspace: string;
   modified_at: string;
+  /** True when the working copy is an incomplete draft that does not pass validation yet. */
+  draft: boolean;
+  /** Workspace revision this copy was loaded at; saves from a stale revision are refused (CONFLICT). */
+  revision: number | null;
   project: {
     manifest: { project: Dict; modules: Record<string, boolean> };
     modules: Record<string, Dict>;

@@ -16,7 +16,7 @@ IDs are nonempty strings ≤128 characters; process-lifetime uniqueness, max 100
 |health, list_modules|none; health includes profiles, protocol/desktop versions, installed Registry|
 |create_project|workspace, identity:{id,name,timezone}, modules:[module_id]|
 |create_demo, open_project|workspace (independent local folder)|
-|get_project, save_project, list_enabled_modules|none|
+|get_project, save_project, list_enabled_modules, discard_draft|none|
 |get_module_schema, get_module_data|module_id|
 |enable_module|module_id; optional payload (otherwise generic schema scaffold)|
 |disable_module|module_id|
@@ -31,9 +31,9 @@ IDs are nonempty strings ≤128 characters; process-lifetime uniqueness, max 100
 |get_snapshot|snapshot_id (current project only, verified)|
 |compare_versions|old,new: snapshot IDs or WORKING|
 
-State-changing project/module calls return authoritative workspace DTO: `project`, `workspace`, `modified_at`, `quality`, `release_quality`, `modules`. Disk failure does not replace in-memory session state. `modified_at` is persisted workspace file mtime, not time opened.
+State-changing project/module calls return authoritative workspace DTO: `project`, `workspace`, `modified_at`, `draft`, `revision`, `quality`, `release_quality`, `modules`. `draft=true` means the working copy is an incomplete draft stored in the workspace SQLite; `discard_draft` drops it and returns the last saved project. Disk failure does not replace in-memory session state. `modified_at` is persisted workspace file mtime, not time opened.
 
 ## Errors
-`PROTOCOL`, `DUPLICATE_ID`, `UNKNOWN_METHOD`, `PROJECT`, `VALIDATION_BLOCK`, `DEPENDENCY`, `APPROVAL`, `SNAPSHOT`, `UNEXPECTED`; Rust/frontend add `SIDECAR` for transport failure. UI shows category/message and collapsible Technical Details. Missing dependencies and invalid approvals remain backend decisions.
+`PROTOCOL`, `DUPLICATE_ID`, `UNKNOWN_METHOD`, `PROJECT`, `VALIDATION_BLOCK`, `DEPENDENCY`, `APPROVAL`, `SNAPSHOT`, `CONFLICT`, `UNEXPECTED`; `CONFLICT` means the workspace was saved by another program (CLI or another window) after this session opened it — nothing was written and the session must reopen; Rust/frontend add `SIDECAR` for transport failure. UI shows category/message and collapsible Technical Details. Missing dependencies and invalid approvals remain backend decisions.
 
 Approvals require an explicit reference and current revision, and only record outside decisions. Neither protocol nor UI auto-approves prices or inventory. All demos and tests use synthetic facts.

@@ -22,6 +22,7 @@ const errorLabels: Dict = {
   SIDECAR: "后端连接中断",
   UNEXPECTED: "出现意外错误",
   PROJECT: "请先打开项目",
+  CONFLICT: "工作区已在别处修改",
 };
 export default function App() {
   const [health, setHealth] = useState<Dict | null>(null),
@@ -215,10 +216,9 @@ export default function App() {
         data: s.project.modules[moduleView.id].payload,
       });
     setNotice(
-      "后端工作态已保存。" +
-        (s.quality.status === "BLOCK"
-          ? "草稿仍有阻断，请前往 Quality Gate。"
-          : ""),
+      s.draft
+        ? "已保存为未完成草稿：尚未通过检查，请前往 Quality Gate 修正。"
+        : "已保存为工作态。",
     );
     return s;
   };
@@ -452,9 +452,29 @@ export default function App() {
                 <span className="muted">
                   {snapshot
                     ? "READ ONLY · " + snapshot.snapshot_id
-                    : "Working Copy"}{" "}
+                    : state.draft
+                      ? "Working Copy · 未完成草稿"
+                      : "Working Copy"}{" "}
                   · <code>{meta?.version}</code>
                 </span>
+                {!snapshot && state.draft && (
+                  <p className="draft-banner" role="note">
+                    当前工作副本是未完成草稿：命令行和桌面端看到的是同一份草稿，修正全部阻断后会自动保存为正式工作态。
+                    <button
+                      disabled={busy}
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "放弃草稿中的全部修改，回到上次保存的工作态？此操作不可撤销。",
+                          )
+                        )
+                          void run(() => mutate("discard_draft"));
+                      }}
+                    >
+                      放弃草稿
+                    </button>
+                  </p>
+                )}
               </div>
               <div className="actions">
                 {snapshot ? (
@@ -829,6 +849,18 @@ export default function App() {
             <summary>Technical Details</summary>
             <pre>{display(error.details)}</pre>
           </details>
+          {error.code === "CONFLICT" && state && (
+            <button
+              className="primary"
+              onClick={() => {
+                const path = state.workspace;
+                setError(null);
+                openProject(path);
+              }}
+            >
+              重新打开项目（放弃本窗口未保存的修改）
+            </button>
+          )}
           <button onClick={() => setError(null)}>关闭错误提示</button>
         </div>
       )}

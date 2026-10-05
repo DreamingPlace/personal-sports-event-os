@@ -24,6 +24,8 @@ class Project:
     manifest: dict
     states: dict[str, ModuleState] = field(default_factory=dict)
     evidence: list = field(default_factory=list)
+    # Workspace revision this copy was loaded at (Store); None = not loaded from a store. Never serialized.
+    base_revision: int | None = field(default=None, compare=False, repr=False)
 
     @property
     def enabled(self):
