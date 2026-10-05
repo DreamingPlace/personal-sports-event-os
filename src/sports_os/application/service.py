@@ -64,6 +64,7 @@ class ApplicationService:
         self.save_project(projects[0]);return projects[0]
 
     def list_modules(self):return self.registry.list()
+    def plugin_problems(self):return self.registry.problems()
 
     def create_project(self,identity,profile=None,modules=()):
         if profile is not None and profile not in PROFILES:raise KernelError('未知预设')
@@ -382,7 +383,7 @@ class ApplicationService:
         files['manifest.json']=self.json_text(dict(snapshot_id=record['snapshot_id'],files={k:digest(v) for k,v in files.items()}))
         target=safe_path(self.root,'outputs/releases/'+record['snapshot_id'])
         if target.exists():
-            if {p.name for p in target.iterdir()}!=set(files) or any(safe_path(target,k).read_text()!=v for k,v in files.items()):
+            if {p.name for p in target.iterdir()}!=set(files) or any(safe_path(target,k).read_text(encoding='utf-8')!=v for k,v in files.items()):
                 raise ReleaseBlocked('发布目录不同，拒绝覆盖')
             return target
         import tempfile

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { open } from "@tauri-apps/plugin-dialog";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { isTauri } from "@tauri-apps/api/core";
@@ -90,14 +90,33 @@ export default function App() {
       setBusy(false);
     }
   }, []);
+  // Workspace to reopen after the sidecar restarts (everything is persisted, so nothing is lost).
+  const lastWorkspace = useRef<string | null>(null);
+  useEffect(() => {
+    lastWorkspace.current = state?.workspace ?? null;
+  }, [state?.workspace]);
   const connect = useCallback(
     () =>
       run(async () => {
         setHealth(await sportsOS.call("health"));
-        setState(null);
         setDirty(false);
         setSnapshot(null);
         setModuleView(null);
+        const reopen = lastWorkspace.current;
+        if (!reopen) {
+          setState(null);
+          return;
+        }
+        try {
+          setState(
+            await sportsOS.call<Workspace>("open_project", {
+              workspace: reopen,
+            }),
+          );
+          setNotice("后端已重新连接，项目已从磁盘重新打开。");
+        } catch {
+          setState(null);
+        }
       }),
     [run],
   );
@@ -273,7 +292,9 @@ export default function App() {
           Sports Event OS
         </button>
         <span className="environment">SYNTHETIC / LOCAL</span>
-        <span className="app-version">Desktop 0.1</span>
+        <span className="app-version">
+          Desktop {health?.desktop_version ?? ""}
+        </span>
       </header>
       {!health ? (
         <main className="startup">

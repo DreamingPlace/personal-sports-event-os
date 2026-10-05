@@ -14,6 +14,16 @@ from ..kernel.store import ConflictError
 from .protocol import decode,ProtocolError,MAX_LINE
 
 
+DESKTOP_VERSION='0.2.0'
+PROTOCOL_VERSION='0.2'
+
+
+class Params(dict):
+    """Request params: a missing required key is the client's protocol error, not a server defect."""
+    def __missing__(self,key):
+        raise ProtocolError('PROTOCOL',f'缺少参数：{key}')
+
+
 class DesktopSession:
     def __init__(self):
         self.app=None;self.project=None;self.seen=set();self.lock=threading.Lock()
@@ -34,7 +44,9 @@ class DesktopSession:
     def dispatch(self,method,p):
         if method=='health':
             from ..kernel import Registry
-            return dict(protocol_version='0.1',desktop_version='0.1.1',modules=Registry.discover().list(),profiles=PROFILES)
+            registry=Registry.discover()
+            return dict(protocol_version=PROTOCOL_VERSION,desktop_version=DESKTOP_VERSION,modules=registry.list(),
+                        plugin_problems=registry.problems(),profiles=PROFILES)
         if method=='list_modules':
             from ..kernel import Registry
             return Registry.discover().list()
@@ -97,14 +109,13 @@ class DesktopSession:
                 if len(self.seen)>=100000:raise ProtocolError('PROTOCOL','会话请求上限，请重启应用')
                 self.seen.add(rid)
                 # Never let a plugin's accidental print contaminate JSON Lines.
-                with contextlib.redirect_stdout(sys.stderr):result=self.dispatch(req['method'],req['params'])
+                with contextlib.redirect_stdout(sys.stderr):result=self.dispatch(req['method'],Params(req['params']))
                 return dict(id=rid,ok=True,result=result)
             except ProtocolError as exc:return dict(id=rid,ok=False,error=dict(code=exc.code,message=str(exc),details=exc.details))
             except Exception as exc:
                 code='UNEXPECTED'
                 if isinstance(exc,ConflictError):code='CONFLICT'
                 elif isinstance(exc,ReleaseBlocked):code='SNAPSHOT'
-                elif isinstance(exc,(KeyError,TypeError)):code='PROTOCOL'
                 elif isinstance(exc,KernelError):
                     code='VALIDATION_BLOCK'
                     if req['method'].startswith('approve'):code='APPROVAL'
@@ -112,7 +123,10 @@ class DesktopSession:
                 trace=traceback.format_exc();print(trace,file=sys.stderr)
                 # Full tracebacks stay on stderr; set SPORTS_OS_DEBUG=1 to also return them to the client.
                 details=dict(technical=trace if os.environ.get('SPORTS_OS_DEBUG')=='1' else f'{type(exc).__name__}: {exc}')
-                if self.project is not None:details['quality']=self.app.validate_project(self.project).to_dict()
+                if self.project is not None:
+                    # Best effort: a failure here must not turn a structured error into a dead sidecar.
+                    try:details['quality']=self.app.validate_project(self.project).to_dict()
+                    except Exception as inner:details['quality_error']=f'{type(inner).__name__}: {inner}'
                 return dict(id=rid,ok=False,error=dict(code=code,message=str(exc),details=details))
 
 
@@ -128,7 +142,9 @@ def main():
             try:response=session.handle(line.decode('utf-8'))
             except UnicodeDecodeError:response=dict(id=None,ok=False,error=dict(code='PROTOCOL',message='请求不是UTF-8',details={}))
         # json_text keeps Decimal exact; compact one-line frame, never pretty JSON on stdout.
-        normalized=json.loads(ApplicationService.json_text(response))
+        try:normalized=json.loads(ApplicationService.json_text(response))
+        except Exception as exc:  # an unserializable result must still produce exactly one reply
+            normalized=dict(id=response.get('id'),ok=False,error=dict(code='UNEXPECTED',message=f'结果无法序列化：{type(exc).__name__}: {exc}',details={}))
         print(canonical(normalized),flush=True)
 
 if __name__=='__main__':main()

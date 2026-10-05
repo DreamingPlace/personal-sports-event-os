@@ -51,7 +51,7 @@ def export_release(record,root):
     files['manifest.json']=json.dumps(manifest,ensure_ascii=False,indent=2,sort_keys=True)+'\n'
     root=Path(root);target=root/record['snapshot_id']
     if target.exists():
-        if any(not (target/name).is_file() or (target/name).read_text()!=text for name,text in files.items()):
+        if any(not (target/name).is_file() or (target/name).read_text(encoding='utf-8')!=text for name,text in files.items()):
             raise ReleaseBlocked('BLOCK：已存在发布目录与快照不符；不覆盖')
         return target
     # Validate everything before creating any release artifact.

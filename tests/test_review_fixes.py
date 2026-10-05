@@ -259,5 +259,69 @@ class CliTests(Base):
         self.assertEqual([f['path'] for f in facts], ['/S01/VIP/price'])
 
 
+
+class RobustnessTests(Base):
+    def registry_with(self, module):
+        from sports_os.kernel import Registry
+        registry = Registry.discover()
+        registry.register(module)
+        return registry
+
+    def test_unexpected_plugin_exception_becomes_a_finding(self):
+        from sports_os.kernel import Module
+
+        class Buggy(Module):
+            module_id = 'synthetic.buggy'
+            def schema(self):
+                return {'type': 'object', 'properties': {}, 'additionalProperties': False}
+            def validate(self, context, gate):
+                return [][1]  # IndexError: previously escaped the gate and crashed the caller
+            def cross_validate(self, context, gate):
+                return None.missing  # AttributeError
+
+        app = ApplicationService(self.root, self.registry_with(Buggy()))
+        p = app.enable_module(self.p, 'synthetic.buggy', {})
+        findings = app.validate_project(p).findings
+        self.assertTrue(any(f.rule_id == 'M_INPUT' and 'IndexError' in f.actual for f in findings))
+
+    def test_broken_plugin_does_not_hide_the_others(self):
+        import sys
+        root = self.root / 'plugins'
+        dist = root / 'broken_extension-0.1.dist-info'
+        dist.mkdir(parents=True)
+        (dist / 'METADATA').write_text('Metadata-Version: 2.1\nName: broken-extension\nVersion: 0.1\n')
+        (dist / 'entry_points.txt').write_text('[sports_os.modules]\nsynthetic.broken = broken_extension:Missing\n')
+        (root / 'broken_extension.py').write_text('raise RuntimeError("synthetic import failure")\n')
+        sys.path.insert(0, str(root))
+        self.addCleanup(lambda: sys.path.remove(str(root)))
+        from sports_os.kernel import Registry
+        from sports_os.kernel.data import KernelError
+        registry = Registry.discover()
+        self.assertIn('ticketing.pricing', {m['module_id'] for m in registry.list()})
+        self.assertIn('synthetic.broken', registry.load_errors)
+        self.assertIn('RuntimeError', registry.load_errors['synthetic.broken'])
+        with self.assertRaisesRegex(KernelError, '无法加载'):
+            registry.get('synthetic.broken')
+
+    def test_store_closes_connections(self):
+        import gc
+        import warnings
+        self.app.demo()
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter('always', ResourceWarning)
+            for _ in range(3):
+                ApplicationService(self.root).open_project()
+            gc.collect()
+        self.assertFalse([w for w in caught if 'sqlite3.Connection' in str(w.message)])
+
+    def test_sidecar_missing_param_is_protocol_error(self):
+        import json
+        from sports_os.desktop.server import DesktopSession
+        session = DesktopSession()
+        r = session.handle(json.dumps(dict(id='1', method='open_project', params={})))
+        self.assertEqual(r['error']['code'], 'PROTOCOL')
+        self.assertIn('workspace', r['error']['message'])
+
+
 if __name__ == '__main__':
     unittest.main()
