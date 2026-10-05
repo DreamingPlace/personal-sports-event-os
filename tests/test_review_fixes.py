@@ -5,7 +5,7 @@ from pathlib import Path
 
 from sports_os.application import ApplicationService
 from sports_os.application import schemas
-from sports_os.models.demo import make_demo
+from sports_os_legacy.models.demo import make_demo
 
 
 class Base(unittest.TestCase):
@@ -321,6 +321,38 @@ class RobustnessTests(Base):
         r = session.handle(json.dumps(dict(id='1', method='open_project', params={})))
         self.assertEqual(r['error']['code'], 'PROTOCOL')
         self.assertIn('workspace', r['error']['message'])
+
+
+
+class StructureTests(unittest.TestCase):
+    def test_core_does_not_import_legacy(self):
+        import subprocess
+        import sys
+        code = ('import sys, sports_os.kernel, sports_os.application, sports_os.cli, sports_os.desktop.server;'
+                'from sports_os.kernel import Registry; Registry.discover();'
+                'print(sorted(m for m in sys.modules if m.startswith("sports_os_legacy")))')
+        out = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True, check=True).stdout.strip()
+        self.assertEqual(out, '[]')
+
+    def test_modules_publish_display_metadata(self):
+        from sports_os.kernel import Registry
+        for info in Registry.discover().list():
+            self.assertNotEqual(info['display_name'], info['module_id'], info['module_id'])
+            self.assertNotEqual(info['category'], 'Other', info['module_id'])
+            self.assertTrue(info['description'], info['module_id'])
+
+    def test_third_party_module_without_metadata_falls_back_to_id(self):
+        from sports_os.kernel import Module, Registry
+
+        class Plain(Module):
+            module_id = 'synthetic.plain'
+            def schema(self):
+                return {'type': 'object', 'properties': {}, 'additionalProperties': False}
+
+        registry = Registry()
+        registry.register(Plain())
+        self.assertEqual(registry.list()[0]['display_name'], 'synthetic.plain')
+        self.assertEqual(registry.list()[0]['category'], 'Other')
 
 
 if __name__ == '__main__':

@@ -3,6 +3,9 @@ from .products import Products, BASE
 
 class Travel(Products):
     module_id='product.travel'
+    display_name='旅行包 Travel'
+    category='Product'
+    description='含门票与住宿服务的旅行包及其成本和报价'
     allowed_types=('TRAVEL',)
     row_schema=obj(dict(BASE,travel=obj(dict(guests=I,expected_rooms=I,room_quantity=I,nights=I,
         room_cost=N,service_per_guest=N,other_cost=N,pricing_method={'enum':['markup','margin']},

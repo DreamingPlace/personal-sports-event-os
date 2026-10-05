@@ -4,6 +4,9 @@ RATES={'type':'object','additionalProperties':RATE}
 
 class MultiplicativeDemandModel(Module):
     module_id='demand.multiplicative'
+    display_name='需求 Multiplicative'
+    category='Finance'
+    description='按场次需求率×票档需求率得到各容量池需求率的情景'
     provides=('demand',)
     requires_capabilities=('capacity',)
     def schema(self):
@@ -24,6 +27,9 @@ class MultiplicativeDemandModel(Module):
 
 class DirectDemandModel(Module):
     module_id='demand.direct'
+    display_name='需求 Direct'
+    category='Finance'
+    description='直接给出每个容量池需求率的情景'
     provides=('demand',)
     requires_capabilities=('capacity',)
     def schema(self):

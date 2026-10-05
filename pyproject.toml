@@ -56,4 +56,4 @@ ignore = ["E701", "E702", "E501", "F403", "F405", "UP", "E731", "E741", "E402", 
 # Names imported here are re-exported to every module through `from .common import *`.
 "src/sports_os/modules/common.py" = ["F401"]
 # Legacy v1.0 compatibility diff: the nested helper runs inside the same loop iteration.
-"src/sports_os/versioning/diff.py" = ["B023"]
+"src/sports_os_legacy/versioning/diff.py" = ["B023"]

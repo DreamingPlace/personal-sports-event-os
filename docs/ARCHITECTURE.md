@@ -53,3 +53,17 @@ quality.declarations的可选finance.revenue依赖保留：该模块summary明�
 - 内核按依赖图验证：某模块存在BLOCK时，依赖它的模块不再运行验证，只记录一条 `DEPENDENCY_BLOCKED`（actual为阻断的上游模块），避免重复报错或在坏输入上崩溃。
 - `M_INPUT`/`M_CROSS` 仍保留为兜底：只在插件代码抛出未预期异常时出现，表示插件需要修正，而不是正常的输入错误。
 - 第三方插件建议：`ck=self.checks(gate)`（RowsModule）或 `Checks(gate, module_id)`，用 `ck(条件, rule_id, source, message, expected, actual, severity)` 记录问题；`require()` 只用于计算阶段的不变式。
+
+## v1.2 代码布局
+
+|位置|内容|
+|---|---|
+|`src/sports_os/kernel/`|业务无关内核：Project/Module契约、Registry、Gate、Store（唯一工作库）、Snapshot、Diff|
+|`src/sports_os/modules/`|内置业务模块；每个模块提供schema、验证、计算及展示元数据（display_name/category/description）|
+|`src/sports_os/application/`|ApplicationService（CLI与桌面端共用）、manifest、schema文件与数据字典生成|
+|`src/sports_os/desktop/`|桌面端sidecar（JSON Lines协议）|
+|`src/sports_os/cli.py`|命令行|
+|`src/sports_os_legacy/`|冻结的v1.0代码：单文档模型、旧门禁、收入引擎、版本、导出、旧CLI（`--legacy`）及v1.0→模块化适配器|
+|`apps/desktop/src/`|桌面前端：`App.tsx`为会话外壳，`pages/`为各页面，`views/`为侧栏、向导、错误与批准对话框，`Editor.tsx`为schema驱动编辑器|
+
+内核、业务模块和sidecar在导入时不加载 `sports_os_legacy`（有测试保证）。`sports_os.application` 只在三处按需使用：`--legacy`、`migrate-v10` 和生成Demo（Demo由v1.0示例经适配器生成，两种格式描述同一虚构赛事）。

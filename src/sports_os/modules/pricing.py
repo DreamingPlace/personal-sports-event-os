@@ -4,6 +4,9 @@ LIFECYCLE=('price_version','status','approval_ref')
 
 
 class Pricing(RowsModule):
+    display_name='票价 Pricing'
+    category='Ticketing'
+    description='每个场次和价格类别的票价'
     module_id='ticketing.pricing'
     module_version='1.2.0'
     schema_version='2'

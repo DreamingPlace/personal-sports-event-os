@@ -26,15 +26,15 @@ class ApplicationService:
 
     @staticmethod
     def run_legacy(argv):
-        from .legacy import main
+        from sports_os_legacy.cli import main
         return main(argv)
 
     def migrate_v10(self,data):
-        from .migration import migrate_v10
+        from sports_os_legacy.migration import migrate_v10
         return migrate_v10(data,self.registry)
 
     def demo(self,profile=None):
-        from ..models.demo import make_demo,make_version_b
+        from sports_os_legacy.models.demo import make_demo,make_version_b
         a=make_demo();b=make_version_b(a)
         projects=[self.migrate_v10(d) for d in (a,b)]
         if profile is not None:

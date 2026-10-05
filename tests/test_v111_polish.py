@@ -5,8 +5,8 @@ from decimal import Decimal
 from pathlib import Path
 import json
 from sports_os.application import ApplicationService
-from sports_os.application.migration import migrate_v10
-from sports_os.models.demo import make_demo
+from sports_os_legacy.migration import migrate_v10
+from sports_os_legacy.models.demo import make_demo
 from sports_os.kernel.snapshot import ReleaseBlocked
 
 

@@ -3,6 +3,9 @@ from .common import *
 from .rule_base import RuleModule
 
 class RightsReturn(RuleModule):
+    display_name='权益回流规则'
+    category='Rules'
+    description='未使用权益在开赛前回流公开池的时点'
     module_id='ticketing.rights_return'
     content_schema=obj(dict(hours_before=I))
     def applicability(self,r,c,ck,at):

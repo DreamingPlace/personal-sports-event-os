@@ -2,6 +2,9 @@ from .common import *
 from .rule_base import RuleModule
 
 class Refund(RuleModule):
+    display_name='退票规则'
+    category='Rules'
+    description='退票窗口与手续费率'
     module_id='ticketing.refund'
     content_schema=obj(dict(coverage_start=S,coverage_end=S,windows=arr(obj(dict(start=S,end=S,fee_rate=RATE)))))
     def applicability(self,r,c,ck,at):

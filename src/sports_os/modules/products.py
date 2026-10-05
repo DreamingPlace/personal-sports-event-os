@@ -63,4 +63,7 @@ class Products(RowsModule):
 
 class Pass(Products):
     module_id='product.pass'
+    display_name='票务产品 Pass'
+    category='Product'
+    description='单场票与通票产品及其占用的场次座区'
     allowed_types=('SINGLE','PASS')

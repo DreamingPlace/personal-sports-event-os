@@ -1,6 +1,9 @@
 from .common import *
 
 class Rights(RowsModule):
+    display_name='付费权益 Rights'
+    category='Ticketing'
+    description='付费权益的数量、结算方式和履约率'
     module_id='ticketing.rights'
     module_version='1.1.1'
     schema_version='2'

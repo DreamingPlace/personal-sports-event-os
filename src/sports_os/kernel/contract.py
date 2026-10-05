@@ -47,6 +47,10 @@ class Module:
     Schema and semantic migrations must be explicit, even when schema is unchanged.
     """
     module_id = ''
+    # Presentation metadata for UIs (the desktop app shows these; nothing in the kernel depends on them).
+    display_name = ''   # human name; UIs fall back to module_id
+    category = 'Other'  # grouping label, e.g. Core / Ticketing / Rules / Finance / Product / Project
+    description = ''    # one line: what data this module holds
     module_version = '1.1.0'
     schema_version = '1'
     dependencies = ()

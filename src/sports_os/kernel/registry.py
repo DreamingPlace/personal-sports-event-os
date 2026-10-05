@@ -42,7 +42,8 @@ class Registry:
             raise KernelError('未安装模块：'+module_id) from None
 
     def list(self):
-        return [dict(module_id=m.module_id,module_version=m.module_version,schema_version=m.schema_version,
+        return [dict(module_id=m.module_id,display_name=m.display_name or m.module_id,category=m.category or 'Other',description=m.description,
+                     module_version=m.module_version,schema_version=m.schema_version,
                      dependencies=list(m.dependencies),optional_dependencies=list(m.optional_dependencies),
                      provides=list(m.provides),requires_capabilities=list(m.requires_capabilities),
                      optional_capabilities=list(m.optional_capabilities))

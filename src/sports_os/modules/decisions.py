@@ -1,6 +1,9 @@
 from .common import *
 
 class Decisions(RowsModule):
+    display_name='决策 Decisions'
+    category='Project'
+    description='业务决策记录及其来源和影响的字段'
     module_id='project.decisions'
     identity=('decision_id',)
     row_schema=obj(dict(decision_id=S,issue=S,options=arr(S),decision=S,reason=S,

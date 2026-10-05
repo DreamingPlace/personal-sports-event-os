@@ -1,6 +1,9 @@
 from .common import *
 
 class Schedule(RowsModule):
+    display_name='赛程 Schedule'
+    category='Core'
+    description='场次、阶段、起止时间与可选销售期'
     module_id='core.schedule'
     module_version='1.1.1'
     schema_version='2'

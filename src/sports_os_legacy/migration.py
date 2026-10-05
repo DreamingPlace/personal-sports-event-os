@@ -1,8 +1,8 @@
 """Explicit v1.0 input adapter. The modular kernel never imports this module."""
 from copy import deepcopy
-from ..models import assert_model
-from ..kernel import Project,ModuleState
-from ..kernel.data import digest,KernelError
+from .models import assert_model
+from sports_os.kernel import Project,ModuleState
+from sports_os.kernel.data import digest,KernelError
 
 RULE_MODULES={k:'ticketing.'+k for k in ('refund','launch','transfer','identity','rights_return')}
 

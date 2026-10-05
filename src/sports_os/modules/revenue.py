@@ -3,6 +3,9 @@ from decimal import localcontext, ROUND_HALF_EVEN
 from .common import *
 
 class Revenue(Module):
+    display_name='收入 Revenue'
+    category='Finance'
+    description='由容量、票价、需求和权益计算的收入预览（无输入数据）'
     module_id='finance.revenue'
     module_version='1.1.1'
     requires_capabilities=('capacity','demand','prices','schedule')

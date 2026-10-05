@@ -1,6 +1,9 @@
 from .common import *
 
 class Venue(RowsModule):
+    display_name='场馆 Venue'
+    category='Core'
+    description='场馆及其IANA时区'
     module_id='core.venue'
     provides=('venues',)
     identity=('venue_id',)

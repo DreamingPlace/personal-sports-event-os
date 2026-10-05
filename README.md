@@ -148,7 +148,7 @@ python -m sports_os --legacy validate
 "custom.checklist" = "custom_package:Checklist"
 ```
 
-继承 `sports_os.kernel.Module`，实现 `module_id`、`schema()`；按需实现validate、cross_validate、calculate、diff、export、release_requirements、migrate并声明依赖。不要把批准或版本字段放进payload；支持requires_capabilities及optional_capabilities。calculate/export可不实现。安装后`modules`即能发现，不需修改Kernel注册表。完整示例见 [架构](V1_1_ARCHITECTURE.md)。插件是可信Python代码，不是沙箱。
+继承 `sports_os.kernel.Module`，实现 `module_id`、`schema()`；按需实现validate、cross_validate、calculate、diff、export、release_requirements、migrate并声明依赖。不要把批准或版本字段放进payload；支持requires_capabilities及optional_capabilities。calculate/export可不实现。可设置 `display_name`、`category`、`description`，桌面端直接显示这些名称，无需修改前端。验证用 `self.checks(gate)` 收集问题（见[架构](docs/ARCHITECTURE.md)）。安装后`modules`即能发现，不需修改Kernel注册表；导入失败的插件会被跳过并在 `health.plugin_problems` 中报告。完整示例见 [架构](V1_1_ARCHITECTURE.md)。插件是可信Python代码，不是沙箱。
 
 ## 边界
 

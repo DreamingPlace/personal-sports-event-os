@@ -2,6 +2,9 @@ from .common import *
 from .rule_base import RuleModule
 
 class Launch(RuleModule):
+    display_name='开票规则'
+    category='Rules'
+    description='分轮开票时间与各轮比例'
     module_id='ticketing.launch'
     content_schema=obj(dict(denominator={'const':'PUBLIC_POOL'},rounds=arr(obj(dict(at=S,fraction=RATE)))))
     def applicability(self,r,c,ck,at):

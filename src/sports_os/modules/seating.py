@@ -4,6 +4,9 @@ HOLDS=('functional_hold','broadcast_hold','free_rights','other_hold')
 def sellable(row):return row['physical_capacity']-sum(row[k] for k in HOLDS)
 
 class Seating(RowsModule):
+    display_name='座席 Seating'
+    category='Ticketing'
+    description='各场次座区物理容量、扣减与可售容量'
     module_id='ticketing.seating'
     requires_capabilities=('schedule','prices')
     provides=('capacity',)

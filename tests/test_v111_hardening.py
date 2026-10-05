@@ -2,7 +2,7 @@ import unittest
 import tempfile
 from copy import deepcopy
 from sports_os.application import ApplicationService
-from sports_os.models.demo import make_demo
+from sports_os_legacy.models.demo import make_demo
 from sports_os.kernel import Module, ModuleState
 from sports_os.kernel.data import KernelError, canonical
 from sports_os.kernel.snapshot import ReleaseBlocked

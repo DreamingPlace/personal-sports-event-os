@@ -2,6 +2,9 @@ from collections import defaultdict
 from .common import *
 
 class Inventory(RowsModule):
+    display_name='库存 Inventory'
+    category='Ticketing'
+    description='各容量池按状态和渠道划分的库存数量'
     module_id='ticketing.inventory'
     requires_capabilities=('capacity',)
     optional_capabilities=('rights',)

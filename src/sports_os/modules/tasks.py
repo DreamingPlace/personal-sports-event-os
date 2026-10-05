@@ -1,6 +1,9 @@
 from .common import *
 
 class Tasks(RowsModule):
+    display_name='任务 Tasks'
+    category='Project'
+    description='赛前、赛中、赛后任务及其依赖与完成证据'
     module_id='project.tasks'
     optional_capabilities=('schedule',)
     identity=('task_id',)
