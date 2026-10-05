@@ -1,4 +1,5 @@
-import unittest,tempfile
+import unittest
+import tempfile
 from pathlib import Path
 from sports_os.models import assert_model, ModelError, sellable, occupancy
 from sports_os.models.demo import make_demo

@@ -1,9 +1,12 @@
-import io,json,subprocess,sys,tempfile,unittest
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from unittest.mock import patch
 from sports_os.desktop.server import DesktopSession
-from sports_os.application import ApplicationService
 
 class DesktopProtocolTests(unittest.TestCase):
     def setUp(self):

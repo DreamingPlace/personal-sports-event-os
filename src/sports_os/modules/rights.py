@@ -17,14 +17,17 @@ class Rights(RowsModule):
             key=pool_key(r);require(key in pools,'权益引用不存在的座区')
             require(r['quantity']<=pools[key]['sellable_capacity'],'权益数量超过可售池')
             require(r['strategy']!='DISCOUNT_RATE' or r['value']<=1,'DISCOUNT_RATE表示实付比例，必须0到1')
+            require(r['strategy']!='FIXED_PRICE' or D(r['value'])==D(money(D(r['value']))),'FIXED_PRICE单价最多两位小数')
+            require(r['strategy']!='FACE_VALUE' or D(r['value'])==1,'FACE_VALUE按面值结算，value必须为1（其他取值会被静默忽略）')
             require(bool(r['expected_fulfillment']),'权益履约情景不可缺失')
 
     def calculate(self,c):
         pools=c.provider('capacity');prices=c.provider('prices');result={}
         for r in self.rows(c):
             key=pool_key(r);face=prices[price_key(pools[key])]
-            effective={'FACE_VALUE':lambda:face,'FIXED_PRICE':lambda:D(r['value']),
-                       'DISCOUNT_RATE':lambda:face*D(r['value'])}[r['strategy']]()
+            if r['strategy']=='FACE_VALUE':effective=face
+            elif r['strategy']=='FIXED_PRICE':effective=D(r['value'])
+            else:effective=face*D(r['value'])
             result[key]=dict(quantity=r['quantity'],effective_unit_price=effective,billing_basis=r['billing_basis'],
                              expected_fulfillment={k:D(v) for k,v in r['expected_fulfillment'].items()})
         return result

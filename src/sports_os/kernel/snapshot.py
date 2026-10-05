@@ -1,5 +1,4 @@
 from datetime import datetime,timezone
-from copy import deepcopy
 from .data import canonical,digest,KernelError
 from .contract import Project
 from .gate import validate_project

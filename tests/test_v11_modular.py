@@ -11,12 +11,11 @@ from unittest.mock import patch
 from sports_os.application import ApplicationService
 from sports_os.application.migration import migrate_v10
 from sports_os.application.manifest import render_manifest,parse_manifest
-from sports_os.kernel import Module,ModuleState,Project,Registry
+from sports_os.kernel import Module,ModuleState,Registry
 from sports_os.kernel.data import KernelError,canonical
 from sports_os.kernel.snapshot import verify_snapshot,ReleaseBlocked
 from sports_os.models.demo import make_demo
 from sports_os.revenue import calculate as legacy_calculate
-from sports_os.modules.common import pool_key
 
 class ModularTests(unittest.TestCase):
     def setUp(self):

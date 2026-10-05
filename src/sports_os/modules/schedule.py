@@ -1,5 +1,4 @@
 from .common import *
-from zoneinfo import ZoneInfo
 
 class Schedule(RowsModule):
     module_id='core.schedule'

@@ -18,7 +18,7 @@ python tests/run_v111_acceptance.py
 
 Windows 激活用 `.venv\Scripts\activate`。核心仅标准库；`excel` 用于保留的只读 Excel 适配器及其测试。不要跳过包安装：模块来自安装元数据的 `sports_os.modules` entry points；仅设置 PYTHONPATH 不等于完成安装。离线且已有 setuptools≥68/openpyxl 时可 `python -m pip install --no-build-isolation --no-deps -e .`。
 
-本轮基线 **140 项**、新增 **40 项**，合计 **180 项**；实际结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构。旧测试文件、旧工作样本和批准快照保留原样。
+本轮基线 **140 项**、新增 **40 项**，合计 **180 项**；此后桌面端与打包测试使 `unittest discover` 共 **198 项**（非 macOS 上 4 项打包测试按设计跳过）。实际结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构。旧测试文件、旧工作样本和批准快照保留原样。
 
 ## 立即运行
 

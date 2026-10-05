@@ -11,7 +11,10 @@ test.beforeEach(async ({ page }) => {
   workspace = mkdtempSync(join(tmpdir(), "sports-desktop-e2e-"));
   seq = 0;
   child = spawn(
-    resolve("src-tauri/binaries/sports-os-sidecar-aarch64-apple-darwin"),
+    resolve(
+      process.env.SPORTS_SIDECAR ??
+        "src-tauri/binaries/sports-os-sidecar-aarch64-apple-darwin",
+    ),
     [],
     { env: { PATH: "/usr/bin:/bin", HOME: process.env.HOME! } },
   );

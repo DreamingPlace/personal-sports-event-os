@@ -1,7 +1,6 @@
 import unittest
 import tempfile
 from copy import deepcopy
-from decimal import Decimal
 from sports_os.application import ApplicationService
 from sports_os.models.demo import make_demo
 from sports_os.kernel import Module, ModuleState
@@ -160,7 +159,9 @@ class HardeningTests(unittest.TestCase):
         self.assertEqual(self.app.enable_module(self.p,'ticketing.pricing').to_dict(),self.p.to_dict())
     def test_cli_edit_and_manual_approval(self):
         """CLI | patch→snapshot BLOCK→approve-module→approve-project→snapshot | PASS"""
-        import json,subprocess,sys
+        import json
+        import subprocess
+        import sys
         from pathlib import Path
         self.app.save_project(self.p)
         path=Path(self.app.root)/'patch.json';path.write_text(json.dumps([dict(path=['rows',0,'price'],value=731)]))
@@ -203,7 +204,8 @@ class HardeningTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(),before)
     def test_cli_explicit_project_migration(self):
         """兼容CLI | 旧工作库执行migrate-project | 成功且重新批准前发布BLOCK"""
-        import subprocess,sys
+        import subprocess
+        import sys
         from pathlib import Path
         from sports_os.kernel import Project
         from sports_os.kernel.data import load_json

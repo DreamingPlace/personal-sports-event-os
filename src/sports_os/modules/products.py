@@ -46,6 +46,9 @@ class Products(RowsModule):
             result=details[p['product_id']]
             require(p['price'] is not None or p['price_claim']=='SUM_FACE_PRICES','独立产品漏价')
             require(p['price_claim']!='SUM_FACE_PRICES' or result['total_price']==result['ticket_amount'],'声称票价之和但价格不符')
+            if result['total_price']<result['ticket_amount']:
+                g.add('PRODUCT_BELOW_FACE',self.module_id+'/'+p['product_id'],'产品总价不低于所含门票面值之和（折扣请确认）',
+                      str(result['total_price']),'产品总价低于面值之和 %s（差额 %s），请确认是有意折扣而非输入错误'%(result['ticket_amount'],result['ticket_amount']-result['total_price']),'WARNING')
 
 class Pass(Products):
     module_id='product.pass'

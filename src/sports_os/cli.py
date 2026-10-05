@@ -1,6 +1,5 @@
 """Thin CLI over ApplicationService. No direct business-engine imports."""
 import argparse
-import json
 import sys
 import sqlite3
 from .application import ApplicationService

@@ -328,7 +328,9 @@ class ApplicationService:
             if {p.name for p in target.iterdir()}!=set(files) or any(safe_path(target,k).read_text()!=v for k,v in files.items()):
                 raise ReleaseBlocked('发布目录不同，拒绝覆盖')
             return target
-        import tempfile,os,shutil
+        import tempfile
+        import os
+        import shutil
         target.parent.mkdir(parents=True,exist_ok=True)
         from pathlib import Path
         temporary=Path(tempfile.mkdtemp(prefix='.staging-',dir=target.parent))
@@ -354,7 +356,8 @@ class ApplicationService:
     def write_artifact(self,name,content):
         path=safe_path(self.root,name);path.parent.mkdir(parents=True,exist_ok=True)
         # Atomic replacement of working artifacts; never used for frozen release paths.
-        import tempfile,os
+        import tempfile
+        import os
         fd,tmp=tempfile.mkstemp(prefix='.write-',dir=path.parent)
         try:
             with os.fdopen(fd,'w',encoding='utf-8') as f:f.write(content)
