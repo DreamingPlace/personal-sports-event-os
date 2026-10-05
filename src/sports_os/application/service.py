@@ -297,26 +297,32 @@ class ApplicationService:
         return out
 
     def migrate_project(self,project):
-        """Explicit all-installed-module migration; persist only after every migration succeeds."""
-        out=deepcopy(project)
+        """Explicit all-installed-module migration; persist only after every migration succeeds.
+
+        The project version advances once for the whole migration, not once per module."""
+        out=deepcopy(project);changed=False
         for key in sorted(out.states):
             state=out.states[key]
             if key not in out.enabled:continue
             module=self.registry.get(key)
             if (state.module_version,state.schema_version)!=(module.module_version,module.schema_version):
-                out=self.migrate_module(out,key)
+                out=self._migrate_state(out,key);changed=True
+        if changed:self._configuration_changed(out)
         gate=self.validate_project(out)
         if gate.status=='BLOCK':raise GateBlocked(gate)
         return out
 
     def migrate_module(self,project,module_id):
-        out=deepcopy(project);module=self.registry.get(module_id);state=out.states[module_id]
+        return self._configuration_changed(self._migrate_state(deepcopy(project),module_id))
+
+    def _migrate_state(self,out,module_id):
+        module=self.registry.get(module_id);state=out.states[module_id]
         state.payload=module.migrate(state.module_version,state.schema_version,deepcopy(state.payload))
         state.module_version=module.module_version;state.schema_version=module.schema_version
         state.data_version=self._next_revision(state.data_version)
         state.payload=module.prepare_revision(state.payload,state.data_version)
         state.status='DRAFT';state.approval_ref=None
-        return self._configuration_changed(out)
+        return out
 
     def validate_project(self,project,for_release=False):return validate_project(project,self.registry,for_release)
 
@@ -359,16 +365,31 @@ class ApplicationService:
 
     def compare_versions(self,old,new):
         from ..kernel.diff import changes
+        upgraded=[]
+        def readable(project,label):
+            """Snapshots frozen by older plugin versions are migrated in memory for comparison only;
+            the stored snapshot is never changed."""
+            for key in project.enabled:
+                state=project.states[key];module=self.registry.get(key)
+                if (state.module_version,state.schema_version)!=(module.module_version,module.schema_version):
+                    state.payload=module.migrate(state.module_version,state.schema_version,deepcopy(state.payload))
+                    state.module_version,state.schema_version=module.module_version,module.schema_version
+                    upgraded.append(f'{label}:{key}')
+            return project
         def unpack(value):
             if isinstance(value,Project):return value,None
             if 'snapshot_id' in value:
                 verify_snapshot(value)
-                return Project.from_dict(value['project']),{k:value[k] for k in ('snapshot_id','created_at','content_hash','record_hash')}
+                project=readable(Project.from_dict(value['project']),value['snapshot_id'])
+                return project,{k:value[k] for k in ('snapshot_id','created_at','content_hash','record_hash')}
             return Project.from_dict(value),None
         a,ma=unpack(old);b,mb=unpack(new)
         result=compare_versions(a,b,self.registry)
         result['snapshot_metadata']=changes(ma,mb,'snapshot')
+        if upgraded:
+            result['limitations'].append('以下快照模块由旧插件版本冻结，已在内存中按当前模块迁移后比较（快照本身未改变）：'+', '.join(upgraded))
         return result
+
     def create_snapshot(self,project,ack_warnings=False):return create_snapshot(project,self.registry,self.store,ack_warnings)
     def list_snapshots(self,project_id):return self.store.list_snapshots(project_id)
 

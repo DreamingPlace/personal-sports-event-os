@@ -64,6 +64,27 @@ class ApprovalOutsidePayloadTests(Base):
             self.assertEqual(migrated.states[key].status, 'DRAFT')
         self.assertEqual(self.app.validate_project(migrated).status, 'PASS')
 
+    def test_migration_advances_project_version_once(self):
+        old = self._as_v111(self.app.migrate_v10(make_demo()))
+        migrated = self.app.migrate_project(old)
+        self.assertEqual(migrated.manifest['project']['version'], old.manifest['project']['version'] + '-r1')
+
+    def test_snapshot_frozen_by_old_plugins_can_be_compared(self):
+        from sports_os.kernel.data import digest
+        old = self._as_v111(self.app.migrate_v10(make_demo()))
+        data = old.to_dict(active_only=True)
+        hashed = digest(data)
+        record = dict(format_version='1.1', snapshot_id='SN11-' + hashed[:24], content_hash=hashed, project=data,
+                      module_index={k: dict(module_version=s.module_version, schema_version=s.schema_version, content_hash=s.content_hash)
+                                    for k, s in sorted(old.states.items()) if k in old.enabled},
+                      created_at='2026-01-01T00:00:00+00:00', warnings_acknowledged=False, quality_gate={'status': 'PASS', 'findings': []})
+        record['record_hash'] = digest(record)
+        before = digest(record)
+        result = self.app.compare_versions(record, self.edit_price())
+        self.assertEqual([f['path'] for f in result['business']['ticketing.pricing']], ['/S01/VIP/price'])
+        self.assertIn('内存中', result['limitations'][-1])
+        self.assertEqual(digest(record), before)
+
     def test_v10_unbacked_row_approval_still_blocks(self):
         from tests.cases import case_data
         p = self.app.migrate_v10(case_data('TEST-010'))

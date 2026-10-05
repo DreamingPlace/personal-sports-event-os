@@ -1,4 +1,13 @@
-# Sports Event OS Modular Kernel v1.1.1
+# Sports Event OS Modular Kernel v1.2.0
+
+## v1.2 变化（升级前请阅读）
+
+- **批准只记录在模块状态**：Pricing 和五个规则模块的 rows 不再含 price_version/version/status/approval_ref。已有 v1.1.x 工作目录需运行一次 `migrate-project`，迁移后重新人工批准变化的模块和项目。
+- **一次报告全部问题**：每条问题有具体 rule_id，source 指向字段（如 `ticketing.pricing/rows/3/price`）；上游模块有阻断时，下游只记一条 `DEPENDENCY_BLOCKED`。
+- **唯一工作副本**：桌面端未完成草稿保存在 `data/modular.sqlite`，命令行看到的是同一份草稿；`discard-draft` 可放弃。打开后被其他程序保存过的工作区会拒绝覆盖（退出码3 / 桌面端 CONFLICT）。
+- **命令行**：新增 `status`（列出待批准模块和下一步命令）；退出码 0 成功、1 门禁阻断、2 输入错误、3 冲突；`diff` 支持 `WORKING` 和快照ID。
+- **代码结构**：v1.0 代码移到 `src/sports_os_legacy`；桌面前端拆分为 `pages/` 和 `views/`；模块提供展示名称。详见 [架构](docs/ARCHITECTURE.md)。
+- 桌面端版本 0.2.0（协议 0.2）。
 
 离线、确定性、完全合成数据的个人赛事工具。**Kernel 不认识票价、座席、退款或旅行包**；业务由可独立安装的 Python 模块提供。核心不依赖 GUI；无 AI、网络平台连接、自动定价或真实库存操作。
 
