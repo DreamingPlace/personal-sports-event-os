@@ -106,7 +106,7 @@ class DesktopSession:
                     elif req['method'] in ('enable_module','disable_module'):code='DEPENDENCY'
                 trace=traceback.format_exc();print(trace,file=sys.stderr)
                 # Full tracebacks stay on stderr; set SPORTS_OS_DEBUG=1 to also return them to the client.
-                details=dict(technical=trace if os.environ.get('SPORTS_OS_DEBUG') else f'{type(exc).__name__}: {exc}')
+                details=dict(technical=trace if os.environ.get('SPORTS_OS_DEBUG')=='1' else f'{type(exc).__name__}: {exc}')
                 if self.project is not None:details['quality']=self.app.validate_project(self.project).to_dict()
                 return dict(id=rid,ok=False,error=dict(code=code,message=str(exc),details=details))
 

@@ -18,7 +18,9 @@ python tests/run_v111_acceptance.py
 
 Windows 激活用 `.venv\Scripts\activate`。核心仅标准库；`excel` 用于保留的只读 Excel 适配器及其测试。不要跳过包安装：模块来自安装元数据的 `sports_os.modules` entry points；仅设置 PYTHONPATH 不等于完成安装。离线且已有 setuptools≥68/openpyxl 时可 `python -m pip install --no-build-isolation --no-deps -e .`。
 
-本轮基线 **140 项**、新增 **40 项**，合计 **180 项**；此后桌面端与打包测试使 `unittest discover` 共 **198 项**（非 macOS 上 4 项打包测试按设计跳过）。实际结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构。旧测试文件、旧工作样本和批准快照保留原样。
+v1.1.1 历史基线为 **180 项**，桌面端与打包测试增至 **198 项**，validator polish 补丁及接入边界测试新增 **16 项**，当前 `unittest discover` 共 **214 项**（非 macOS 上 4 项打包测试按设计跳过）。本轮结果与边界见 [VALIDATOR_POLISH_REPORT.md](VALIDATOR_POLISH_REPORT.md)，历史结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构；旧业务测试断言、工作样本和批准快照保留，部分测试文件仅清理未使用 import。
+
+当前完整回归使用 `python -m unittest discover -s tests`；`tests/run_v111_acceptance.py` 是固定 140 项旧测试计数的历史报告生成器，不适用于当前扩展后的全套测试，也不应覆盖冻结的历史证据。
 
 ## 立即运行
 
