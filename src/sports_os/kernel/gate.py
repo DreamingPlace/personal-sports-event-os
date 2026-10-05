@@ -42,7 +42,14 @@ def validate_project(project, registry, for_release=False):
             gate.add('K003',key,'兼容版本及独立payload schema',str(e))
     if gate.status=='BLOCK':return gate
     context=Context(project,registry,releasing)
+    graph=registry.dependency_graph(project.enabled);blocked=set()
     for key in order:
+        # A module whose inputs come from a blocked module would only repeat its errors (or crash on them).
+        upstream=sorted(graph[key]&blocked)
+        if upstream:
+            gate.add('DEPENDENCY_BLOCKED',key,'依赖模块全部通过验证',upstream,'依赖的模块存在阻断问题；先修正这些模块，本模块随后再验证')
+            blocked.add(key);continue
+        before=len(gate.findings)
         try:
             with localcontext() as decimal_context:
                 decimal_context.prec=80
@@ -50,6 +57,7 @@ def validate_project(project, registry, for_release=False):
                 registry.get(key).validate(context,gate)
         except (ValueError,TypeError,KeyError,ArithmeticError,RecursionError) as e:
             gate.add('M_INPUT',key,'可验证的模块输入',str(e))
+        if any(f.severity=='BLOCK' for f in gate.findings[before:]):blocked.add(key)
     if gate.status!='BLOCK':
         for key in order:
             try:

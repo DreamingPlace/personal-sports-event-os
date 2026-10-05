@@ -80,5 +80,41 @@ class ApprovalOutsidePayloadTests(Base):
         self.assertEqual(schemas.dictionary_text(self.app.registry, text), text)
 
 
+
+class CollectedFindingsTests(Base):
+    def test_all_errors_in_a_module_are_reported_with_field_sources(self):
+        p = self.app.apply_changeset(self.p, 'ticketing.pricing', [
+            dict(path=['rows', 0, 'price'], value=10.001),
+            dict(path=['rows', 1, 'session_id'], value='NOPE'),
+            dict(path=['rows', 2, 'valid_from'], value='not-a-time'),
+        ])
+        found = {(f.rule_id, f.source) for f in self.app.validate_project(p).findings}
+        self.assertLessEqual({
+            ('PRICE_PRECISION', 'ticketing.pricing/rows/0/price'),
+            ('PRICE_UNKNOWN_SESSION', 'ticketing.pricing/rows/1/session_id'),
+            ('INVALID_TIME', 'ticketing.pricing/rows/2/valid_from'),
+        }, found)
+
+    def test_every_duplicate_key_is_reported(self):
+        rows = self.app.get_module_data(self.p, 'core.venue')['rows']
+        p = self.app.update_module_data(self.p, 'core.venue', dict(rows=rows + [dict(rows[0]), dict(rows[0])]))
+        dupes = [f.source for f in self.app.validate_project(p).findings if f.rule_id == 'DUPLICATE_KEY']
+        self.assertEqual(dupes, ['core.venue/rows/1', 'core.venue/rows/2'])
+
+    def test_downstream_modules_wait_for_blocked_upstream(self):
+        p = self.app.apply_changeset(self.p, 'core.schedule', [dict(path=['rows', 0, 'start_time'], value='bad')])
+        findings = self.app.validate_project(p).findings
+        self.assertIn(('INVALID_TIME', 'core.schedule/rows/0/start_time'), {(f.rule_id, f.source) for f in findings})
+        waiting = {f.source: f.actual for f in findings if f.rule_id == 'DEPENDENCY_BLOCKED'}
+        self.assertEqual(waiting['ticketing.pricing'], ['core.schedule'])
+        self.assertIn('finance.revenue', waiting)
+        self.assertFalse(any(f.rule_id in ('M_INPUT', 'M_CROSS') for f in findings))
+
+    def test_cross_module_findings_point_at_rows(self):
+        p = self.app.apply_changeset(self.p, 'ticketing.inventory', [dict(path=['rows', 0, 'quantity'], value=1)])
+        finding = next(f for f in self.app.validate_project(p).findings if f.rule_id == 'INVENTORY_POOL_TOTAL')
+        self.assertEqual(finding.source, 'ticketing.inventory/rows/0/quantity')
+
+
 if __name__ == '__main__':
     unittest.main()

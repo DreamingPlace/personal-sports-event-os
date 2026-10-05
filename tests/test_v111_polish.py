@@ -60,13 +60,14 @@ class ValidatorPolishTests(unittest.TestCase):
     def test_pass_below_face_is_a_warning_with_amounts(self):
         face = next(r['ticket_amount'] for r in self.app.calculate_module(self.p, 'product.pass')
                     if r['product_id'] == 'PASS-DEMO')
-        for row in self.payload('product.pass')['rows']:
-            if row['product_id'] == 'PASS-DEMO':
-                row.update(price=1.0, price_claim='INDEPENDENT')
+        rows = self.payload('product.pass')['rows']
+        index = next(i for i, row in enumerate(rows) if row['product_id'] == 'PASS-DEMO')
+        rows[index].update(price=1.0, price_claim='INDEPENDENT')
         gate = self.gate()
         self.assertEqual(gate.status, 'WARNING')
         finding = next(f for f in gate.findings if f.rule_id == 'PRODUCT_BELOW_FACE')
-        self.assertEqual(finding.source, 'product.pass/PASS-DEMO')
+        # Sources are editor field paths so the desktop app can focus the field.
+        self.assertEqual(finding.source, f'product.pass/rows/{index}/price')
         self.assertEqual(Decimal(finding.actual), Decimal('1'))
         self.assertIn(str(face), finding.message)
         self.assertIn(str(face-1), finding.message)
@@ -87,8 +88,9 @@ class ValidatorPolishTests(unittest.TestCase):
         gate = self.gate()
         self.assertEqual(gate.status, 'BLOCK')
         self.assertTrue(any(f.rule_id == 'PRODUCT_BELOW_FACE' and f.severity == 'WARNING'
-                            and f.source == 'product.travel/'+row['product_id'] for f in gate.findings))
-        self.assertTrue(any(f.rule_id == 'M_CROSS' and f.source == 'product.travel' for f in gate.findings))
+                            and f.source == 'product.travel/rows/0/price' for f in gate.findings))
+        self.assertTrue(any(f.rule_id == 'TRAVEL_TOTAL_MISMATCH' and f.source == 'product.travel/rows/0/price'
+                            for f in gate.findings))
 
     def assert_warning_snapshot_requires_ack(self, module_id, payload, rule_id):
         project = self.app.update_module_data(self.p, module_id, payload)

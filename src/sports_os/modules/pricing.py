@@ -14,11 +14,15 @@ class Pricing(RowsModule):
     row_schema=obj(dict(session_id=S,price_class_id=S,price=N,valid_from=S))
 
     def validate(self,c,g):
-        super().validate(c,g);sessions=c.provider('schedule')['sessions']
-        for r in self.rows(c):
-            require(r['session_id'] in sessions,'价格场次外键不存在')
-            require(D(r['price'])==D(money(D(r['price']))),'票价最多两位小数')
-            require(moment(r['valid_from'])<=moment(sessions[r['session_id']]['start_time']),'价格开始晚于场次')
+        super().validate(c,g);ck=self.checks(g);sessions=c.provider('schedule')['sessions']
+        for i,r in enumerate(self.rows(c)):
+            at=ck.row(i)
+            ck(D(r['price'])==D(money(D(r['price']))),'PRICE_PRECISION',at('price'),'票价最多两位小数','最多2位小数',r['price'])
+            start=ck.time(r['valid_from'],at('valid_from'))
+            if not ck(r['session_id'] in sessions,'PRICE_UNKNOWN_SESSION',at('session_id'),'价格场次外键不存在',sorted(sessions),r['session_id']):continue
+            if start:
+                session_start=sessions[r['session_id']]['start_time']
+                ck(start<=moment(session_start),'PRICE_STARTS_AFTER_SESSION',at('valid_from'),'价格开始晚于场次',f'<= {session_start}',r['valid_from'])
 
     def calculate(self,c):return {price_key(r):D(r['price']) for r in self.rows(c)}
 

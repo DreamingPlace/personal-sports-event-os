@@ -27,7 +27,47 @@ def unique(rows,key):
     return dict(zip(keys,rows))
 
 def require(condition,message):
+    """Raise for calculation-time invariants. Validation should use Checks so every problem is reported."""
     if not condition:raise KernelError(message)
+
+
+class Checks:
+    """Collects findings instead of stopping at the first failure.
+
+    Sources use the editor's field paths (``module/rows/3/price``) so the desktop app can focus the field.
+    Every call returns whether the condition held, so dependent checks can be skipped without raising.
+    """
+    def __init__(self,gate,module_id):
+        self.gate=gate;self.module_id=module_id
+
+    def where(self,*parts):
+        return '/'.join([self.module_id,*(str(p) for p in parts)])
+
+    def row(self,index,collection='rows'):
+        """Field-path builder for one row: ``at=ck.row(3); at('price')``."""
+        def at(*fields):return self.where(collection,index,*fields)
+        return at
+
+    def __call__(self,ok,rule,source,message,expected=None,actual=None,severity='BLOCK'):
+        if not ok:self.gate.add(rule,source,message if expected is None else expected,actual,message,severity)
+        return bool(ok)
+
+    def time(self,value,source,rule='INVALID_TIME'):
+        try:return moment(value)
+        except KernelError as e:
+            self.gate.add(rule,source,'带UTC偏移的ISO 8601时间',value,str(e))
+            return None
+
+    def unique(self,rows,key,collection='rows',rule='DUPLICATE_KEY'):
+        """Report every duplicate business key; return the first row for each key."""
+        seen={}
+        for i,row in enumerate(rows):
+            k=key(row)
+            if k in seen:
+                self.gate.add(rule,self.where(collection,i),'业务键唯一',list(k) if isinstance(k,tuple) else k,
+                              f'与第{seen[k]+1}行业务键重复')
+            else:seen[k]=i
+        return {k:rows[i] for k,i in seen.items()}
 
 class RowsModule(Module):
     row_schema=None
@@ -36,7 +76,8 @@ class RowsModule(Module):
     def schema(self):return obj({'rows':arr(self.row_schema)})
     def rows(self,context):return context.payload(self.module_id)['rows']
     def key(self,row):return tuple(row[k] for k in self.identity)
-    def validate(self,context,gate):unique(self.rows(context),self.key)
+    def checks(self,gate):return Checks(gate,self.module_id)
+    def validate(self,context,gate):self.checks(gate).unique(self.rows(context),self.key)
     def canonical_row(self,row):return row
     def diff(self,old,new):
         def keyed(payload):return {'/'.join(map(str,self.key(r))):self.canonical_row(r) for r in payload['rows']}

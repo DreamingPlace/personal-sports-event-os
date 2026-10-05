@@ -32,6 +32,19 @@ class Registry:
                 for _,m in sorted(self._modules.items())]
 
     def order(self, enabled):
+        graph=self.dependency_graph(enabled)
+        result=[];visiting=set();done=set()
+        def visit(key):
+            if key in visiting:raise KernelError('模块依赖循环：'+key)
+            if key in done:return
+            visiting.add(key)
+            for dep in sorted(graph[key]):visit(dep)
+            visiting.remove(key);done.add(key);result.append(key)
+        for key in sorted(graph):visit(key)
+        return result
+
+    def dependency_graph(self, enabled):
+        """module_id -> set of enabled modules it depends on (modules and capability providers)."""
         enabled=set(enabled);graph={}
         for key in sorted(enabled):
             m=self.get(key);missing=set(m.dependencies)-enabled
@@ -49,12 +62,4 @@ class Registry:
             for cap in self.get(key).provides:
                 if cap in caps:raise KernelError(f'能力冲突 {cap}: {caps[cap]}, {key}')
                 caps[cap]=key
-        result=[];visiting=set();done=set()
-        def visit(key):
-            if key in visiting:raise KernelError('模块依赖循环：'+key)
-            if key in done:return
-            visiting.add(key)
-            for dep in sorted(graph[key]):visit(dep)
-            visiting.remove(key);done.add(key);result.append(key)
-        for key in sorted(enabled):visit(key)
-        return result
+        return graph

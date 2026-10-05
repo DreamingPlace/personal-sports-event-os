@@ -46,3 +46,10 @@
 |ticketing.transfer|schedule|—|—|— / —|
 
 quality.declarations的可选finance.revenue依赖保留：该模块summary明确使用该输出结构，不是通用金额能力。其他本轮审查模块已按能力消费。
+
+## v1.2 验证结果（Findings）
+
+- 模块validate/cross_validate不再在第一处错误抛异常，而是通过 `modules.common.Checks` 收集全部问题。每条Finding有具体rule_id（如 `PRICE_PRECISION`、`INVENTORY_POOL_TOTAL`），source为编辑器字段路径 `模块ID/rows/行号/字段`，桌面端可直接定位到字段。
+- 内核按依赖图验证：某模块存在BLOCK时，依赖它的模块不再运行验证，只记录一条 `DEPENDENCY_BLOCKED`（actual为阻断的上游模块），避免重复报错或在坏输入上崩溃。
+- `M_INPUT`/`M_CROSS` 仍保留为兜底：只在插件代码抛出未预期异常时出现，表示插件需要修正，而不是正常的输入错误。
+- 第三方插件建议：`ck=self.checks(gate)`（RowsModule）或 `Checks(gate, module_id)`，用 `ck(条件, rule_id, source, message, expected, actual, severity)` 记录问题；`require()` 只用于计算阶段的不变式。

@@ -12,14 +12,18 @@ class Rights(RowsModule):
         expected_fulfillment={'type':'object','additionalProperties':RATE}))
 
     def validate(self,c,g):
-        super().validate(c,g);pools=c.provider('capacity')
-        for r in self.rows(c):
-            key=pool_key(r);require(key in pools,'权益引用不存在的座区')
-            require(r['quantity']<=pools[key]['sellable_capacity'],'权益数量超过可售池')
-            require(r['strategy']!='DISCOUNT_RATE' or r['value']<=1,'DISCOUNT_RATE表示实付比例，必须0到1')
-            require(r['strategy']!='FIXED_PRICE' or D(r['value'])==D(money(D(r['value']))),'FIXED_PRICE单价最多两位小数')
-            require(r['strategy']!='FACE_VALUE' or D(r['value'])==1,'FACE_VALUE按面值结算，value必须为1（其他取值会被静默忽略）')
-            require(bool(r['expected_fulfillment']),'权益履约情景不可缺失')
+        super().validate(c,g);ck=self.checks(g);pools=c.provider('capacity')
+        for i,r in enumerate(self.rows(c)):
+            at=ck.row(i);key=pool_key(r)
+            if ck(key in pools,'RIGHTS_UNKNOWN_POOL',at('zone_id'),'权益引用不存在的座区池','已有容量池',list(key)):
+                ck(r['quantity']<=pools[key]['sellable_capacity'],'RIGHTS_EXCEED_SELLABLE',at('quantity'),'权益数量超过可售池',
+                   f"<= {pools[key]['sellable_capacity']}",r['quantity'])
+            ck(r['strategy']!='DISCOUNT_RATE' or r['value']<=1,'RIGHTS_DISCOUNT_RANGE',at('value'),'DISCOUNT_RATE表示实付比例，必须0到1','0..1',r['value'])
+            ck(r['strategy']!='FIXED_PRICE' or D(r['value'])==D(money(D(r['value']))),'RIGHTS_PRICE_PRECISION',at('value'),
+               'FIXED_PRICE单价最多两位小数','最多2位小数',r['value'])
+            ck(r['strategy']!='FACE_VALUE' or D(r['value'])==1,'RIGHTS_FACE_VALUE',at('value'),
+               'FACE_VALUE按面值结算，value必须为1（其他取值会被静默忽略）',1,r['value'])
+            ck(bool(r['expected_fulfillment']),'RIGHTS_NO_SCENARIOS',at('expected_fulfillment'),'权益履约情景不可缺失')
 
     def calculate(self,c):
         pools=c.provider('capacity');prices=c.provider('prices');result={}

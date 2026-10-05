@@ -57,7 +57,7 @@ Profile 仅预填启用清单。没有 `profile == ...` 业务分支，不是限
 |data/modular.sqlite|模块工作payload、模块版本、内容hash及不可变快照|
 |data/modular_demo/*.json|可复现合成A/B输入样本，不是第二个自动同步数据源|
 |data/schemas/modules/*.json|各模块独立schema；无巨型业务根schema|
-|outputs/V1_1_QUALITY_GATE.json|质量结果；每条违规均含七个规定字段|
+|outputs/V1_1_QUALITY_GATE.json|质量结果；每条违规含rule_id、severity、message、source（字段路径）、expected、actual、suggested_action，且一次验证报告全部问题|
 |outputs/V1_1_finance.revenue.json|精确收入预览、阶段/票档/场次汇总和敏感性|
 |outputs/V1_1_DIFF.json|模块增删、元数据、模块自行解释的业务差异|
 |outputs/releases/SN11-*/|冻结manifest、模块版本/hash、批准引用、结果和完整性清单|
