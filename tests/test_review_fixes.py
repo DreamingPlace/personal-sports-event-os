@@ -188,5 +188,76 @@ class UnifiedStorageTests(Base):
         self.assertEqual(session.project.to_dict(), before)
 
 
+
+class CliTests(Base):
+    def cli(self, *args):
+        import contextlib
+        import io
+        from sports_os.cli import main
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = main([*args, '--workspace', str(self.root)])
+        return code, out.getvalue(), err.getvalue()
+
+    def setUp(self):
+        super().setUp()
+        self.app.demo()
+        (self.root / 'patch.json').write_text('[{"path": ["rows", 0, "price"], "value": 731}]')
+
+    def test_exit_codes_separate_blocked_from_input_errors(self):
+        self.assertEqual(self.cli('patch', 'ticketing.pricing', 'patch.json')[0], 0)
+        code, _, err = self.cli('snapshot')
+        self.assertEqual(code, 1)
+        code, out, err = self.cli('validate', '--data', 'missing.json')
+        self.assertEqual((code, out), (2, ''))
+        self.assertIn('ERROR', err)
+
+    def test_conflict_exit_code(self):
+        from unittest.mock import patch
+        from sports_os.kernel.store import ConflictError
+        with patch.object(ApplicationService, 'save_project', side_effect=ConflictError('changed elsewhere')):
+            code, _, err = self.cli('patch', 'ticketing.pricing', 'patch.json')
+        self.assertEqual(code, 3)
+        self.assertIn('CONFLICT', err)
+
+    def test_status_lists_exact_approval_steps(self):
+        import json
+        self.cli('patch', 'ticketing.pricing', 'patch.json')
+        code, out, _ = self.cli('status', '--json')
+        report = json.loads(out)
+        self.assertEqual(code, 0)
+        pending = [m['module_id'] for m in report['modules'] if m['needs_approval']]
+        self.assertEqual(pending, ['ticketing.pricing'])
+        version = next(m['data_version'] for m in report['modules'] if m['module_id'] == 'ticketing.pricing')
+        self.assertIn(f'approve-module ticketing.pricing --version {version}', report['next_steps'][0])
+        self.assertIn('approve-project', report['next_steps'][1])
+        self.assertIn('snapshot', report['next_steps'][2])
+        # Following the printed steps (with a real reference) produces a snapshot.
+        project_version = report['project']['version']
+        self.assertEqual(self.cli('approve-module', 'ticketing.pricing', '--version', version, '--approval-ref', 'REF-M')[0], 0)
+        self.assertEqual(self.cli('approve-project', '--version', project_version, '--approval-ref', 'REF-P')[0], 0)
+        self.assertEqual(self.cli('snapshot')[0], 0)
+        self.assertEqual(json.loads(self.cli('status', '--json')[1])['snapshots']['count'], 1)
+
+    def test_status_while_blocked_suggests_fixing_or_discarding(self):
+        import json
+        app = ApplicationService(self.root)
+        app.persist_desktop_project(app.apply_changeset(app.open_project(), 'ticketing.pricing', [dict(path=['rows', 0, 'price'], value=1.001)]))
+        report = json.loads(self.cli('status', '--json')[1])
+        self.assertTrue(report['draft'])
+        self.assertIn('discard-draft', report['next_steps'][0])
+        self.assertEqual(self.cli('discard-draft')[0], 0)
+        self.assertFalse(json.loads(self.cli('status', '--json')[1])['draft'])
+
+    def test_diff_working_copy_against_snapshot(self):
+        import json
+        snapshot = self.app.create_snapshot(self.app.open_project())['snapshot_id']
+        self.cli('patch', 'ticketing.pricing', 'patch.json')
+        code, out, _ = self.cli('diff', snapshot, 'WORKING')
+        self.assertEqual(code, 0)
+        facts = json.loads(out)['business']['ticketing.pricing']
+        self.assertEqual([f['path'] for f in facts], ['/S01/VIP/price'])
+
+
 if __name__ == '__main__':
     unittest.main()

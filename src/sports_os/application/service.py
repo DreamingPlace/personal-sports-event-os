@@ -12,6 +12,12 @@ from ..kernel.snapshot import create_snapshot,verify_snapshot,ReleaseBlocked
 from ..kernel.data import KernelError,canonical,digest
 from .manifest import PROFILES,parse_manifest,render_manifest,safe_path
 
+
+class GateBlocked(KernelError):
+    """The quality gate BLOCKed an operation; ``gate`` holds the findings."""
+    def __init__(self,gate):
+        super().__init__('BLOCK: '+canonical(gate.to_dict()));self.gate=gate
+
 class ApplicationService:
     def __init__(self,workspace,registry=None):
         self.root=safe_path(workspace,'.')
@@ -102,7 +108,7 @@ class ApplicationService:
 
     def save_project(self,project):
         gate=self.validate_project(project)
-        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        if gate.status=='BLOCK':raise GateBlocked(gate)
         self.store.save(project)
         self.write_artifact('project.toml',render_manifest(project.manifest))
         return gate
@@ -275,7 +281,7 @@ class ApplicationService:
         state.payload=self.registry.get(module_id).prepare_revision(state.payload,data_version,approval_ref)
         state.status='APPROVED';state.approval_ref=approval_ref
         gate=self.validate_project(out)
-        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        if gate.status=='BLOCK':raise GateBlocked(gate)
         return out
 
     def approve_project(self,project,approval_ref,version):
@@ -286,7 +292,7 @@ class ApplicationService:
             raise KernelError('已批准项目不可改写批准引用')
         out=deepcopy(project);out.manifest['project'].update(status='APPROVED',approval_ref=approval_ref)
         gate=self.validate_project(out,True)
-        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        if gate.status=='BLOCK':raise GateBlocked(gate)
         return out
 
     def migrate_project(self,project):
@@ -299,7 +305,7 @@ class ApplicationService:
             if (state.module_version,state.schema_version)!=(module.module_version,module.schema_version):
                 out=self.migrate_module(out,key)
         gate=self.validate_project(out)
-        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        if gate.status=='BLOCK':raise GateBlocked(gate)
         return out
 
     def migrate_module(self,project,module_id):
@@ -313,9 +319,41 @@ class ApplicationService:
 
     def validate_project(self,project,for_release=False):return validate_project(project,self.registry,for_release)
 
+    def status(self,project):
+        """Where the working copy stands and the exact next steps to a snapshot (no approvals are invented)."""
+        import shlex
+        from ..kernel.gate import approved
+        gate=self.validate_project(project);release=self.validate_project(project,True)
+        meta=project.manifest['project'];draft=self.store.has_draft()
+        modules=[]
+        for key in project.enabled:
+            state=project.states.get(key)
+            if state is None:
+                modules.append(dict(module_id=key,data_version=None,status=None,approval_ref=None,needs_approval=True));continue
+            modules.append(dict(module_id=key,data_version=state.data_version,status=state.status,approval_ref=state.approval_ref,
+                                needs_approval=not approved(state.status,state.approval_ref)))
+        workspace=' --workspace '+shlex.quote(str(self.root))
+        steps=[]
+        if gate.status=='BLOCK':
+            steps.append('修正 validate 报告的BLOCK问题'+('；或 sports-os discard-draft'+workspace+' 回到上次保存的工作态' if draft else ''))
+        else:
+            for m in modules:
+                if m['needs_approval'] and m['data_version']:
+                    steps.append(f"sports-os approve-module {m['module_id']} --version {shlex.quote(m['data_version'])} --approval-ref '<人工批准引用>'"+workspace)
+            if not approved(meta['status'],meta['approval_ref']):
+                steps.append(f"sports-os approve-project --version {shlex.quote(meta['version'])} --approval-ref '<人工批准引用>'"+workspace)
+            steps.append('sports-os snapshot'+(' --ack-warnings' if release.status=='WARNING' else '')+workspace)
+        snapshots=self.list_snapshots(meta['id']) if not draft else []
+        count=lambda g,level:sum(f.severity==level for f in g.findings)
+        return dict(project={k:meta[k] for k in ('id','name','version','status','approval_ref')},draft=draft,revision=project.base_revision,
+                    quality=dict(status=gate.status,blocks=count(gate,'BLOCK'),warnings=count(gate,'WARNING')),
+                    release_quality=dict(status=release.status,blocks=count(release,'BLOCK'),warnings=count(release,'WARNING')),
+                    modules=modules,snapshots=dict(count=len(snapshots),latest=max(snapshots,key=lambda r:r['created_at'])['snapshot_id'] if snapshots else None),
+                    next_steps=steps)
+
     def calculate_module(self,project,module_id):
         gate=self.validate_project(project)
-        if gate.status=='BLOCK':raise KernelError('BLOCK: '+canonical(gate.to_dict()))
+        if gate.status=='BLOCK':raise GateBlocked(gate)
         return Context(project,self.registry).calculate(module_id)
 
     def compare_versions(self,old,new):

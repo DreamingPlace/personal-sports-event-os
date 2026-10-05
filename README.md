@@ -35,6 +35,7 @@ python -m sports_os validate --workspace ./outputs/my-v111-event
 python -m sports_os revenue --workspace ./outputs/my-v111-event
 python -m sports_os diff version_a version_b --workspace ./outputs/my-v111-event
 python -m sports_os snapshot --workspace ./outputs/my-v111-event
+python -m sports_os status --workspace ./outputs/my-v111-event
 ```
 
 Demo 是 **2027 Global Racket Masters**（16场、4阶段、5票档、8040物理席），使用模拟批准引用。上述命令生成当前schema的 Demo；重复运行不会覆盖已修改工作态。仓库原有v1.1样本需显式迁移，不能直接用新模块静默运行。每条命令均支持 `--workspace /path/to/local-workspace`，所有路径限制在该独立目录内，拒绝 `/Volumes` 与越界符号链接。
@@ -62,7 +63,7 @@ Profile 仅预填启用清单。没有 `profile == ...` 业务分支，不是限
 |outputs/V1_1_DIFF.json|模块增删、元数据、模块自行解释的业务差异|
 |outputs/releases/SN11-*/|冻结manifest、模块版本/hash、批准引用、结果和完整性清单|
 
-`validate`：PASS/WARNING 返回0，BLOCK返回2；输入错误返回2。任何 BLOCK 禁止 calculation/snapshot/export。WARNING 创建快照需要 `--ack-warnings`。旧预览文件可能来自上一次成功运行；不要把“文件存在”当本次成功。
+退出码（v1.2）：0 成功（`validate` 为PASS或WARNING）；1 被质量门禁或发布规则阻断；2 参数或输入错误；3 工作区冲突（打开后被其他程序保存）。结果输出到stdout，错误输出到stderr。任何 BLOCK 禁止 calculation/snapshot/export。WARNING 创建快照需要 `--ack-warnings`。旧预览文件可能来自上一次成功运行；不要把“文件存在”当本次成功。
 
 金额在服务层保留 Decimal。JSON 将 Decimal 输出为**精确十进制字符串**；这是计算结果，不是输入数值替代。只在阅读展示时四舍五入到分，不能将取整显示值回灌。分组显示额相加可能有分币尾差；精确汇总严格闭合。
 
@@ -82,7 +83,8 @@ Profile 仅预填启用清单。没有 `profile == ...` 业务分支，不是限
 python -m sports_os patch ticketing.pricing price-patch.json --workspace ./outputs/my-v111-event
 python -m sports_os validate --workspace ./outputs/my-v111-event
 python -m sports_os snapshot --workspace ./outputs/my-v111-event
-# 此时应BLOCK；从patch的输出读取实际module data_version及project version。
+# 此时应BLOCK（退出码1）。status会列出待批准模块、实际版本号和按顺序要运行的批准命令：
+python -m sports_os status --workspace ./outputs/my-v111-event
 python -m sports_os approve-module ticketing.pricing --version '<实际data_version>' --approval-ref '<人工批准引用>' --workspace ./outputs/my-v111-event
 python -m sports_os approve-project --version '<实际project version>' --approval-ref '<人工批准引用>' --workspace ./outputs/my-v111-event
 python -m sports_os snapshot --workspace ./outputs/my-v111-event
@@ -91,6 +93,8 @@ python -m sports_os snapshot --workspace ./outputs/my-v111-event
 尖括号内容必须替换，不是默认批准。批准接口只记录人工确认；没有auto_approve。canonical内容改变才生成 `原版本-r1/-r2/...`，清除模块和项目批准；完全相同payload不变。批准只记录在模块状态（ModuleState），不写入业务rows；批准不会产生业务diff。先批准变化模块，再批准项目，最后snapshot；旧snapshot不变。
 
 `export-data` 可导出工作JSON；`load` 和 `--data` 是外部导入入口，统一按DRAFT处理，不继承输入声称的批准。`--data snapshot` 因未批准而BLOCK，应先load再明确批准。`save_project` 验证完整工作态后落盘；可以在内存中多次编辑修正跨模块约束，再统一保存。API返回副本，不会修改传入对象。
+
+`diff` 的两个参数可以是 `WORKING`（当前工作副本）、快照ID（`SN11-...`）、`version_a`/`version_b`（Demo输入）或JSON文件，例如 `diff SN11-xxxx WORKING`。桌面端留下的未完成草稿也是命令行的工作副本；`discard-draft` 放弃草稿并回到上次保存的状态。`status --json` 输出机器可读结果。
 
 所有命令都可指定 `--workspace`；例如 `disable product.travel`、`enable product.travel`、`calculate ticketing.rights`。
 

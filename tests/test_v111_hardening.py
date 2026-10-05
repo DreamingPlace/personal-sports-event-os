@@ -167,7 +167,7 @@ class HardeningTests(unittest.TestCase):
         path=Path(self.app.root)/'patch.json';path.write_text(json.dumps([dict(path=['rows',0,'price'],value=731)]))
         def run(*args):return subprocess.run([sys.executable,'-m','sports_os',*args,'--workspace',str(self.app.root)],text=True,capture_output=True)
         r=run('patch','ticketing.pricing','patch.json');self.assertEqual(r.returncode,0,r.stdout+r.stderr)
-        self.assertEqual(run('snapshot').returncode,2)
+        self.assertEqual(run('snapshot').returncode,1)  # 1 = blocked by the gate (v1.2 exit codes)
         p=self.app.open_project()
         r=run('approve-module','ticketing.pricing','--approval-ref','SYNTHETIC-CLI-MODULE','--version',p.states['ticketing.pricing'].data_version)
         self.assertEqual(r.returncode,0,r.stdout+r.stderr)
