@@ -1,7 +1,7 @@
 import json
 import sqlite3
 from pathlib import Path
-from .data import canonical, digest, KernelError
+from .data import canonical, KernelError
 from .contract import Project, ModuleState
 
 class Store:

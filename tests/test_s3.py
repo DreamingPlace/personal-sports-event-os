@@ -1,5 +1,5 @@
-import unittest,tempfile
-from copy import deepcopy
+import unittest
+import tempfile
 from pathlib import Path
 from sports_os.models.demo import make_demo
 from sports_os.models import ModelError,load_json

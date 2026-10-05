@@ -3,7 +3,7 @@ import argparse
 import json
 import sqlite3
 from pathlib import Path
-from ..models import load_json,canonical,assert_model,ModelError
+from ..models import load_json,canonical,ModelError
 from ..models.demo import make_demo,make_version_b
 from ..models.schema import SCHEMA
 from ..database import Store

@@ -1,11 +1,11 @@
 """Persistent offline sidecar: stdout exclusively contains protocol responses."""
 import contextlib
 import json
+import os
 import sys
 import traceback
 import threading
 from datetime import datetime,timezone
-from pathlib import Path
 from ..application import ApplicationService
 from ..application.manifest import PROFILES
 from ..kernel.data import KernelError,canonical
@@ -32,7 +32,7 @@ class DesktopSession:
     def dispatch(self,method,p):
         if method=='health':
             from ..kernel import Registry
-            return dict(protocol_version='0.1',desktop_version='0.1.0',modules=Registry.discover().list(),profiles=PROFILES)
+            return dict(protocol_version='0.1',desktop_version='0.1.1',modules=Registry.discover().list(),profiles=PROFILES)
         if method=='list_modules':
             from ..kernel import Registry
             return Registry.discover().list()
@@ -105,7 +105,8 @@ class DesktopSession:
                     if req['method'].startswith('approve'):code='APPROVAL'
                     elif req['method'] in ('enable_module','disable_module'):code='DEPENDENCY'
                 trace=traceback.format_exc();print(trace,file=sys.stderr)
-                details=dict(technical=trace)
+                # Full tracebacks stay on stderr; set SPORTS_OS_DEBUG=1 to also return them to the client.
+                details=dict(technical=trace if os.environ.get('SPORTS_OS_DEBUG')=='1' else f'{type(exc).__name__}: {exc}')
                 if self.project is not None:details['quality']=self.app.validate_project(self.project).to_dict()
                 return dict(id=rid,ok=False,error=dict(code=code,message=str(exc),details=details))
 

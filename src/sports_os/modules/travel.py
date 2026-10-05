@@ -11,7 +11,7 @@ class Travel(Products):
     def validate(self,c,g):
         super().validate(c,g)
         for p in self.rows(c):
-            t=p['travel'];source=self.module_id+'/'+p['product_id']
+            t=p['travel']
             require(t['room_quantity']==t['expected_rooms']>0 and t['guests']>0 and t['nights']>0,'房间/人数/房晚不成立或重复计房')
             require(all(x['ticket_quantity']==t['guests'] for x in p['included_sessions']),'每场票张必须等于人数')
             require(D(t['quoted_non_ticket'])==D(money(D(t['quoted_non_ticket']))),'非票报价最多2位小数')

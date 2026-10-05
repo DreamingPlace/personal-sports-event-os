@@ -4,6 +4,8 @@
 
 可选桌面端见 [Desktop README](apps/desktop/README.md)。**0.1.0 下载包存在签名缺陷，停止使用；0.1.1 为修复签名的未公证 macOS Apple Silicon 测试版，不是免确认的正式发行版。** 详情见 [打包修复报告](DESKTOP_V0_1_1_PACKAGING_REPORT.md)。
 
+桌面操作说明：[受控中英双语使用说明](docs/USER_GUIDE_STE_EN_ZH.md)。以已发布 Desktop 0.1.1 为基线；两栏均使用受控写作规则，中文采用对应项目规则，不宣称正式 ASD-STE100 合规。
+
 ## 安装与测试
 
 Python **3.11+**，推荐独立环境：
@@ -18,7 +20,9 @@ python tests/run_v111_acceptance.py
 
 Windows 激活用 `.venv\Scripts\activate`。核心仅标准库；`excel` 用于保留的只读 Excel 适配器及其测试。不要跳过包安装：模块来自安装元数据的 `sports_os.modules` entry points；仅设置 PYTHONPATH 不等于完成安装。离线且已有 setuptools≥68/openpyxl 时可 `python -m pip install --no-build-isolation --no-deps -e .`。
 
-本轮基线 **140 项**、新增 **40 项**，合计 **180 项**；实际结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构。旧测试文件、旧工作样本和批准快照保留原样。
+v1.1.1 历史基线为 **180 项**，桌面端与打包测试增至 **198 项**，validator polish 补丁及接入边界测试新增 **16 项**，当前 `unittest discover` 共 **214 项**（非 macOS 上 4 项打包测试按设计跳过）。本轮结果与边界见 [VALIDATOR_POLISH_REPORT.md](VALIDATOR_POLISH_REPORT.md)，历史结果见 [V1_1_1_TEST_REPORT.md](V1_1_1_TEST_REPORT.md)。所有输入均为虚构；旧业务测试断言、工作样本和批准快照保留，部分测试文件仅清理未使用 import。
+
+当前完整回归使用 `python -m unittest discover -s tests`；`tests/run_v111_acceptance.py` 是固定 140 项旧测试计数的历史报告生成器，不适用于当前扩展后的全套测试，也不应覆盖冻结的历史证据。
 
 ## 立即运行
 

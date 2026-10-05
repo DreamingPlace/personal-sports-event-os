@@ -1,7 +1,9 @@
 from pathlib import Path
 from hashlib import sha256
-import json,os,tempfile,shutil
-from ..models import canonical
+import json
+import os
+import tempfile
+import shutil
 from ..revenue import calculate
 from ..versioning.snapshot import verify_snapshot,require_gate,ReleaseBlocked
 
