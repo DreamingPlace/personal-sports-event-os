@@ -4,6 +4,8 @@
 
 可选桌面端见 [Desktop README](apps/desktop/README.md)。**0.1.0 下载包存在签名缺陷，停止使用；0.1.1 为修复签名的未公证 macOS Apple Silicon 测试版，不是免确认的正式发行版。** 详情见 [打包修复报告](DESKTOP_V0_1_1_PACKAGING_REPORT.md)。
 
+桌面操作说明：[受控中英双语使用说明](docs/USER_GUIDE_STE_EN_ZH.md)。以已发布 Desktop 0.1.1 为基线；两栏均使用受控写作规则，中文采用对应项目规则，不宣称正式 ASD-STE100 合规。
+
 ## 安装与测试
 
 Python **3.11+**，推荐独立环境：
