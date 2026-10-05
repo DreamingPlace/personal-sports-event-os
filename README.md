@@ -88,7 +88,7 @@ python -m sports_os approve-project --version '<实际project version>' --approv
 python -m sports_os snapshot --workspace ./outputs/my-v111-event
 ```
 
-尖括号内容必须替换，不是默认批准。批准接口只记录人工确认；没有auto_approve。canonical内容改变才生成 `原版本-r1/-r2/...`，清除模块和项目批准；完全相同payload不变。Pricing/Rule内部版本和批准字段由所属模块hook同步，不由GUI自己维护。先批准变化模块，再批准项目，最后snapshot；旧snapshot不变。
+尖括号内容必须替换，不是默认批准。批准接口只记录人工确认；没有auto_approve。canonical内容改变才生成 `原版本-r1/-r2/...`，清除模块和项目批准；完全相同payload不变。批准只记录在模块状态（ModuleState），不写入业务rows；批准不会产生业务diff。先批准变化模块，再批准项目，最后snapshot；旧snapshot不变。
 
 `export-data` 可导出工作JSON；`load` 和 `--data` 是外部导入入口，统一按DRAFT处理，不继承输入声称的批准。`--data snapshot` 因未批准而BLOCK，应先load再明确批准。`save_project` 验证完整工作态后落盘；可以在内存中多次编辑修正跨模块约束，再统一保存。API返回副本，不会修改传入对象。
 
@@ -144,7 +144,7 @@ python -m sports_os --legacy validate
 "custom.checklist" = "custom_package:Checklist"
 ```
 
-继承 `sports_os.kernel.Module`，实现 `module_id`、`schema()`；按需实现validate、cross_validate、calculate、diff、export、release_requirements、migrate并声明依赖。嵌入生命周期字段的插件还需实现纯函数prepare_revision；支持requires_capabilities及optional_capabilities。calculate/export可不实现。安装后`modules`即能发现，不需修改Kernel注册表。完整示例见 [架构](V1_1_ARCHITECTURE.md)。插件是可信Python代码，不是沙箱。
+继承 `sports_os.kernel.Module`，实现 `module_id`、`schema()`；按需实现validate、cross_validate、calculate、diff、export、release_requirements、migrate并声明依赖。不要把批准或版本字段放进payload；支持requires_capabilities及optional_capabilities。calculate/export可不实现。安装后`modules`即能发现，不需修改Kernel注册表。完整示例见 [架构](V1_1_ARCHITECTURE.md)。插件是可信Python代码，不是沙箱。
 
 ## 边界
 

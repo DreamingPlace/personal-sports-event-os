@@ -10,7 +10,6 @@ N={'type':'number','minimum':0,'maximum':10**12}
 RATE={'type':'number','minimum':0,'maximum':1}
 BOOL={'type':'boolean'}
 NULL_S={'type':['string','null']}
-STATUS={'enum':['DRAFT','APPROVED','PUBLISHED','RETIRED']}
 D=lambda x:Decimal(str(x))
 ZERO=Decimal(0)
 
@@ -30,12 +29,6 @@ def unique(rows,key):
 def require(condition,message):
     if not condition:raise KernelError(message)
 
-def approval(row,context,gate,source):
-    active=context.project.states[source.split('/')[0]] if source.split('/')[0] in context.project.states else None
-    must=context.for_release or (active and active.status in ('APPROVED','PUBLISHED')) or row['status'] in ('APPROVED','PUBLISHED')
-    if must and not (row['status'] in ('APPROVED','PUBLISHED') and isinstance(row.get('approval_ref'),str) and row['approval_ref'].strip()):
-        gate.add('APPROVAL',source,'批准状态与非空approval_ref',row['status'])
-
 class RowsModule(Module):
     row_schema=None
     identity=()
@@ -50,14 +43,9 @@ class RowsModule(Module):
         return changes(keyed(old),keyed(new))
     def export(self,context):return context.payload(self.module_id)
 
-class ApprovedRowsModule(RowsModule):
-    version_field='version'
 
-    def prepare_revision(self,payload,data_version,approval_ref=None):
-        from copy import deepcopy
-        payload=deepcopy(payload)
-        for row in payload['rows']:
-            row[self.version_field]=data_version
-            row['status']='APPROVED' if approval_ref else 'DRAFT'
-            row['approval_ref']=approval_ref
-        return payload
+def strip_lifecycle(payload,fields):
+    """Migration helper: approval lives only in ModuleState, never inside business rows."""
+    for row in payload['rows']:
+        for field in fields:row.pop(field,None)
+    return payload

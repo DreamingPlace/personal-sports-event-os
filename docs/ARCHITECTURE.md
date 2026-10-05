@@ -15,7 +15,7 @@
 [原架构](../V1_1_ARCHITECTURE.md)是v1.1基线；本节和[加固报告](../V1_1_1_HARDENING.md)记录当前差异，主分层不变。
 
 - Registry增加通用optional_capabilities，存在则进入拓扑排序，不存在不强制启用；冲突仍BLOCK。
-- Module增加纯函数prepare_revision(payload, data_version, approval_ref=None)，默认复制输入。ApplicationService决定何时失效/批准；业务模块只同步自身嵌套生命周期字段。Kernel不含票价或规则字段名。
+- 批准与数据版本只存在于ModuleState，payload只含业务事实（v1.2起Pricing/Rule不再嵌入行级批准字段）。Module.prepare_revision保留为兼容钩子，默认复制输入；内置模块不再覆盖它。ApplicationService决定何时失效/批准。Kernel不含票价或规则字段名。
 - 新写接口：get_module_data、update_module_data、apply_changeset、approve_module、approve_project、import_project、migrate_project。既有create/open/list/enable/disable/replace/validate/calculate/compare/snapshot/list_snapshots/export继续使用。
 - 写操作和迁移先返回独立Project，save_project验证后持久化；patch只替换已有typed path，失败不改输入。单用户工作版本递增-rN，非多写者乐观锁。
 - 新JSON导入统一DRAFT。外部TOML变化被识别为工作配置变化，不接受其批准声明。GUI不直接改Project内部对象；这是一条应用工程边界，不是恶意插件/管理员安全边界。

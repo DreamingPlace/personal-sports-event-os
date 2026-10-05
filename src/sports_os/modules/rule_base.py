@@ -1,16 +1,18 @@
 from .common import *
 
+LIFECYCLE=('version','status','approval_ref')
 SCOPE=obj(dict(type={'enum':['ALL','SESSION']},session_ids=arr(S)),optional=('session_ids',))
 
-class RuleModule(ApprovedRowsModule):
-    module_version='1.1.1'
-    schema_version='2'
+class RuleModule(RowsModule):
+    module_version='1.2.0'
+    schema_version='3'
     requires_capabilities=('schedule',)
     identity=('rule_id',)
     content_schema=None
 
     def schema(self):
-        row=obj(dict(rule_id=S,version=S,scope=SCOPE,content=self.content_schema,valid_from=S,valid_to=S,status=STATUS,approval_ref=NULL_S))
+        # Approval and data_version live only in ModuleState; rows carry business facts only.
+        row=obj(dict(rule_id=S,scope=SCOPE,content=self.content_schema,valid_from=S,valid_to=S))
         return obj(dict(rows=arr(row)))
 
     def session_ids(self,r,c):
@@ -34,14 +36,12 @@ class RuleModule(ApprovedRowsModule):
         super().validate(c,g);rows=self.rows(c);intervals=[]
         require(bool(rows),'已启用规则模块需要至少一条明确规则')
         for r in rows:
-            require(r['version']==c.project.states[self.module_id].data_version,'规则版本与模块数据版本不一致')
             lo,hi=moment(r['valid_from']),moment(r['valid_to'])
             require(hi>lo,'规则有效期为空或倒置')
             sessions=self.session_ids(r,c)
             for ids,a,b in intervals:
                 require(not (sessions & ids and max(lo,a)<min(hi,b)),'规则Scope适用Session与有效期重叠，不能唯一决策')
             intervals.append((sessions,lo,hi))
-            approval(r,c,g,self.module_id+'/'+r['rule_id'])
         for r in rows:self.applicability(r,c,g)
 
     def applicability(self,r,c,g):
@@ -71,6 +71,7 @@ class RuleModule(ApprovedRowsModule):
         return dict(row,scope=scope)
 
     def migrate(self,old_version,old_schema,payload):
-        require((old_version,old_schema)==('1.1.0','1'),'不支持的Rule迁移')
-        for row in payload['rows']:row['scope']={'type':'ALL'}
-        return payload
+        require((old_version,old_schema) in (('1.1.0','1'),('1.1.1','2')),'不支持的Rule迁移')
+        if old_schema=='1':
+            for row in payload['rows']:row['scope']={'type':'ALL'}
+        return strip_lifecycle(payload,LIFECYCLE)

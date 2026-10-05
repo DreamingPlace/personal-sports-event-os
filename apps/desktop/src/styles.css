@@ -414,10 +414,6 @@ dd {
   min-width: 155px;
   padding: 4px 6px;
 }
-.array-editor td.managed {
-  min-width: 100px;
-  color: var(--muted);
-}
 .scalar input:not([type="checkbox"]) {
   width: 100%;
   min-width: 115px;
