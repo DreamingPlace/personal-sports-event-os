@@ -1,83 +1,80 @@
 import { invoke } from "@tauri-apps/api/core";
+
 export type Dict = Record<string, any>;
-export type Finding = {
-  rule_id: string;
-  severity: string;
-  message: string;
-  source: string;
-  expected: unknown;
-  actual: unknown;
-  suggested_action: string;
+
+/** What the sidecar returns after every change: the whole book plus everything worked out from it. */
+export type State = {
+  path: string;
+  book: Dict;
+  ledger: Dict;
+  forecast: Dict;
+  versions: { id: string; label: string; created_at: string }[];
+  log: { at: string; action: string; detail: string }[];
 };
-export type Gate = { status: string; findings: Finding[] };
-export type Workspace = {
-  workspace: string;
-  modified_at: string;
-  /** True when the working copy is an incomplete draft that does not pass validation yet. */
-  draft: boolean;
-  /** Whether there is a saved version to fall back to (false for a brand-new unfinished project). */
-  can_discard: boolean;
-  /** Ordered setup checklist: what to fill in next. */
-  setup: Dict;
-  /** Modules enabled automatically by the last call -> the module that needed them. */
-  added_modules: Record<string, string>;
-  /** Workspace revision this copy was loaded at; saves from a stale revision are refused (CONFLICT). */
-  revision: number | null;
-  project: {
-    manifest: { project: Dict; modules: Record<string, boolean> };
-    modules: Record<string, Dict>;
-  };
-  quality: Gate;
-  release_quality: Gate;
-  modules: Dict[];
-};
+
+export type Change = { path: (string | number)[]; value: any };
+
 export class BackendError extends Error {
   constructor(
     public code: string,
     message: string,
-    public details: Dict = {},
   ) {
     super(message);
   }
 }
-export const sportsOS = {
-  async call<T = any>(method: string, params: Dict = {}): Promise<T> {
-    let response;
-    try {
-      response = await invoke<Dict>("sports_call", { method, params });
-    } catch (e) {
-      throw new BackendError(
-        "SIDECAR",
-        "后端连接不可用。请重新连接后打开项目。",
-        { technical: String(e) },
-      );
-    }
-    if (!response.ok)
-      throw new BackendError(
-        response.error.code,
-        response.error.message,
-        response.error.details,
-      );
-    return response.result as T;
-  },
+
+export async function call<T = any>(method: string, params: Dict = {}): Promise<T> {
+  let response: Dict;
+  try {
+    response = await invoke<Dict>("sports_call", { method, params });
+  } catch (e) {
+    throw new BackendError("SIDECAR", "后台程序没有响应，请重新打开文件。" + (e ? ` (${String(e)})` : ""));
+  }
+  if (!response.ok) throw new BackendError(response.error.code, response.error.message);
+  return response.result as T;
+}
+
+export const KIND_NAMES: Record<string, string> = {
+  hold: "功能占用",
+  comp: "权益/赠票",
+  priority: "优先购",
+  reserve: "预留",
 };
-/**
- * Module presentation metadata comes from the backend (Module.display_name / category / description),
- * so third-party modules get proper names without frontend changes. Unknown IDs fall back to the ID.
- */
-let catalog: Record<string, Dict> = {};
-export const setModuleCatalog = (modules: Dict[] | undefined) => {
-  catalog = Object.fromEntries((modules || []).map((m) => [m.module_id, m]));
+
+export const PRODUCT_NAMES: Record<string, string> = {
+  day: "一日通票",
+  full: "全程通票",
+  package: "旅行套票",
 };
-export const moduleName = (id: string): string =>
-  catalog[id]?.display_name || id;
-export const moduleCategory = (id: string): string =>
-  catalog[id]?.category || "Other";
-export const moduleDescription = (id: string): string =>
-  catalog[id]?.description || "";
-export const display = (v: unknown) =>
-  v === null || v === undefined
-    ? "—"
-    : typeof v === "object"
-      ? JSON.stringify(v)
-      : String(v);
+
+export const LINE_NAMES: Record<string, string> = {
+  seats: "总座席",
+  hold: "功能占用",
+  sellable: "可售座席",
+  comp: "权益/赠票",
+  priority: "优先购",
+  reserve: "预留",
+  product: "通票/套票",
+  public: "公开销售",
+  sold: "公开已售",
+  left: "剩余",
+};
+
+/** 1234567.5 → "1,234,567.5"; keeps exact decimal strings from the backend. */
+export function yuan(v: string | number | null | undefined): string {
+  if (v === null || v === undefined || v === "") return "—";
+  const [whole, frac] = String(v).split(".");
+  const sign = whole.startsWith("-") ? "-" : "";
+  const digits = whole.replace("-", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const cents = frac ? frac.replace(/0+$/, "").slice(0, 2) : "";
+  return sign + digits + (cents ? "." + cents : "");
+}
+
+export function num(v: number | null | undefined): string {
+  if (v === null || v === undefined) return "—";
+  return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function bandName(book: Dict, code: string): string {
+  return book.bands.find((b: Dict) => b.code === code)?.name || code;
+}

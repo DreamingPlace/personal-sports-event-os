@@ -4,16 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "personal-sports-event-os"
-version = "1.2.0"
-description = "Offline synthetic sports-event modeling and release quality gates"
+version = "2.0.0"
+description = "Ticket book for sports events: sessions, prices, seat split, inventory and box office forecast (offline, encrypted)"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["cryptography>=42", "openpyxl>=3.1.5,<4"]
 
 [project.optional-dependencies]
 excel = ["openpyxl>=3.1.5,<4"]
 
 [project.scripts]
 sports-os = "sports_os.cli:main"
+ticketbook-desktop = "ticketbook.desktop:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

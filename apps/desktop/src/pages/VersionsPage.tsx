@@ -1,113 +1,109 @@
 import { useState } from "react";
-import { Dict, display, moduleName } from "../api";
-import { Empty } from "../components";
+import type { Dict } from "../api";
+import { call } from "../api";
+import type { PageProps } from "../App";
+import { Confirm, Section } from "../ui";
 
-/** Compare a snapshot with the working copy or with another snapshot. */
-export function VersionsPage({
-  snapshots,
-  busy,
-  onCompare,
-}: {
-  snapshots: Dict[];
-  busy: boolean;
-  onCompare: (oldRef: string, newRef: string) => Promise<Dict | undefined>;
-}) {
-  const [picked, setPicked] = useState(""),
-    [newVersion, setNewVersion] = useState("WORKING"),
-    [diff, setDiff] = useState<Dict | null>(null);
-  // Default to the first snapshot until the user picks one.
-  const old = picked || snapshots[0]?.snapshot_id || "";
-  return (
-    <>
-      <div className="compare-controls">
-        <label>
-          旧版本
-          <select value={old} onChange={(e) => setPicked(e.target.value)}>
-            <option value="">选择快照</option>
-            {snapshots.map((s) => (
-              <option key={s.snapshot_id}>{s.snapshot_id}</option>
-            ))}
-          </select>
-        </label>
-        <span>→</span>
-        <label>
-          新版本
-          <select
-            value={newVersion}
-            onChange={(e) => setNewVersion(e.target.value)}
-          >
-            <option value="WORKING">当前工作副本</option>
-            {snapshots.map((s) => (
-              <option key={s.snapshot_id}>{s.snapshot_id}</option>
-            ))}
-          </select>
-        </label>
-        <button
-          disabled={!old || busy}
-          onClick={async () => setDiff((await onCompare(old, newVersion)) ?? null)}
-        >
-          比较版本
-        </button>
-      </div>
-      {diff ? (
-        <DiffView diff={diff} />
-      ) : (
-        <Empty title="选择两个版本进行比较">
-          支持快照与工作副本、快照与快照；原因由后端证据提供，不做推测补全。
-        </Empty>
-      )}
-    </>
-  );
-}
+export function VersionsPage({ state, run }: PageProps) {
+  const [label, setLabel] = useState("");
+  const [diff, setDiff] = useState<{ title: string; rows: Dict[] } | null>(null);
+  const [restoring, setRestoring] = useState<Dict | null>(null);
+  const [error, setError] = useState("");
+  const versions = [...state.versions].reverse();
 
-function DiffView({ diff }: { diff: Dict }) {
-  const entries = Object.entries(diff.business || {});
+  const compareWith = async (v: Dict) => {
+    setError("");
+    try {
+      const rows = await call<Dict[]>("compare", { old: v.id, new: "CURRENT" });
+      setDiff({ title: `“${v.label}” → 现在`, rows });
+    } catch (e: any) {
+      setError(e?.message || String(e));
+    }
+  };
+
   return (
-    <section>
-      {!entries.length && (
-        <Empty title="没有业务事实变化">
-          元数据或快照标识仍可能不同，详见下方后端记录。
-        </Empty>
-      )}
-      {entries.map(([id, rows]: [string, any]) => (
-        <section key={id}>
-          <h2>{moduleName(id)}</h2>
-          <table>
-            <caption className="sr-only">{id} 版本差异</caption>
-            <thead>
-              <tr>
-                <th>字段 / 事实类型</th>
-                <th>Old → New</th>
-                <th>原因证据</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r: any, i: number) => (
-                <tr key={i}>
-                  <td>
-                    <code>{r.path}</code>
-                    <small>{r.fact_kind}</small>
-                  </td>
-                  <td>
-                    {display(r.old)} → {display(r.new)}
-                  </td>
-                  <td>
-                    {r.reasons?.length
-                      ? r.reasons.map((x: any, j: number) => (
-                          <p key={j}>{display(x)}</p>
-                        ))
-                      : "No Evidence · 无直接证据"}
-                  </td>
+    <div className="page">
+      <Section title="保存版本" hint="每次修改都会自动保存到文件里。“版本”是你想留下的一个时间点，例如“1128开售版本”。">
+        <div className="row">
+          <input aria-label="版本名称" placeholder="版本名称，例如 1128开售版本" value={label} onChange={(e) => setLabel(e.target.value)} />
+          <button className="primary" disabled={!label.trim()} onClick={() => run("save_version", { label: label.trim() }).then(() => setLabel(""))}>
+            保存版本
+          </button>
+        </div>
+      </Section>
+
+      <Section title="已保存的版本">
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
+        {!versions.length && <p className="hint">还没有保存过版本。</p>}
+        <ul className="plain">
+          {versions.map((v) => (
+            <li key={v.id}>
+              <strong>{v.label}</strong> <span className="muted">{new Date(v.created_at).toLocaleString()}</span>{" "}
+              <button className="link" onClick={() => compareWith(v)}>
+                和现在比较
+              </button>
+              <button className="link" onClick={() => setRestoring(v)}>
+                恢复到这个版本
+              </button>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {diff && (
+        <Section title={`变化：${diff.title}`} actions={<button onClick={() => setDiff(null)}>关闭</button>}>
+          {!diff.rows.length ? (
+            <p className="ok-line">没有变化</p>
+          ) : (
+            <table className="grid">
+              <thead>
+                <tr>
+                  <th>位置</th>
+                  <th>原来</th>
+                  <th>现在</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-      ))}
-      <details>
-        <summary>完整后端差异记录（含模块启停与元数据）</summary>
-        <pre>{JSON.stringify(diff, null, 2)}</pre>
-      </details>
-    </section>
+              </thead>
+              <tbody>
+                {diff.rows.map((r, i) => (
+                  <tr key={i}>
+                    <td>{r.path.join(" / ")}</td>
+                    <td>{r.old === undefined || r.old === null ? "—" : String(r.old)}</td>
+                    <td>{r.new === undefined || r.new === null ? "—" : String(r.new)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </Section>
+      )}
+
+      <Section title="修改记录" hint="最近 50 条。">
+        <ul className="plain log">
+          {[...state.log].reverse().map((e, i) => (
+            <li key={i}>
+              <span className="muted">{new Date(e.at).toLocaleString()}</span> {e.action} {e.detail && <span className="muted">· {e.detail}</span>}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {restoring && (
+        <Confirm
+          title="恢复版本"
+          confirmText="恢复"
+          onCancel={() => setRestoring(null)}
+          onConfirm={async () => {
+            await run("restore", { id: restoring.id });
+            setRestoring(null);
+          }}
+        >
+          <p>把票务总表恢复到“{restoring.label}”。恢复前会自动把现在的内容保存为一个版本。</p>
+        </Confirm>
+      )}
+    </div>
   );
 }
