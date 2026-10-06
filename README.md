@@ -7,6 +7,7 @@
 - **唯一工作副本**：桌面端未完成草稿保存在 `data/modular.sqlite`，命令行看到的是同一份草稿；`discard-draft` 可放弃。打开后被其他程序保存过的工作区会拒绝覆盖（退出码3 / 桌面端 CONFLICT）。
 - **命令行**：新增 `status`（列出待批准模块和下一步命令）；退出码 0 成功、1 门禁阻断、2 输入错误、3 冲突；`diff` 支持 `WORKING` 和快照ID。
 - **代码结构**：v1.0 代码移到 `src/sports_os_legacy`；桌面前端拆分为 `pages/` 和 `views/`；模块提供展示名称。详见 [架构](docs/ARCHITECTURE.md)。
+- **新建项目更简单**：只需名称和活动类型；ID、时区、文件夹和所需模块自动处理，创建后按“开始设置”清单逐步填写（见下文“新建项目”）。启用模块时自动加入它需要的模块。
 - 桌面端版本 0.2.0（协议 0.2）。
 
 离线、确定性、完全合成数据的个人赛事工具。**Kernel 不认识票价、座席、退款或旅行包**；业务由可独立安装的 Python 模块提供。核心不依赖 GUI；无 AI、网络平台连接、自动定价或真实库存操作。
@@ -113,13 +114,17 @@ python -m sports_os snapshot --workspace ./outputs/my-v111-event
 
 CLI启停/替换会把项目设为DRAFT，需要重新批准。独立产品、权益、收入、库存均可启停，但依赖和跨模块约束不会被绕过：**禁用Rights后库存仍含付费权益分配时，必须人工处理或禁用库存，系统不替你改池**。
 
-## 从空项目开始
+## 新建项目
+
+桌面端：点“新建项目”，填项目名称、选活动类型，再选保存位置即可。项目 ID 由名称生成，时区用本机时区，都可在“更多设置”里改；所选类型需要的模块会自动加上；选普通文件夹（如“文稿”）时会在里面为项目新建一个文件夹。创建后概览页的“开始设置”按顺序列出要填写的模块，未完成的部分自动存为草稿。
+
+命令行只需名称和类型：
 
 ```bash
-python -m sports_os create --id SYNTHETIC-NEW --name "Synthetic community event" --timezone UTC --workspace ./outputs/my-project
+python -m sports_os create --name "Summer Cup 2027" --template ticketed-indoor-event --workspace ./outputs
 ```
 
-生成合法但未批准的裸Kernel项目。加 `--profile` 只写入推荐manifest及 `outputs/project-skeleton.json`，**不编造业务payload**；按独立schema补齐各启用模块，再 `load`。批准必须通过 `approve-module` / `approve-project` 明确输入版本与非空批准引用；程序不会自动批准。
+类型：`non-ticketed-event`（免费 / 不售票活动）、`ticketed-indoor-event`（售票赛事）、`multi-session-tournament`（多场次锦标赛含通票）、`custom`（配合 `--modules a,b` 自选；所需依赖自动加入）。`--id`、`--timezone` 可选。命令会打印设置进度和下一步：用 `get` 导出某模块数据、编辑后 `update` 保存；项目未完成时修改保存为草稿，`status` 随时显示进度。程序不会编造业务数据，也不会自动批准；批准仍须通过 `approve-module` / `approve-project` 明确输入版本与非空批准引用。
 
 ## v1.1 → v1.1.1 显式迁移
 

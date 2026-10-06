@@ -37,8 +37,10 @@ class DesktopSession:
         release=self.app.validate_project(self.project,True)
         paths=[self.app.store.path,self.app.root/'project.toml']
         modified=max((p.stat().st_mtime for p in paths if p.exists()),default=0)
-        return dict(project=self.project.to_dict(),workspace=str(self.app.root),modified_at=datetime.fromtimestamp(modified,timezone.utc).isoformat(),
-                    draft=self.app.has_draft(),revision=self.project.base_revision,quality=gate.to_dict(),
+        added,self.app.last_added=self.app.last_added,{}
+        return dict(project=self.project.to_dict(),workspace=str(self.app.root),setup=self.app.setup_progress(self.project,gate),
+                    added_modules=added,modified_at=datetime.fromtimestamp(modified,timezone.utc).isoformat(),
+                    draft=self.app.has_draft(),can_discard=self.app.can_discard_draft(),revision=self.project.base_revision,quality=gate.to_dict(),
                     release_quality=release.to_dict(),modules=self.app.list_modules())
 
     def dispatch(self,method,p):
@@ -46,20 +48,24 @@ class DesktopSession:
             from ..kernel import Registry
             registry=Registry.discover()
             return dict(protocol_version=PROTOCOL_VERSION,desktop_version=DESKTOP_VERSION,modules=registry.list(),
-                        plugin_problems=registry.problems(),profiles=PROFILES)
+                        plugin_problems=registry.problems(),profiles=PROFILES,
+                        templates=ApplicationService.templates(),default_timezone=ApplicationService.local_timezone())
         if method=='list_modules':
             from ..kernel import Registry
             return Registry.discover().list()
         if method in ('create_project','open_project','create_demo'):
-            app=ApplicationService(p['workspace'])
             if method=='create_project':
                 identity=p['identity']
                 if set(identity)-{'id','name','timezone'}:raise ProtocolError('PROTOCOL','identity仅允许id/name/timezone')
-                project=app.create_workspace(identity,p.get('modules',[]))
-            elif method=='create_demo':
-                if not app.store.is_empty() or (app.root/app.LEGACY_DRAFT).exists():raise KernelError('目录已存在项目，Demo不得覆盖')
-                project=app.demo()
-            else:project=app.open_desktop_project()
+                # A non-empty folder gets a new sub-folder named after the project instead of an error.
+                app=ApplicationService(ApplicationService.project_folder(p['workspace'],identity.get('name','')))
+                project=app.create_workspace(identity,p.get('modules',[]),p.get('template'))
+            else:
+                app=ApplicationService(p['workspace'])
+                if method=='create_demo':
+                    if not app.store.is_empty() or (app.root/app.LEGACY_DRAFT).exists():raise KernelError('目录已存在项目，Demo不得覆盖')
+                    project=app.demo()
+                else:project=app.open_desktop_project()
             self.app=app;self.project=project
             return self.state()
         self.require_project()
@@ -72,15 +78,15 @@ class DesktopSession:
             if p.get('snapshot_id'):return self.app.calculate_snapshot_module(self.project,p['snapshot_id'],p['module_id'])
             return self.app.calculate_module(self.project,p['module_id'])
         if method=='discard_draft':
-            self.project=self.app.discard_draft();return self.state()
+            self.project=self.app.discard_draft(self.project);return self.state()
         if method=='save_project':
             self.app.persist_desktop_project(self.project);return self.state()
         if method in ('enable_module','disable_module','update_module_data','apply_changeset','approve_module','approve_project'):
             candidate=self.project
             if method=='enable_module':
                 key=p['module_id'];payload=p.get('payload')
-                if payload is None and key not in candidate.states:payload=self.app.empty_payload(self.app.get_module_schema(key))
-                candidate=self.app.enable_module(candidate,key,payload)
+                # Anything the module needs is enabled with it (reported back as added_modules).
+                candidate=self.app.enable_with_dependencies(candidate,key,payload)
             elif method=='disable_module':candidate=self.app.disable_module(candidate,p['module_id'])
             elif method=='update_module_data':candidate=self.app.update_module_data(candidate,p['module_id'],p['payload'])
             elif method=='apply_changeset':candidate=self.app.apply_changeset(candidate,p['module_id'],p['changes'])

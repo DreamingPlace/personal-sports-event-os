@@ -109,12 +109,28 @@ class Store:
             con.execute('INSERT INTO drafts VALUES(?,?,?)', (project.manifest['project']['id'], canonical(record), digest(record)))
         project.base_revision = revision
 
-    def discard_draft(self):
-        """Drop the incomplete draft; the last saved project becomes the working copy again."""
+    def discard_draft(self, base_revision=None):
+        """Drop the incomplete draft; the last saved project becomes the working copy again.
+
+        Refuses (changing nothing) when there is no saved project to fall back to, e.g. a new project
+        that has never passed validation: the draft is then the only copy. ``base_revision`` works like
+        in save(): a draft that another program changed since it was loaded is not discarded.
+        """
         with self.transaction() as con:
-            if con.execute('SELECT COUNT(*) FROM drafts').fetchone()[0]:
-                self._advance(con, None)
-                con.execute('DELETE FROM drafts')
+            if not con.execute('SELECT COUNT(*) FROM drafts').fetchone()[0]:
+                return
+            if not con.execute('SELECT COUNT(*) FROM projects').fetchone()[0]:
+                raise KernelError('这是新项目的唯一版本，还没有可以回退的已保存版本；放弃会丢失整个项目，因此未做任何更改。'
+                                  '请继续修正问题；如果确实要重新开始，请删除整个项目文件夹。')
+            self._advance(con, base_revision)
+            con.execute('DELETE FROM drafts')
+
+    def has_saved(self):
+        """Whether a validated project has ever been saved (something a draft can be discarded back to)."""
+        if not self.path.exists():
+            return False
+        with self.connect() as con:
+            return con.execute('SELECT COUNT(*) FROM projects').fetchone()[0] > 0
 
     def has_draft(self):
         if not self.path.exists():

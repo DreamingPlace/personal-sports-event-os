@@ -1,111 +1,133 @@
 import { useState } from "react";
-import { Dict } from "../api";
+import { Dict, moduleName } from "../api";
 import { ModuleList } from "../pages/ModulesPage";
 
-const PROFILE_LABELS: Dict = {
-  "": "Blank · 空项目",
-  "non-ticketed-event": "Non-ticketed Event · 非票务赛事",
-  "ticketed-indoor-event": "Ticketed Indoor Event · 室内票务",
-  "multi-session-tournament": "Multi-session Tournament · 多场次",
+const browserTimezone = () => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+  } catch {
+    return "";
+  }
 };
 
-/** New-project wizard: identity → optional preset → module selection. */
+/**
+ * New project in one screen: a name and the kind of event. Everything else has a sensible default
+ * (project ID from the name, this computer's time zone, a new folder for the project, and every module
+ * the choice needs) and can be changed under "更多设置".
+ */
 export function Wizard({
   modules,
-  profiles,
+  templates,
+  defaultTimezone,
   busy,
   onCreate,
 }: {
   modules: Dict[];
-  profiles: Dict;
+  templates: Dict[];
+  defaultTimezone?: string;
   busy: boolean;
   onCreate: (p: Dict) => void;
 }) {
-  const [step, setStep] = useState(1),
-    [identity, setIdentity] = useState({
-      id: "",
-      name: "",
-      timezone: "Asia/Singapore",
-    }),
-    [profile, setProfile] = useState(""),
-    [selected, setSelected] = useState<string[]>([]);
+  const [name, setName] = useState(""),
+    [template, setTemplate] = useState(
+      templates.find((t) => t.id === "ticketed-indoor-event")?.id ||
+        templates[0]?.id ||
+        "custom",
+    ),
+    [custom, setCustom] = useState<string[]>([]),
+    [id, setId] = useState(""),
+    [timezone, setTimezone] = useState(
+      browserTimezone() || defaultTimezone || "UTC",
+    );
+  const chosen = templates.find((t) => t.id === template);
   return (
     <div className="wizard">
-      <p className="step-label">
-        {step} / 3 · {["项目身份", "选择预设", "能力模块"][step - 1]}
-      </p>
-      {step === 1 ? (
-        <>
-          {(["name", "id", "timezone"] as const).map((k) => (
-            <label className="field" key={k}>
-              {
-                { name: "项目名称", id: "项目 ID", timezone: "时区 Timezone" }[
-                  k
-                ]
-              }
-              <input
-                value={identity[k]}
-                onChange={(e) =>
-                  setIdentity({ ...identity, [k]: e.target.value })
-                }
-              />
-            </label>
-          ))}
-          <p className="muted">仅合成项目，不录入真实公司或个人数据。</p>
-        </>
-      ) : step === 2 ? (
-        <fieldset>
-          <legend>预设仅填写模块清单，可以继续调整</legend>
-          {["", ...Object.keys(profiles)].map((k) => (
-            <label className="profile-choice" key={k}>
-              <input
-                type="radio"
-                name="profile"
-                checked={profile === k}
-                onChange={() => {
-                  setProfile(k);
-                  setSelected(profiles[k] || []);
-                }}
-              />
-              {PROFILE_LABELS[k] || k}
-            </label>
-          ))}
-        </fieldset>
-      ) : (
+      <label className="field">
+        项目名称
+        <input
+          autoFocus
+          value={name}
+          placeholder="例如：2027 夏季公开赛"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <fieldset className="template-choices">
+        <legend>这是什么类型的活动？</legend>
+        {templates.map((t) => (
+          <label
+            key={t.id}
+            className={`template-choice ${template === t.id ? "selected" : ""}`}
+          >
+            <input
+              type="radio"
+              name="template"
+              checked={template === t.id}
+              onChange={() => setTemplate(t.id)}
+            />
+            <span>
+              <strong>{t.label}</strong>
+              <small>{t.description}</small>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+      {template === "custom" ? (
         <div className="wizard-modules">
+          <p className="muted">
+            勾选需要的功能。它们依赖的模块会自动加上，之后也可以在“能力模块”里随时调整。
+          </p>
           <ModuleList
             modules={modules}
-            selected={selected}
+            selected={custom}
             busy={busy}
-            onToggle={(id) =>
-              setSelected(
-                selected.includes(id)
-                  ? selected.filter((k) => k !== id)
-                  : [...selected, id],
+            onToggle={(m) =>
+              setCustom(
+                custom.includes(m)
+                  ? custom.filter((k) => k !== m)
+                  : [...custom, m],
               )
             }
           />
         </div>
+      ) : (
+        chosen && (
+          <p className="muted template-includes">
+            包含：{chosen.modules.map(moduleName).join("、")}
+          </p>
+        )
       )}
+      <details className="more-settings">
+        <summary>更多设置（可选）</summary>
+        <label className="field">
+          项目 ID
+          <input
+            value={id}
+            placeholder="留空则根据名称自动生成"
+            onChange={(e) => setId(e.target.value)}
+          />
+        </label>
+        <label className="field">
+          时区 Timezone
+          <input value={timezone} onChange={(e) => setTimezone(e.target.value)} />
+        </label>
+      </details>
+      <p className="muted">
+        仅用于合成项目，不录入真实公司或个人数据。下一步选择保存位置：可以选任意文件夹，会在里面为项目新建一个文件夹。
+      </p>
       <div className="dialog-actions">
-        {step > 1 && <button onClick={() => setStep(step - 1)}>上一步</button>}
-        {step < 3 ? (
-          <button
-            className="primary"
-            disabled={Object.values(identity).some((v) => !v.trim())}
-            onClick={() => setStep(step + 1)}
-          >
-            下一步
-          </button>
-        ) : (
-          <button
-            className="primary"
-            disabled={busy}
-            onClick={() => onCreate({ identity, modules: selected })}
-          >
-            选择文件夹并创建
-          </button>
-        )}
+        <button
+          className="primary"
+          disabled={busy || !name.trim()}
+          onClick={() =>
+            onCreate({
+              identity: { name: name.trim(), id: id.trim(), timezone },
+              template,
+              modules: template === "custom" ? custom : [],
+            })
+          }
+        >
+          选择保存位置并创建
+        </button>
       </div>
     </div>
   );

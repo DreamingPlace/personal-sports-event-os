@@ -228,10 +228,14 @@ export default function App() {
         ...moduleView,
         data: s.project.modules[moduleView.id].payload,
       });
+    const added = Object.keys(s.added_modules || {});
     setNotice(
-      s.draft
-        ? "已保存为未完成草稿：尚未通过检查，请前往 Quality Gate 修正。"
-        : "已保存为工作态。",
+      (added.length
+        ? "已自动加入所需模块：" + added.map(moduleName).join("、") + "。"
+        : "") +
+        (s.draft
+          ? "已保存为未完成草稿，可按概览中的“开始设置”继续填写。"
+          : "已保存为工作态。"),
     );
     return s;
   };
@@ -340,7 +344,7 @@ export default function App() {
                       : "Working Copy"}{" "}
                   · <code>{meta?.version}</code>
                 </span>
-                {!snapshot && state.draft && (
+                {!snapshot && state.draft && state.can_discard && (
                   <p className="draft-banner" role="note">
                     当前工作副本是未完成草稿：命令行和桌面端看到的是同一份草稿，修正全部阻断后会自动保存为正式工作态。
                     <button
@@ -424,6 +428,7 @@ export default function App() {
                   workspace={state.workspace}
                   enabled={enabled}
                   modules={current?.modules}
+                  setup={snapshot ? undefined : state.setup}
                   onOpenModule={loadPage}
                 />
               )}
@@ -544,7 +549,8 @@ export default function App() {
         {health && (
           <Wizard
             modules={health.modules}
-            profiles={health.profiles}
+            templates={health.templates || []}
+            defaultTimezone={health.default_timezone}
             busy={busy}
             onCreate={async (values) => {
               const s = await run(async () => {
@@ -558,6 +564,7 @@ export default function App() {
               if (s) {
                 adopt(s);
                 setWizard(false);
+                setNotice("项目已创建：" + s.workspace + "。按“开始设置”的顺序填写即可。");
               }
             }}
           />

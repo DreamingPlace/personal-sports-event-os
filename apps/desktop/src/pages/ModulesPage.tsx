@@ -71,7 +71,7 @@ export function ModulesPage({
   return (
     <>
       <p className="muted">
-        启停由后端校验依赖；禁用保留数据，不会修改历史快照。
+        启用一个模块时，它需要的其他模块会自动一起启用；禁用会保留数据，不会修改历史快照。
       </p>
       <ModuleList
         modules={modules}

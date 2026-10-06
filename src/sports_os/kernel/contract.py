@@ -51,6 +51,9 @@ class Module:
     display_name = ''   # human name; UIs fall back to module_id
     category = 'Other'  # grouping label, e.g. Core / Ticketing / Rules / Finance / Product / Project
     description = ''    # one line: what data this module holds
+    # When several installed modules provide a capability, this one is chosen automatically when a user
+    # enables something that needs the capability (they can still switch to another provider).
+    default_provider = False
     module_version = '1.1.0'
     schema_version = '1'
     dependencies = ()

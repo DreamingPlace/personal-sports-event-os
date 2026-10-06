@@ -4,7 +4,8 @@ RATES={'type':'object','additionalProperties':RATE}
 
 class MultiplicativeDemandModel(Module):
     module_id='demand.multiplicative'
-    display_name='需求 Multiplicative'
+    default_provider=True
+    display_name='需求预估'
     category='Finance'
     description='按场次需求率×票档需求率得到各容量池需求率的情景'
     provides=('demand',)
@@ -27,7 +28,7 @@ class MultiplicativeDemandModel(Module):
 
 class DirectDemandModel(Module):
     module_id='demand.direct'
-    display_name='需求 Direct'
+    display_name='需求预估（逐池输入）'
     category='Finance'
     description='直接给出每个容量池需求率的情景'
     provides=('demand',)

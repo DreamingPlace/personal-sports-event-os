@@ -10,7 +10,7 @@ from ..kernel.gate import validate_project
 from ..kernel.diff import compare_versions
 from ..kernel.snapshot import create_snapshot,verify_snapshot,ReleaseBlocked
 from ..kernel.data import KernelError,canonical,digest
-from .manifest import PROFILES,parse_manifest,render_manifest,safe_path
+from .manifest import PROFILES,TEMPLATES,parse_manifest,render_manifest,safe_path
 
 
 class GateBlocked(KernelError):
@@ -23,6 +23,7 @@ class ApplicationService:
         self.root=safe_path(workspace,'.')
         self.registry=registry if registry is not None else Registry.discover()
         self.store=Store(safe_path(self.root,'data/modular.sqlite'))
+        self.last_added={}  # modules added automatically by the last create/enable call -> which module needed them
 
     @staticmethod
     def run_legacy(argv):
@@ -184,14 +185,114 @@ class ApplicationService:
         if kind in ('number','integer'):return schema.get('minimum',0)
         return ''
 
-    def create_workspace(self,identity,modules):
+    # ---- New project -------------------------------------------------------------------------------
+    @staticmethod
+    def suggest_project_id(name):
+        """A readable project ID from the name (ASCII words, upper case); dated fallback for other scripts."""
+        import unicodedata
+        ascii_name=unicodedata.normalize('NFKD',name or '').encode('ascii','ignore').decode()
+        slug='-'.join(re.findall(r'[A-Za-z0-9]+',ascii_name)).upper()[:40].strip('-')
+        if not slug:return 'EVENT-'+datetime.now().strftime('%Y%m%d')
+        return slug if re.search('[A-Z]',slug) else 'EVENT-'+slug  # "2027 夏季公开赛" -> EVENT-2027
+
+    @staticmethod
+    def local_timezone():
+        """Best-effort IANA name of this computer's time zone; UTC when it cannot be determined."""
+        import os
+        from pathlib import Path
+        from zoneinfo import ZoneInfo
+        candidates=[os.environ.get('TZ','')]
+        try:
+            target=str(Path('/etc/localtime').resolve())
+            if 'zoneinfo/' in target:candidates.append(target.split('zoneinfo/',1)[1])
+        except OSError:
+            pass
+        for name in candidates:
+            try:
+                if name and '/' in name:ZoneInfo(name);return name
+            except (ValueError,KeyError,OSError):
+                continue
+        return 'UTC'
+
+    @staticmethod
+    def project_folder(chosen,name):
+        """Where a new project goes: the chosen folder if it is empty (or new), otherwise a new sub-folder
+        named after the project, so picking an ordinary folder such as Documents just works."""
+        from pathlib import Path
+        root=Path(chosen).expanduser()
+        if not root.exists() or (root.is_dir() and not any(root.iterdir())):return root
+        base=ApplicationService.suggest_project_id(name).lower();candidate=root/base;n=2
+        while candidate.exists() and any(candidate.iterdir()):
+            candidate=root/f'{base}-{n}';n+=1
+        return candidate
+
+    @staticmethod
+    def templates():
+        return [dict(t,modules=list(t['modules'])) for t in TEMPLATES]
+
+    def create_workspace(self,identity,modules=None,template=None):
+        """Create a new project in this (empty) workspace.
+
+        Only a name is required: the ID defaults to one derived from the name, the time zone to this
+        computer's, and the modules to the chosen template. Modules the selection needs are added
+        automatically. Returns the project; ``self.last_added`` lists what was added and why."""
         if not self.store.is_empty() or safe_path(self.root,'project.toml').exists() or safe_path(self.root,self.LEGACY_DRAFT).exists():
             raise KernelError('目录已有项目，拒绝覆盖；请选择空项目目录')
-        project=self.create_project(identity,modules=modules)
+        identity=dict(identity)
+        if not str(identity.get('name','')).strip():raise KernelError('请填写项目名称')
+        identity['id']=str(identity.get('id') or '').strip() or self.suggest_project_id(identity['name'])
+        identity['timezone']=str(identity.get('timezone') or '').strip() or self.local_timezone()
+        if template is not None:
+            found=[t for t in TEMPLATES if t['id']==template]
+            if not found:raise KernelError('未知模板：'+template)
+            modules=list(found[0]['modules'])+list(modules or ())
+        selected,self.last_added=self.registry.with_dependencies(modules or ())
+        project=self.create_project(identity,modules=selected)
         for key in self.registry.order(project.enabled):
             project=self.enable_module(project,key,self.empty_payload(self.get_module_schema(key)))
-        self.save_desktop_draft(project)
+        # A project with nothing left to fill in is saved normally; otherwise it starts as a draft.
+        self.persist_desktop_project(project)
         return project
+
+    def enable_with_dependencies(self,project,module_id,payload=None):
+        """Enable a module and, with empty starter data, anything it needs that is not enabled yet."""
+        selected,added=self.registry.with_dependencies(list(project.enabled)+[module_id])
+        out=project
+        for key in self.registry.order(selected):
+            if key in out.enabled:continue
+            data=payload if key==module_id else None
+            if data is None and key not in out.states:data=self.empty_payload(self.get_module_schema(key))
+            out=self.enable_module(out,key,data)
+        self.last_added={k:v for k,v in added.items() if k not in project.enabled}
+        return out
+
+    def setup_progress(self,project,gate=None):
+        """Per enabled module, in the order to fill them in: what is left to do.
+
+        state: DONE (filled in, no blocking problems), TODO (still empty), FIX (has blocking problems),
+        WAITING (a module it depends on must be completed first), AUTO (calculated, nothing to enter).
+        ``next`` is the module to work on now."""
+        gate=gate or self.validate_project(project)
+        try:order=self.registry.order(project.enabled)
+        except KernelError:order=list(project.enabled)
+        items=[]
+        for key in order:
+            module=self.registry.get(key);schema=module.schema()
+            mine=[f for f in gate.findings if f.severity=='BLOCK' and (f.source==key or f.source.startswith(key+'/'))]
+            waiting=sorted({m for f in mine if f.rule_id=='DEPENDENCY_BLOCKED' for m in (f.actual or [])})
+            blocks=sum(f.rule_id!='DEPENDENCY_BLOCKED' for f in mine)
+            state=project.states.get(key)
+            empty=state is None or canonical(state.payload)==canonical(self.empty_payload(schema))
+            if not schema.get('properties'):status='WAITING' if waiting else ('FIX' if blocks else 'AUTO')
+            elif waiting:status='WAITING'
+            elif empty:status='TODO'   # problems of an untouched module are just "fill this in"
+            elif blocks:status='FIX'
+            else:status='DONE'
+            items.append(dict(module_id=key,display_name=module.display_name or key,description=module.description,
+                              status=status,blocks=blocks,waiting_for=waiting))
+        nxt=next((i['module_id'] for i in items if i['status'] in ('FIX','TODO')),None)
+        done=sum(i['status'] in ('DONE','AUTO') for i in items)
+        return dict(modules=items,next=nxt,done=done,total=len(items),complete=bool(items) and done==len(items))
 
     def save_desktop_draft(self,project):
         """Persist an incomplete DRAFT in the working store; never weakens save/release gates."""
@@ -206,9 +307,13 @@ class ApplicationService:
 
     def has_draft(self):return self.store.has_draft()
 
-    def discard_draft(self):
-        """Drop incomplete edits and return to the last saved project."""
-        self.store.discard_draft()
+    def can_discard_draft(self):return self.store.has_draft() and self.store.has_saved()
+
+    def discard_draft(self,project=None):
+        """Drop incomplete edits and return to the last saved project.
+
+        Pass the project being discarded so a draft changed elsewhere since it was opened is not lost."""
+        self.store.discard_draft(project.base_revision if project is not None else None)
         return self.open_project()
 
     def persist_desktop_project(self,project):
@@ -341,8 +446,17 @@ class ApplicationService:
                                 needs_approval=not approved(state.status,state.approval_ref)))
         workspace=' --workspace '+shlex.quote(str(self.root))
         steps=[]
+        progress=self.setup_progress(project,gate)
         if gate.status=='BLOCK':
-            steps.append('修正 validate 报告的BLOCK问题'+('；或 sports-os discard-draft'+workspace+' 回到上次保存的工作态' if draft else ''))
+            if progress['next']:
+                item=next(i for i in progress['modules'] if i['module_id']==progress['next'])
+                what='还没有填写' if item['status']=='TODO' else f"有 {item['blocks']} 个阻断问题（sports-os validate 查看）"
+                key=item['module_id'];folder=shlex.quote(str(self.root))
+                steps.append(f"先完成 {item['display_name']}（{key}）：{what}。"
+                             f"导出：sports-os get {key}{workspace} > {folder}/{key}.json；编辑后：sports-os update {key} {key}.json{workspace}")
+            else:
+                steps.append('修正 sports-os validate 报告的BLOCK问题')
+            if self.can_discard_draft():steps.append('或放弃这次未完成的修改：sports-os discard-draft'+workspace)
         else:
             for m in modules:
                 if m['needs_approval'] and m['data_version']:
@@ -355,7 +469,7 @@ class ApplicationService:
         return dict(project={k:meta[k] for k in ('id','name','version','status','approval_ref')},draft=draft,revision=project.base_revision,
                     quality=dict(status=gate.status,blocks=count(gate,'BLOCK'),warnings=count(gate,'WARNING')),
                     release_quality=dict(status=release.status,blocks=count(release,'BLOCK'),warnings=count(release,'WARNING')),
-                    modules=modules,snapshots=dict(count=len(snapshots),latest=max(snapshots,key=lambda r:r['created_at'])['snapshot_id'] if snapshots else None),
+                    modules=modules,setup=progress,snapshots=dict(count=len(snapshots),latest=max(snapshots,key=lambda r:r['created_at'])['snapshot_id'] if snapshots else None),
                     next_steps=steps)
 
     def calculate_module(self,project,module_id):

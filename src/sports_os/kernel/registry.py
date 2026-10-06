@@ -49,6 +49,28 @@ class Registry:
                      optional_capabilities=list(m.optional_capabilities))
                 for _,m in sorted(self._modules.items())]
 
+    def with_dependencies(self, selected):
+        """Return (modules, added) where modules = selected plus everything they need to run, and added maps
+        each automatically added module to the module that needed it. Required capabilities already
+        provided by a selected module are left alone; otherwise the installed provider is used, preferring
+        one marked ``default_provider`` when several exist."""
+        chosen=list(dict.fromkeys(selected));added={}
+        queue=list(chosen)
+        while queue:
+            key=queue.pop(0);module=self.get(key)
+            needs=[(dep,None) for dep in module.dependencies]+[(None,cap) for cap in module.requires_capabilities]
+            for dep,cap in needs:
+                if cap is not None:
+                    if any(cap in self.get(k).provides for k in chosen):continue
+                    providers=sorted(m.module_id for m in self._modules.values() if cap in m.provides)
+                    preferred=[k for k in providers if self.get(k).default_provider]
+                    if len(preferred)!=1 and len(providers)!=1:
+                        raise KernelError(f'{key} 需要能力 {cap}，可选提供者 {providers}；请先启用其中一个')
+                    dep=(preferred or providers)[0]
+                if dep not in chosen:
+                    chosen.append(dep);added[dep]=key;queue.append(dep)
+        return chosen,added
+
     def order(self, enabled):
         graph=self.dependency_graph(enabled)
         result=[];visiting=set();done=set()

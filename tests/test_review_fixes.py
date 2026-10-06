@@ -266,7 +266,8 @@ class CliTests(Base):
         app.persist_desktop_project(app.apply_changeset(app.open_project(), 'ticketing.pricing', [dict(path=['rows', 0, 'price'], value=1.001)]))
         report = json.loads(self.cli('status', '--json')[1])
         self.assertTrue(report['draft'])
-        self.assertIn('discard-draft', report['next_steps'][0])
+        self.assertIn('ticketing.pricing', report['next_steps'][0])
+        self.assertIn('discard-draft', report['next_steps'][1])
         self.assertEqual(self.cli('discard-draft')[0], 0)
         self.assertFalse(json.loads(self.cli('status', '--json')[1])['draft'])
 
@@ -374,6 +375,103 @@ class StructureTests(unittest.TestCase):
         registry.register(Plain())
         self.assertEqual(registry.list()[0]['display_name'], 'synthetic.plain')
         self.assertEqual(registry.list()[0]['category'], 'Other')
+
+
+
+class ReviewFollowUpTests(Base):
+    """Two defects found in external review of the v1.2 branch."""
+
+    def test_discarding_the_only_draft_of_a_new_project_is_refused(self):
+        from sports_os.kernel.data import KernelError
+        app = ApplicationService(self.root / 'new')
+        app.create_workspace(dict(name='New event'), ['ticketing.refund'])
+        self.assertTrue(app.has_draft())
+        self.assertFalse(app.can_discard_draft())
+        with self.assertRaisesRegex(KernelError, '唯一版本'):
+            app.discard_draft(app.open_project())
+        self.assertTrue(app.has_draft())
+        self.assertEqual(app.open_project().manifest['project']['name'], 'New event')
+
+    def test_discard_refuses_a_draft_changed_elsewhere(self):
+        from sports_os.kernel.store import ConflictError
+        self.app.demo()
+        first, second = ApplicationService(self.root), ApplicationService(self.root)
+        stale = first.open_project()
+        second.persist_desktop_project(second.apply_changeset(second.open_project(), 'ticketing.pricing',
+                                                              [dict(path=['rows', 0, 'price'], value=1.001)]))
+        with self.assertRaises(ConflictError):
+            first.discard_draft(stale)
+        self.assertTrue(second.has_draft())
+
+    def test_module_approval_is_reported_as_metadata(self):
+        draft = self.edit_price()
+        approved = self.approve(draft, 'ticketing.pricing')
+        diff = self.app.compare_versions(draft, approved)
+        self.assertEqual(diff['business'], {})
+        changed = {m['path']: (m['old'], m['new']) for m in diff['metadata']}
+        self.assertEqual(changed['modules/ticketing.pricing/status'], ('DRAFT', 'APPROVED'))
+        self.assertEqual(changed['modules/ticketing.pricing/approval_ref'], (None, 'REVIEW-REF'))
+
+
+class NewProjectTests(Base):
+    def test_only_a_name_and_template_are_needed(self):
+        app = ApplicationService(self.root / 'cup')
+        p = app.create_workspace(dict(name='Summer Cup 2027'), template='ticketed-indoor-event')
+        meta = p.manifest['project']
+        self.assertEqual(meta['id'], 'SUMMER-CUP-2027')
+        self.assertTrue(meta['timezone'])
+        self.assertIn('finance.revenue', p.enabled)
+        progress = app.setup_progress(p)
+        self.assertEqual(progress['done'], 0)
+        self.assertEqual(next(m for m in progress['modules'] if m['module_id'] == 'finance.revenue')['status'], 'WAITING')
+        self.assertIn(progress['next'], p.enabled)
+
+    def test_needed_modules_are_added_automatically(self):
+        app = ApplicationService(self.root / 'kids')
+        p = app.create_workspace(dict(name='Kids clinic'), ['finance.revenue'])
+        self.assertLessEqual({'core.schedule', 'ticketing.pricing', 'ticketing.seating', 'demand.multiplicative'}, set(p.enabled))
+        self.assertEqual(app.last_added['core.schedule'], 'finance.revenue')
+        p = app.enable_with_dependencies(p, 'ticketing.refund')
+        self.assertIn('ticketing.refund', p.enabled)
+
+    def test_non_empty_folder_gets_a_project_subfolder(self):
+        (self.root / 'Documents').mkdir()
+        (self.root / 'Documents' / 'notes.txt').write_text('x')
+        first = ApplicationService.project_folder(self.root / 'Documents', 'Summer Cup')
+        self.assertEqual(first, self.root / 'Documents' / 'summer-cup')
+        ApplicationService(first).create_workspace(dict(name='Summer Cup'), template='non-ticketed-event')
+        self.assertEqual(ApplicationService.project_folder(self.root / 'Documents', 'Summer Cup'), self.root / 'Documents' / 'summer-cup-2')
+        self.assertEqual(ApplicationService.project_folder(self.root / 'empty', 'X'), self.root / 'empty')
+
+    def test_project_ids(self):
+        self.assertEqual(ApplicationService.suggest_project_id('Summer Cup 2027'), 'SUMMER-CUP-2027')
+        self.assertEqual(ApplicationService.suggest_project_id('2027 夏季公开赛'), 'EVENT-2027')
+        self.assertTrue(ApplicationService.suggest_project_id('夏季公开赛').startswith('EVENT-'))
+
+    def test_cli_project_can_be_filled_one_module_at_a_time(self):
+        import contextlib
+        import io
+        import json
+        from sports_os.cli import main
+        def cli(*args, workspace):
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+                code = main([*args, '--workspace', str(workspace)])
+            return code, out.getvalue()
+        code, out = cli('create', '--name', 'Kids Clinic', '--modules', 'ticketing.refund', workspace=self.root / 'k')
+        self.assertEqual(code, 0)
+        self.assertIn('core.schedule', out)
+        workspace = self.root / 'k'
+        schedule = dict(rows=[dict(session_id='S1', event_id='KIDS-CLINIC', stage='Day 1', start_time='2027-07-01T09:00:00+00:00',
+                                   end_time='2027-07-01T12:00:00+00:00')], sales_start='2027-05-01T00:00:00+00:00', sales_end='2027-06-30T00:00:00+00:00')
+        (workspace / 'schedule.json').write_text(json.dumps(schedule))
+        code, out = cli('update', 'core.schedule', 'schedule.json', workspace=workspace)
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(out)['storage'], 'DRAFT')
+        report = json.loads(cli('status', '--json', workspace=workspace)[1])
+        states = {m['module_id']: m['status'] for m in report['setup']['modules']}
+        self.assertEqual(states['core.schedule'], 'DONE')
+        self.assertEqual(report['setup']['next'], 'ticketing.refund')
 
 
 if __name__ == '__main__':

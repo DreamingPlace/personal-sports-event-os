@@ -15,6 +15,12 @@ export type Workspace = {
   modified_at: string;
   /** True when the working copy is an incomplete draft that does not pass validation yet. */
   draft: boolean;
+  /** Whether there is a saved version to fall back to (false for a brand-new unfinished project). */
+  can_discard: boolean;
+  /** Ordered setup checklist: what to fill in next. */
+  setup: Dict;
+  /** Modules enabled automatically by the last call -> the module that needed them. */
+  added_modules: Record<string, string>;
   /** Workspace revision this copy was loaded at; saves from a stale revision are refused (CONFLICT). */
   revision: number | null;
   project: {
