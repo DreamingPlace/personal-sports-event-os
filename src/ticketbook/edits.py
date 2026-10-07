@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from .live import validate_damai, validate_live
 from .model import BUCKET_KINDS, PRODUCT_KINDS, BookError, count, money, normalize
 
-LISTS = {'tiers': 'code', 'bands': 'code', 'layouts': 'code', 'sessions': 'code', 'buckets': 'id', 'products': 'id', 'rounds': 'code', 'damai': 'id'}
+LISTS = {'tiers': 'code', 'bands': 'code', 'layouts': 'code', 'sessions': 'code', 'buckets': 'id', 'products': 'id', 'rounds': 'code', 'damai': 'id', 'templates': 'id'}
 
 
 def _find(items: list, key: str, value):
@@ -211,6 +211,8 @@ def compare(old: dict, new: dict) -> list[dict]:
     for path in sorted(set(a) | set(b)):
         if path and path[0] == 'forecast' and len(path) > 1 and path[1] == 'scenarios':
             continue
+        if path and path[0] == 'templates' and path[-1] == 'data':
+            continue  # the Word file itself; its name and size still show
         if str(a.get(path)) != str(b.get(path)):
             rows.append({'path': list(path), 'old': a.get(path), 'new': b.get(path)})
     return rows

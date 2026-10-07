@@ -14,6 +14,7 @@ from .export import forecast_table, inventory_count
 from .forecast import forecast, preview, candidate
 from .ledger import compute
 from . import ocr
+from . import report
 from .live import damai_summary, live_summary, parse_damai_table
 from .model import BookError, new_book
 from .store import BookFile, WrongPassword
@@ -41,9 +42,18 @@ class Session:
     def state(self) -> dict:
         f = self.need_file()
         ledger, fc = compute(f.book), forecast(f.book)
-        return {'path': str(f.path), 'book': f.book, 'ledger': ledger, 'forecast': fc,
+        book = dict(f.book)  # the Word templates stay in the file; the screen only needs their names
+        book['templates'] = [{k: v for k, v in t.items() if k != 'data'} for t in f.book['templates']]
+        return {'path': str(f.path), 'book': book, 'ledger': ledger, 'forecast': fc,
                 'live': live_summary(f.book, ledger), 'damai': damai_summary(f.book, fc['gross']),
                 'versions': f.versions(), 'log': f.data['log'][-50:]}
+
+    @staticmethod
+    def _template(f: BookFile, ident: str) -> dict:
+        for t in f.book['templates']:
+            if t['id'] == ident:
+                return t
+        raise BookError('找不到模板：' + str(ident))
 
     def dispatch(self, method: str, p: dict):
         if method == 'health':
@@ -115,6 +125,29 @@ class Session:
                 found['known'] = found['session'] in codes
                 out.append(found)
             return {'results': out}
+        if method == 'report_fields':
+            return {'fields': report.fields(f.book)}
+        if method == 'template_add':
+            raw = Path(p['path']).read_bytes()
+            check = report.check(f.book, raw)
+            used = {t['id'] for t in f.book['templates']}
+            n = len(used) + 1
+            while f't{n}' in used:
+                n += 1
+            name = (p.get('name') or Path(p['path']).stem).strip()
+            item = {'id': f't{n}', 'name': name, 'file': Path(p['path']).name, 'size': len(raw), 'markers': check['markers'],
+                    'data': report.encode(raw)}
+            f.replace_book(apply(f.book, [{'op': 'add', 'list': 'templates', 'item': item}]), '添加报告模板', name)
+            return self.state()
+        if method == 'template_check':
+            return report.check(f.book, report.decode(self._template(f, p['id'])['data']))
+        if method == 'report_make':
+            tpl = self._template(f, p['id'])
+            filled, unknown = report.fill(f.book, report.decode(tpl['data']))
+            out = Path(p['path'])
+            out.write_bytes(filled)
+            f.log('生成报告', f'{tpl["name"]} → {out.name}')
+            return {'path': str(out), 'unknown': unknown}
         if method == 'damai_read':
             return {'projects': parse_damai_table(p['text'])}
         if method == 'damai_add':

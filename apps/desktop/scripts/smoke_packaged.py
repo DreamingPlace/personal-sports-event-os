@@ -61,6 +61,15 @@ with tempfile.TemporaryDirectory(prefix='ticketbook-packaged-') as workspace:
         state = ok('damai_add', text=text, at='2030-11-20T10:00')
         assert state['damai']['latest']['total']['sold_qty'] == 500
         checks.append('read pasted Damai table')
+        import docx  # test runner only, to write a template
+        template = docx.Document()
+        template.add_paragraph('共{{场次数}}场')
+        template.add_paragraph('{{票价表}}')
+        template.save(Path(workspace) / 'template.docx')
+        state = ok('template_add', path=str(Path(workspace) / 'template.docx'))
+        made = ok('report_make', id=state['book']['templates'][0]['id'], path=str(Path(workspace) / 'report.docx'))
+        assert '共5场' in '\n'.join(p.text for p in docx.Document(made['path']).paragraphs), made
+        checks.append('fill a Word report template')
         if health['ocr']:
             from PIL import Image, ImageDraw, ImageFont  # test runner only, to draw a picture to read
             picture = Image.new('RGB', (900, 200), (10, 20, 70))

@@ -56,6 +56,7 @@ def new_book(name: str = '', year: int | None = None) -> dict:
         'sales': {},
         'live': {},
         'damai': [],
+        'templates': [],
         'forecast': {'method': 'band', 'band_fill': {}, 'china_fill': '95', 'other_fill': '65',
                      'session_fill': {}, 'product_fill': '100', 'scenarios': []},
     }

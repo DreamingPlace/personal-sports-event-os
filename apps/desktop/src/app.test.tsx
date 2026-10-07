@@ -125,5 +125,11 @@ describe("ticket book desktop", () => {
     const check = await screen.findByRole("dialog", { name: "核对截图读到的数字" }, { timeout: 30000 });
     expect(within(check).getByRole("button", { name: "保存 0 场" })).toBeInTheDocument();
     await user.click(within(check).getByRole("button", { name: "取消" }));
+
+    // Reports: the field list shows numbers from the book.
+    await user.click(screen.getByRole("button", { name: "报告", exact: true }));
+    expect(await screen.findByRole("button", { name: "{{场次数}}" })).toBeInTheDocument();
+    await user.type(screen.getByLabelText("查找字段"), "开始日期");
+    expect(await screen.findByText("12月1日")).toBeInTheDocument();
   }, 60000);
 });

@@ -9,6 +9,7 @@ import { ForecastPage } from "./pages/ForecastPage";
 import { VersionsPage } from "./pages/VersionsPage";
 import { DamaiPage } from "./pages/DamaiPage";
 import { LivePage } from "./pages/LivePage";
+import { ReportsPage } from "./pages/ReportsPage";
 
 export type PageProps = {
   state: State;
@@ -26,6 +27,7 @@ const PAGES = [
   { id: "forecast", name: "票房测算", Page: ForecastPage },
   { id: "damai", name: "大麦销售", Page: DamaiPage },
   { id: "live", name: "现场入场", Page: LivePage },
+  { id: "reports", name: "报告", Page: ReportsPage },
   { id: "versions", name: "版本", Page: VersionsPage },
 ] as const;
 

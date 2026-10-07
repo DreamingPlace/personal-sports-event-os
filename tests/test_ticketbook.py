@@ -11,6 +11,7 @@ from ticketbook.example import example_book
 from ticketbook.export import forecast_table, inventory_count
 from ticketbook.forecast import candidate, forecast, preview
 from ticketbook.ledger import as_of, compute
+from ticketbook import report
 from ticketbook.ocr import Box, parse_boxes
 from ticketbook.live import damai_summary, live_summary, parse_damai_table
 from ticketbook.model import BookError, new_book, normalize, price
@@ -331,6 +332,95 @@ class ScreenshotTest(unittest.TestCase):
         self.assertTrue(parse_boxes(boxes)['warnings'])
 
 
+def word_template(*paragraphs, table_cell=None) -> bytes:
+    import io
+    import docx
+    d = docx.Document()
+    for text in paragraphs:
+        d.add_paragraph(text)
+    if table_cell:
+        d.add_table(rows=1, cols=1).cell(0, 0).text = table_cell
+    out = io.BytesIO()
+    d.save(out)
+    return out.getvalue()
+
+
+def word_text(raw: bytes) -> str:
+    import io
+    import docx
+    d = docx.Document(io.BytesIO(raw))
+    parts = [p.text for p in d.paragraphs]
+    for t in d.tables:
+        parts += [c.text for row in t.rows for c in row.cells]
+    return '\n'.join(parts)
+
+
+class ReportTest(unittest.TestCase):
+    def test_fields_match_the_ledger(self):
+        f = report.fields(example_book())
+        L = compute(example_book())
+        s1 = L['sessions'][0]['total']
+        self.assertEqual(f['场次数'], '5')
+        self.assertEqual((f['开始日期'], f['结束日期']), ('12月1日', '12月3日'))
+        self.assertEqual(f['全程总座席'], str(L['totals']['seats']))
+        self.assertEqual(f['票价:预赛:B档遮挡'], '200')  # blocked tier follows its base tier minus 100
+        self.assertIn('–', f['每场总座席'])  # two layouts: shown as a range, never as one wrong number
+        self.assertEqual(f['分配:国际组织'], '150')
+        self.assertEqual(f['轮次:第一轮:开售日期'], '11月10日')
+        self.assertTrue(s1['seats'] > 0)
+
+    def test_fill_replaces_markers_and_keeps_unknown_ones(self):
+        raw = word_template('{{赛事名称}}共{{场次数}}场，预计票房{{预计票房万元}}万元。', '{{票价表}}', '这里有{{不认识的字段}}。',
+                            table_cell='VIP 预赛 {{票价:预赛:VIP}} 元')
+        filled, unknown = report.fill(example_book(), raw)
+        text = word_text(filled)
+        self.assertIn('示例赛事（虚构数据）共5场', text)
+        self.assertIn('VIP 预赛 500 元', text)
+        self.assertIn('{{不认识的字段}}', text)
+        self.assertEqual(unknown, ['不认识的字段'])
+        self.assertIn('循环赛', text)  # the price table was inserted
+        self.assertNotIn('{{票价表}}', text)
+        self.assertEqual(report.check(example_book(), raw)['unknown'], ['不认识的字段'])
+
+    def test_sums_in_markers(self):
+        values = {'a': '10', 'b': '3', 'range': '1–2'}
+        self.assertEqual(report.evaluate('a - b', values), '7')
+        self.assertEqual(report.evaluate('1 + a * b', values), '31')
+        self.assertIsNone(report.evaluate('range + 1', values))  # a range is not one number
+        self.assertIsNone(report.evaluate('18-24岁', values))
+        filled, unknown = report.fill(example_book(), word_template('{{场次数 * 100}} / {{分配:海外平台 - 5}}'))
+        self.assertIn('500 / 35', word_text(filled))
+        self.assertEqual(unknown, [])
+
+    def test_caps_tiers_and_round_shares(self):
+        f = report.fields(example_book())
+        self.assertEqual((f['上限:赞助商优先购'], f['上限:赞助商优先购:VIP']), ('200', '100'))
+        self.assertEqual(f['轮次:第一轮:循环赛:比例'], '40%')
+        self.assertEqual(f['座席:C档'], '600')
+
+    def test_formatting_around_markers_is_kept(self):
+        import io
+        import docx
+        d = docx.Document()
+        p = d.add_paragraph()
+        p.add_run('一、总座席：').bold = True
+        p.add_run('每场{{每')  # Word often splits a marker over several runs
+        p.add_run('场可售}}张，')
+        p.add_run('重要').italic = True
+        out = io.BytesIO()
+        d.save(out)
+        filled, _ = report.fill(example_book(), out.getvalue())
+        runs = docx.Document(io.BytesIO(filled)).paragraphs[0].runs
+        self.assertTrue(runs[0].bold)
+        self.assertEqual(runs[0].text, '一、总座席：')
+        self.assertTrue(runs[3].italic)
+        self.assertEqual(''.join(r.text for r in runs), f"一、总座席：每场{report.fields(example_book())['每场可售']}张，重要")
+
+    def test_not_a_word_file(self):
+        with self.assertRaises(BookError):
+            report.markers(b'not a docx')
+
+
 class DamaiTest(unittest.TestCase):
     def test_reads_copied_table(self):
         rows = parse_damai_table(ROW_PER_LINE)
@@ -385,6 +475,12 @@ class DesktopProtocolTest(unittest.TestCase):
             self.assertEqual(r['result']['damai']['latest']['total']['sold_qty'], 1400)
             r = call('edit', ops=[{'op': 'set', 'path': ['live', 'S1'], 'value': {'checked': 10, 'total': 20}}])
             self.assertEqual(r['result']['live']['overall']['rate'], '50.00')
+            tpl = Path(d) / '方案模板.docx'
+            tpl.write_bytes(word_template('共{{场次数}}场'))
+            r = call('template_add', path=str(tpl))
+            self.assertNotIn('data', r['result']['book']['templates'][0])  # the Word file is not sent to the screen
+            out = call('report_make', id=r['result']['book']['templates'][0]['id'], path=str(Path(d) / 'out.docx'))['result']
+            self.assertIn('共5场', word_text(Path(out['path']).read_bytes()))
 
 
 if __name__ == '__main__':
