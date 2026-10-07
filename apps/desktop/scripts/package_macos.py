@@ -53,5 +53,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
     verify(args.app)
     subprocess.run([sys.executable, str(Path(__file__).with_name('smoke_packaged.py')),
-                    str(args.app.resolve() / 'Contents/MacOS/sports-os-sidecar')], check=True)
+                    str(args.app.resolve() / 'Contents/MacOS/sports-os-sidecar'), '--require-ocr'], check=True)
     print(json.dumps(package(args.app, args.archive), indent=2))
