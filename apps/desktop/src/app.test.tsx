@@ -104,6 +104,15 @@ describe("ticket book desktop", () => {
     await screen.findByText("没有修改");
     await user.click(screen.getByRole("button", { name: "版本" }));
     expect(screen.getByText("测算写回前自动保存")).toBeInTheDocument();
+    await user.type(screen.getByLabelText("原密码"), "wrong");
+    await user.type(screen.getByLabelText("新密码"), "pw2");
+    await user.type(screen.getByLabelText("再输一次新密码"), "pw2");
+    await user.click(screen.getByRole("button", { name: "修改密码" }));
+    expect(await screen.findByText("原密码不正确")).toBeInTheDocument();
+    await user.clear(screen.getByLabelText("原密码"));
+    await user.type(screen.getByLabelText("原密码"), "pw");
+    await user.click(screen.getByRole("button", { name: "修改密码" }));
+    expect(await screen.findByText("密码已修改")).toBeInTheDocument();
 
     // Damai sales: paste a copied table, check what was read, then save it.
     await user.click(screen.getByRole("button", { name: "大麦销售" }));

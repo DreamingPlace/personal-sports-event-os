@@ -10,6 +10,18 @@ export function VersionsPage({ state, run }: PageProps) {
   const [restoring, setRestoring] = useState<Dict | null>(null);
   const [error, setError] = useState("");
   const versions = [...state.versions].reverse();
+  const [pw, setPw] = useState({ old: "", next: "", again: "" });
+  const [pwDone, setPwDone] = useState(false);
+  const pwMismatch = pw.again !== "" && pw.next !== pw.again;
+
+  const changePassword = async () => {
+    setPwDone(false);
+    const result = await run("change_password", { old: pw.old, new: pw.next });
+    if (result) {
+      setPw({ old: "", next: "", again: "" });
+      setPwDone(true);
+    }
+  };
 
   const compareWith = async (v: Dict) => {
     setError("");
@@ -30,6 +42,19 @@ export function VersionsPage({ state, run }: PageProps) {
             保存版本
           </button>
         </div>
+      </Section>
+
+      <Section title="修改文件密码" hint="收到别人发来的文件后，先换成只有你知道的密码。忘记密码就打不开文件，请记好。">
+        <div className="row">
+          <input type="password" aria-label="原密码" placeholder="原密码" value={pw.old} onChange={(e) => setPw({ ...pw, old: e.target.value })} />
+          <input type="password" aria-label="新密码" placeholder="新密码" value={pw.next} onChange={(e) => setPw({ ...pw, next: e.target.value })} />
+          <input type="password" aria-label="再输一次新密码" placeholder="再输一次新密码" value={pw.again} onChange={(e) => setPw({ ...pw, again: e.target.value })} />
+          <button className="primary" disabled={!pw.old || !pw.next || pw.next !== pw.again} onClick={changePassword}>
+            修改密码
+          </button>
+        </div>
+        {pwMismatch && <p className="form-error">两次输入的新密码不一样</p>}
+        {pwDone && <p className="ok-line">密码已修改</p>}
       </Section>
 
       <Section title="已保存的版本">

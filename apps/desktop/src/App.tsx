@@ -101,7 +101,7 @@ export default function App() {
             </button>
           </div>
         )}
-        <current.Page key={page === "forecast" || page === "damai" ? page : `${page}-${failures}`} state={state} edit={edit} run={run} />
+        <current.Page key={["forecast", "damai", "versions"].includes(page) ? page : `${page}-${failures}`} state={state} edit={edit} run={run} />
       </main>
       {busy && <div className="busy" aria-live="polite">处理中…</div>}
     </div>
