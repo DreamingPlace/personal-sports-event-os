@@ -3,12 +3,13 @@ import type { Dict } from "../api";
 import { num } from "../api";
 import type { PageProps } from "../App";
 import { Cell, Section } from "../ui";
+import { LiveRead } from "./LiveRead";
 
 const AGES = ["u18", "18-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50+"];
 const ORIGIN_ROWS = 8;
 const pctText = (v: string | null | undefined) => (v === null || v === undefined || v === "" ? "—" : `${v}%`);
 
-export function LivePage({ state, edit }: PageProps) {
+export function LivePage({ state, edit, run }: PageProps) {
   const { book, live } = state;
   const [open, setOpen] = useState<string | null>(null);
   const ageNames = live.age_names as Record<string, string>;
@@ -18,7 +19,11 @@ export function LivePage({ state, edit }: PageProps) {
 
   return (
     <div className="page">
-      <Section title="入场汇总" hint="按大麦现场监控平台上的数字录入。每天和全程的女性、本地、年龄比例按各场已验票人数加权。">
+      <Section
+        title="入场汇总"
+        hint="把大麦现场监控平台的截图读进来（可一次选多张），或在下面手动填写。每天和全程的女性、本地、年龄比例按各场已验票人数加权。"
+        actions={<LiveRead state={state} edit={edit} run={run} />}
+      >
         <div className="forecast-totals">
           <Tile label="已录入场次" value={`${live.overall.sessions} / ${book.sessions.length}`} />
           <Tile label="已验票" value={num(live.overall.checked)} />

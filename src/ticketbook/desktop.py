@@ -13,6 +13,7 @@ from .example import example_book
 from .export import forecast_table, inventory_count
 from .forecast import forecast, preview, candidate
 from .ledger import compute
+from . import ocr
 from .live import damai_summary, live_summary, parse_damai_table
 from .model import BookError, new_book
 from .store import BookFile, WrongPassword
@@ -46,7 +47,7 @@ class Session:
 
     def dispatch(self, method: str, p: dict):
         if method == 'health':
-            return {'protocol': PROTOCOL, 'version': __version__, 'desktop_version': DESKTOP_VERSION}
+            return {'protocol': PROTOCOL, 'version': __version__, 'desktop_version': DESKTOP_VERSION, 'ocr': ocr.available()}
         if method == 'create_book':
             book = example_book() if p.get('example') else new_book(p.get('name', ''), p.get('year'))
             if p.get('name'):
@@ -101,6 +102,19 @@ class Session:
             book['forecast']['scenarios'] = [s for s in book['forecast']['scenarios'] if s['name'] != p['name']]
             f.replace_book(book, '删除测算方案', p['name'])
             return self.state()
+        if method == 'live_read':
+            codes = {s['code'] for s in f.book['sessions']}
+            out = []
+            for path in p['paths']:
+                try:
+                    found = ocr.read_screenshot(path)
+                except BookError as exc:
+                    out.append({'path': path, 'error': str(exc)})
+                    continue
+                found['path'] = path
+                found['known'] = found['session'] in codes
+                out.append(found)
+            return {'results': out}
         if method == 'damai_read':
             return {'projects': parse_damai_table(p['text'])}
         if method == 'damai_add':

@@ -119,5 +119,11 @@ describe("ticket book desktop", () => {
     await user.type(checked, "900{Enter}");
     await user.type(screen.getByLabelText("总票数 S1"), "1000{Enter}");
     await waitFor(() => expect(screen.getAllByText("90.00%").length).toBeGreaterThan(0));
+
+    // Reading a screenshot that cannot be opened: the check dialog says so and saves nothing.
+    await user.click(screen.getByRole("button", { name: "读取截图…" }));
+    const check = await screen.findByRole("dialog", { name: "核对截图读到的数字" }, { timeout: 30000 });
+    expect(within(check).getByRole("button", { name: "保存 0 场" })).toBeInTheDocument();
+    await user.click(within(check).getByRole("button", { name: "取消" }));
   }, 60000);
 });

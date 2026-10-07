@@ -11,6 +11,7 @@ from ticketbook.example import example_book
 from ticketbook.export import forecast_table, inventory_count
 from ticketbook.forecast import candidate, forecast, preview
 from ticketbook.ledger import as_of, compute
+from ticketbook.ocr import Box, parse_boxes
 from ticketbook.live import damai_summary, live_summary, parse_damai_table
 from ticketbook.model import BookError, new_book, normalize, price
 from ticketbook.store import BookFile, WrongPassword
@@ -261,6 +262,73 @@ ROW_PER_LINE = """项目ID\t项目名称\t项目时间\t城市
 \t\t\t\t\t金额（元）\t20000000\t5000000.5\t2000\t14999999.5
 """
 CELL_PER_LINE = "100000003\n示例杯\n2030-11-29至\n2030-12-07\n数量（张）\n123,450\n90000\n0\n33450\n72.90%\n金额（元）\n77777700\n55555500\n0\n22222200\n"
+
+
+def screen_boxes(**skip):
+    """OCR boxes laid out like Damai's on-site screen, with invented figures."""
+    rows = [
+        (300, 10, 200, 20, '示例混合团体赛 S3'), (330, 35, 150, 12, '2030-12-02 15:30:05'),
+        (260, 60, 40, 15, '到场率'), (250, 80, 60, 20, '90.00%'),
+        (30, 150, 70, 20, '已验票数'), (30, 175, 70, 22, '1,800'),
+        (180, 150, 60, 18, '已实名数'), (180, 175, 70, 22, '1900人'),
+        (280, 150, 50, 18, '总票数'), (280, 175, 70, 22, '2,000'),
+        (420, 300, 60, 15, '观众性别'), (430, 400, 30, 12, '88%'), (520, 400, 30, 12, '12%'),
+        (600, 300, 60, 15, '年龄分布'), (950, 300, 60, 15, '来源分布'), (1080, 298, 50, 15, '示例市'), (1140, 298, 30, 15, '21%'),
+        (1000, 330, 50, 12, '甲省'), (1150, 330, 30, 12, '40%'),
+    ]
+    ages = [('18岁以下', '5%'), ('18-24岁', '30%'), ('25-29岁', '20%'), ('30-34岁', '15%'), ('35-39岁', '10%'),
+            ('40-44岁', '8%'), ('45-49岁', '5%'), ('50岁以上', '7%')]
+    for i, (label, value) in enumerate(ages):
+        y = 330 + i * 26
+        if label not in skip.get('labels', ()):
+            rows.append((640, y, 50, 12, label))
+        if value and label not in skip.get('values', ()):
+            rows.append((830, y, 30, 12, value))
+    return [Box(*r) for r in rows]
+
+
+class ScreenshotTest(unittest.TestCase):
+    def test_reads_every_figure(self):
+        r = parse_boxes(screen_boxes())
+        self.assertEqual(r['session'], 'S3')
+        e = r['entry']
+        self.assertEqual((e['at'], e['checked'], e['realname'], e['total']), ('2030-12-02T15:30', 1800, 1900, 2000))
+        self.assertEqual((e['female_pct'], e['local_pct'], e['local_name']), ('88', '21', '示例市'))
+        self.assertEqual(e['age'], {'u18': '5', '18-24': '30', '25-29': '20', '30-34': '15', '35-39': '10', '40-44': '8', '45-49': '5', '50+': '7'})
+        self.assertEqual((r['missing'], r['warnings']), ([], []))
+
+    def test_misread_label_still_placed_by_row(self):
+        e = parse_boxes(screen_boxes(labels=('30-34岁',)))['entry']
+        self.assertEqual(e['age']['30-34'], '15')
+
+    def test_unread_value_left_empty_and_listed(self):
+        r = parse_boxes(screen_boxes(values=('40-44岁',)))
+        self.assertNotIn('40-44', r['entry']['age'])
+        self.assertIn('age:40-44', r['missing'])
+
+    def test_real_ocr_on_a_drawn_screen(self):
+        """End to end with the OCR model, on a picture drawn from the invented layout (skipped without OCR or a Chinese font)."""
+        from ticketbook import ocr
+        font_path = next((f for f in ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', '/System/Library/Fonts/PingFang.ttc') if Path(f).exists()), None)
+        if not ocr.available() or not font_path:
+            self.skipTest('OCR or Chinese font not installed')
+        from PIL import Image, ImageDraw, ImageFont
+        image = Image.new('RGB', (1220, 560), (10, 20, 70))
+        draw = ImageDraw.Draw(image)
+        for b in screen_boxes():
+            draw.text((b.x, b.y), b.text, fill=(230, 235, 255), font=ImageFont.truetype(font_path, int(b.h)))
+        with tempfile.TemporaryDirectory() as d:
+            path = str(Path(d) / 'screen.png')
+            image.save(path)
+            r = ocr.read_screenshot(path)
+        e = r['entry']
+        self.assertEqual(r['session'], 'S3')
+        self.assertEqual((e['checked'], e['realname'], e['total']), (1800, 1900, 2000))
+        self.assertEqual(e.get('female_pct'), '88')
+
+    def test_rate_mismatch_warns(self):
+        boxes = [b for b in screen_boxes() if b.text != '1,800'] + [Box(30, 175, 70, 22, '1,600')]
+        self.assertTrue(parse_boxes(boxes)['warnings'])
 
 
 class DamaiTest(unittest.TestCase):

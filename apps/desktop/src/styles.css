@@ -467,3 +467,27 @@ thead th {
   border-radius: 6px;
   box-sizing: border-box;
 }
+
+.read-card {
+  border-top: 1px solid var(--line);
+  padding: 10px 0;
+}
+.read-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px 10px;
+}
+.read-grid label {
+  display: grid;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.read-grid label.missing input {
+  background: var(--changed);
+}
+.dialog:has(.read-card) {
+  width: min(900px, 94vw);
+  max-height: 88vh;
+  overflow: auto;
+}
