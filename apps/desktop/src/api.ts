@@ -8,6 +8,8 @@ export type State = {
   book: Dict;
   ledger: Dict;
   forecast: Dict;
+  live: Dict;
+  damai: Dict;
   versions: { id: string; label: string; created_at: string }[];
   log: { at: string; action: string; detail: string }[];
 };

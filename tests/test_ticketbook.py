@@ -11,6 +11,7 @@ from ticketbook.example import example_book
 from ticketbook.export import forecast_table, inventory_count
 from ticketbook.forecast import candidate, forecast, preview
 from ticketbook.ledger import as_of, compute
+from ticketbook.live import damai_summary, live_summary, parse_damai_table
 from ticketbook.model import BookError, new_book, normalize, price
 from ticketbook.store import BookFile, WrongPassword
 
@@ -213,6 +214,83 @@ class ExportTest(unittest.TestCase):
             forecast_table(example_book(), Path(d) / 'fc.xlsx')
 
 
+class LiveTest(unittest.TestCase):
+    def book(self):
+        b = tiny_book()
+        b['sessions'].append({'code': 'S2', 'date': '2030-01-01', 'band': 'x', 'layout': 'L'})
+        b['sessions'].append({'code': 'S3', 'date': '2030-01-02', 'band': 'x', 'layout': 'L'})
+        b['live'] = {
+            'S1': {'at': '2030-01-01T15:00', 'checked': 900, 'realname': 950, 'total': 1000, 'female_pct': '90',
+                   'local_pct': '20', 'age': {'18-24': '30'}, 'origins': [{'name': '甲省', 'pct': '50'}]},
+            'S2': {'checked': 300, 'total': 500, 'female_pct': '60', 'age': {'18-24': '10'}},
+        }
+        return normalize(b)
+
+    def test_session_day_and_event(self):
+        b = self.book()
+        live = live_summary(b, compute(b))
+        s1 = live['sessions'][0]
+        self.assertEqual((s1['rate'], s1['no_show'], s1['issued']), ('90.00', 100, 750))  # 100 comp + 150 + 200 + 300 sold
+        self.assertEqual(s1['diff'], 250)
+        self.assertFalse(live['sessions'][2]['entered'])
+        day = live['days'][0]
+        self.assertEqual((day['checked'], day['total'], day['rate']), (1200, 1500, '80.00'))
+        self.assertEqual(day['female_pct'], '82.5')  # (90×900 + 60×300) / 1200
+        self.assertEqual(day['age']['18-24'], '25.0')
+        self.assertEqual(day['local_pct'], '20.0')  # only S1 gave it
+        self.assertEqual(live['overall']['sessions'], 2)
+
+    def test_bad_live_input_refused(self):
+        with self.assertRaises(BookError):
+            apply(self.book(), [{'op': 'set', 'path': ['live', 'S1', 'female_pct'], 'value': '120'}])
+        with self.assertRaises(BookError):
+            apply(self.book(), [{'op': 'set', 'path': ['live', 'S1', 'checked'], 'value': '-1'}])
+
+    def test_session_rename_and_remove_follow(self):
+        b = apply(self.book(), [{'op': 'rename', 'list': 'sessions', 'key': 'S1', 'to': 'S9'}])
+        self.assertIn('S9', b['live'])
+        b = apply(b, [{'op': 'remove', 'list': 'sessions', 'key': 'S9'}])
+        self.assertNotIn('S9', b['live'])
+        self.assertEqual(copy_event(b, 'N', 2031, 365)['live'], {})
+
+
+ROW_PER_LINE = """项目ID\t项目名称\t项目时间\t城市
+\t100000001\t示例杯【赞助商】\t2030-11-29至2030-12-07\t示例市\t项目结束\t数量（张）\t1,000\t900\t0\t100\t90%\t查看报表
+\t\t\t\t\t金额（元）\t50000\t45000\t0\t5000
+\t100000002\t示例杯\t2030-11-29至2030-12-07\t示例市\t销售中\t数量（张）\t2000\t500\t20\t1500\t25%\t查看报表
+\t\t\t\t\t金额（元）\t20000000\t5000000.5\t2000\t14999999.5
+"""
+CELL_PER_LINE = "100000003\n示例杯\n2030-11-29至\n2030-12-07\n数量（张）\n123,450\n90000\n0\n33450\n72.90%\n金额（元）\n77777700\n55555500\n0\n22222200\n"
+
+
+class DamaiTest(unittest.TestCase):
+    def test_reads_copied_table(self):
+        rows = parse_damai_table(ROW_PER_LINE)
+        self.assertEqual([r['id'] for r in rows], ['100000001', '100000002'])
+        self.assertEqual(rows[0]['name'], '示例杯【赞助商】')
+        self.assertEqual((rows[0]['plan_qty'], rows[0]['sold_qty'], rows[0]['left_qty']), (1000, 900, 100))
+        self.assertEqual((rows[1]['sold_amount'], rows[1]['left_amount']), ('5000000.5', '14999999.5'))
+
+    def test_reads_one_cell_per_line(self):
+        (row,) = parse_damai_table(CELL_PER_LINE)  # long amounts must not be taken for project IDs
+        self.assertEqual((row['id'], row['plan_qty'], row['plan_amount']), ('100000003', 123450, '77777700'))
+
+    def test_nothing_found(self):
+        with self.assertRaises(BookError):
+            parse_damai_table('随便一段文字 123')
+
+    def test_snapshots_in_time_order(self):
+        b = tiny_book()
+        b['damai'] = [{'id': 'd2', 'at': '2030-11-20T10:00', 'projects': parse_damai_table(ROW_PER_LINE)},
+                      {'id': 'd1', 'at': '2030-11-10T10:00', 'projects': parse_damai_table(CELL_PER_LINE)}]
+        out = damai_summary(normalize(b), '10000000')
+        self.assertEqual([s['id'] for s in out['snapshots']], ['d1', 'd2'])
+        total = out['latest']['total']
+        self.assertEqual((total['plan_qty'], total['sold_qty'], total['rate']), (3000, 1400, '46.67'))  # latest snapshot only
+        self.assertEqual(total['sold_amount'], '5045000.5')
+        self.assertEqual(out['vs_forecast'], '50.45')
+
+
 class DesktopProtocolTest(unittest.TestCase):
     def test_round_trip(self):
         with tempfile.TemporaryDirectory() as d:
@@ -233,6 +311,12 @@ class DesktopProtocolTest(unittest.TestCase):
             self.assertEqual(call('open_book', path=created['result']['path'], password='no')['error']['code'], 'PASSWORD')
             self.assertTrue(call('open_book', path=created['result']['path'], password='pw')['ok'])
             self.assertEqual(s.handle('not json')['error']['code'], 'PROTOCOL')
+            self.assertEqual(len(call('damai_read', text=ROW_PER_LINE)['result']['projects']), 2)
+            self.assertEqual(call('damai_add', text=ROW_PER_LINE)['error']['code'], 'INPUT')  # needs a time
+            r = call('damai_add', text=ROW_PER_LINE, at='2030-11-20T10:00')
+            self.assertEqual(r['result']['damai']['latest']['total']['sold_qty'], 1400)
+            r = call('edit', ops=[{'op': 'set', 'path': ['live', 'S1'], 'value': {'checked': 10, 'total': 20}}])
+            self.assertEqual(r['result']['live']['overall']['rate'], '50.00')
 
 
 if __name__ == '__main__':

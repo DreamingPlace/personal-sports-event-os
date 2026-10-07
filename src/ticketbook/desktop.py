@@ -13,6 +13,7 @@ from .example import example_book
 from .export import forecast_table, inventory_count
 from .forecast import forecast, preview, candidate
 from .ledger import compute
+from .live import damai_summary, live_summary, parse_damai_table
 from .model import BookError, new_book
 from .store import BookFile, WrongPassword
 
@@ -38,7 +39,9 @@ class Session:
 
     def state(self) -> dict:
         f = self.need_file()
-        return {'path': str(f.path), 'book': f.book, 'ledger': compute(f.book), 'forecast': forecast(f.book),
+        ledger, fc = compute(f.book), forecast(f.book)
+        return {'path': str(f.path), 'book': f.book, 'ledger': ledger, 'forecast': fc,
+                'live': live_summary(f.book, ledger), 'damai': damai_summary(f.book, fc['gross']),
                 'versions': f.versions(), 'log': f.data['log'][-50:]}
 
     def dispatch(self, method: str, p: dict):
@@ -97,6 +100,22 @@ class Session:
             book = json.loads(json.dumps(f.book))
             book['forecast']['scenarios'] = [s for s in book['forecast']['scenarios'] if s['name'] != p['name']]
             f.replace_book(book, '删除测算方案', p['name'])
+            return self.state()
+        if method == 'damai_read':
+            return {'projects': parse_damai_table(p['text'])}
+        if method == 'damai_add':
+            projects = p['projects'] if 'projects' in p else parse_damai_table(p['text'])
+            if not projects:
+                raise BookError('没有项目数据')
+            at = (p.get('at') or '').strip()
+            if not at:
+                raise BookError('请填写读取时间')
+            used = {snap['id'] for snap in f.book['damai']}
+            n = len(used) + 1
+            while f'd{n}' in used:
+                n += 1
+            item = {'id': f'd{n}', 'at': at, 'note': p.get('note', ''), 'projects': projects}
+            f.replace_book(apply(f.book, [{'op': 'add', 'list': 'damai', 'item': item}]), '记录大麦销售', at)
             return self.state()
         if method == 'export_inventory':
             out = inventory_count(f.book, p['path'], p.get('rounds'))

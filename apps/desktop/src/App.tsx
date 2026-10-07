@@ -7,6 +7,8 @@ import { SplitPage } from "./pages/SplitPage";
 import { InventoryPage } from "./pages/InventoryPage";
 import { ForecastPage } from "./pages/ForecastPage";
 import { VersionsPage } from "./pages/VersionsPage";
+import { DamaiPage } from "./pages/DamaiPage";
+import { LivePage } from "./pages/LivePage";
 
 export type PageProps = {
   state: State;
@@ -22,6 +24,8 @@ const PAGES = [
   { id: "split", name: "座位分配", Page: SplitPage },
   { id: "inventory", name: "库存", Page: InventoryPage },
   { id: "forecast", name: "票房测算", Page: ForecastPage },
+  { id: "damai", name: "大麦销售", Page: DamaiPage },
+  { id: "live", name: "现场入场", Page: LivePage },
   { id: "versions", name: "版本", Page: VersionsPage },
 ] as const;
 
@@ -95,7 +99,7 @@ export default function App() {
             </button>
           </div>
         )}
-        <current.Page key={page === "forecast" ? "forecast" : `${page}-${failures}`} state={state} edit={edit} run={run} />
+        <current.Page key={page === "forecast" || page === "damai" ? page : `${page}-${failures}`} state={state} edit={edit} run={run} />
       </main>
       {busy && <div className="busy" aria-live="polite">处理中…</div>}
     </div>

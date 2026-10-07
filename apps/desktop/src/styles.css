@@ -455,3 +455,15 @@ thead th {
 .wrap {
   flex-wrap: wrap;
 }
+
+.paste {
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 6px;
+  box-sizing: border-box;
+}

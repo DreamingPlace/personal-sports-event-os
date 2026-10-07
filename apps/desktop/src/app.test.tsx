@@ -104,5 +104,20 @@ describe("ticket book desktop", () => {
     await screen.findByText("没有修改");
     await user.click(screen.getByRole("button", { name: "版本" }));
     expect(screen.getByText("测算写回前自动保存")).toBeInTheDocument();
+
+    // Damai sales: paste a copied table, check what was read, then save it.
+    await user.click(screen.getByRole("button", { name: "大麦销售" }));
+    await user.click(screen.getByLabelText("粘贴大麦表格"));
+    await user.paste("\t100000001\t示例杯\t数量（张）\t2000\t500\t20\t1500\t25%\n\t金额（元）\t200000\t50000\t2000\t150000\n");
+    await user.click(screen.getByRole("button", { name: "读取" }));
+    await user.click(await screen.findByRole("button", { name: "保存这次记录" }));
+    expect((await screen.findAllByText("25.00%")).length).toBeGreaterThan(0);
+
+    // Live entry: type one session's figures; the day total and attendance rate follow.
+    await user.click(screen.getByRole("button", { name: "现场入场" }));
+    const checked = screen.getByLabelText("已验票数 S1");
+    await user.type(checked, "900{Enter}");
+    await user.type(screen.getByLabelText("总票数 S1"), "1000{Enter}");
+    await waitFor(() => expect(screen.getAllByText("90.00%").length).toBeGreaterThan(0));
   }, 60000);
 });

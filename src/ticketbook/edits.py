@@ -4,9 +4,10 @@ from __future__ import annotations
 import copy
 from datetime import date, timedelta
 
+from .live import validate_damai, validate_live
 from .model import BUCKET_KINDS, PRODUCT_KINDS, BookError, count, money, normalize
 
-LISTS = {'tiers': 'code', 'bands': 'code', 'layouts': 'code', 'sessions': 'code', 'buckets': 'id', 'products': 'id', 'rounds': 'code'}
+LISTS = {'tiers': 'code', 'bands': 'code', 'layouts': 'code', 'sessions': 'code', 'buckets': 'id', 'products': 'id', 'rounds': 'code', 'damai': 'id'}
 
 
 def _find(items: list, key: str, value):
@@ -96,6 +97,7 @@ def _drop_references(book: dict, name: str, key: str):
         for sales in book['sales'].values():
             sales.pop(key, None)
         book['forecast']['session_fill'].pop(key, None)
+        book['live'].pop(key, None)
     elif name == 'rounds':
         book['sales'].pop(key, None)
 
@@ -151,6 +153,7 @@ def _rename(book: dict, name: str, old: str, new: str):
         for sales in book['sales'].values():
             move(sales)
         move(book['forecast']['session_fill'])
+        move(book['live'])
     elif name == 'rounds':
         move(book['sales'])
     else:
@@ -184,6 +187,8 @@ def validate_types(book: dict):
                 if count(value) < 0:
                     raise BookError('已售数量不能为负')
     money(book['event']['agent_fee_pct'])
+    validate_live(book)
+    validate_damai(book)
 
 
 def flatten(value, prefix=()) -> dict:
@@ -217,6 +222,8 @@ def copy_event(book: dict, name: str, year: int | None, shift_days: int) -> dict
     out['event']['name'] = name
     out['event']['year'] = year
     out['sales'] = {}
+    out['live'] = {}
+    out['damai'] = []
     out['forecast']['scenarios'] = []
 
     def move(day: str) -> str:
