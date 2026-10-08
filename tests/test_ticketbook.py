@@ -209,6 +209,25 @@ class StoreTest(unittest.TestCase):
             BookFile.open(f.path, 'wrong')
         self.assertEqual(BookFile.open(f.path, 'secret').book['event']['name'], '示例赛事（虚构数据）')
 
+    def test_inventory_snapshot_restores_only_inventory(self):
+        f = BookFile.create(self.path, 'pw', tiny_book())
+        f.save_snapshot('开售前')
+        self.assertEqual(f.snapshots()[0]['totals']['public'], 500)
+        changed = apply(f.book, [{'op': 'set', 'path': ['buckets', 'r', 'default', 'A'], 'value': 300},
+                                 {'op': 'set', 'path': ['prices', 'x', 'A'], 'value': '999'}])
+        f.replace_book(changed, '修改')
+        diff = Session.__new__(Session)
+        diff.file = f
+        rows = diff.dispatch('snapshot_compare', {'id': f.snapshots()[0]['id']})
+        self.assertEqual([r['path'] for r in rows], [['buckets', 'r', 'default', 'A']])  # the price change is not inventory
+        f.restore_snapshot(f.snapshots()[0]['id'])
+        g = BookFile.open(f.path, 'pw')
+        self.assertEqual(g.book['buckets'][3]['default']['A'], 200)
+        self.assertEqual(g.book['prices']['x']['A'], '999')  # prices are kept
+        self.assertEqual([s['label'] for s in g.snapshots()], ['开售前', '恢复前自动保存'])
+        g.delete_snapshot(g.snapshots()[1]['id'])
+        self.assertEqual(len(BookFile.open(f.path, 'pw').snapshots()), 1)
+
     def test_versions_restore_and_log(self):
         f = BookFile.create(self.path, 'pw', tiny_book())
         f.save_version('1128版')

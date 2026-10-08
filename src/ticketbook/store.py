@@ -34,6 +34,9 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec='seconds')
 
 
+INVENTORY_KEYS = ('layouts', 'buckets', 'products', 'rounds', 'sales')
+
+
 class BookFile:
     """An open event file. Every change is written to disk at once (atomic replace)."""
 
@@ -49,7 +52,7 @@ class BookFile:
         if path.exists():
             raise BookError(f'文件已存在：{path.name}')
         salt = secrets.token_bytes(16)
-        data = {'book': normalize(book or new_book()), 'versions': [], 'log': []}
+        data = {'book': normalize(book or new_book()), 'versions': [], 'snapshots': [], 'log': []}
         f = cls(path, _key(password, salt), salt, data)
         f.log('创建文件')
         return f
@@ -70,6 +73,7 @@ class BookFile:
         data = json.loads(plain.decode('utf-8'))
         data['book'] = normalize(data['book'])
         data.setdefault('versions', [])
+        data.setdefault('snapshots', [])
         data.setdefault('log', [])
         return cls(Path(path), key, salt, data)
 
@@ -122,6 +126,44 @@ class BookFile:
         self.save_version('恢复前自动保存')
         self.replace_book(json.loads(json.dumps(target['book'])), '恢复版本', target['label'])
         return self.book
+
+    # --- inventory snapshots: only the seat plan, allocations, rounds and sales; restoring one leaves prices etc. alone ---
+    def save_snapshot(self, label: str) -> dict:
+        from .ledger import compute
+        totals = compute(self.book)['totals']
+        snap = {'id': uuid.uuid4().hex[:12], 'label': label or '库存快照', 'created_at': _now(),
+                'totals': {k: totals[k] for k in ('seats', 'hold', 'public', 'sold', 'left')},
+                'inventory': json.loads(json.dumps({k: self.book[k] for k in INVENTORY_KEYS}))}
+        self.data['snapshots'].append(snap)
+        self.log('保存库存快照', snap['label'])
+        return {k: v for k, v in snap.items() if k != 'inventory'}
+
+    def snapshot(self, snap_id: str) -> dict:
+        for s in self.data['snapshots']:
+            if s['id'] == snap_id:
+                return s
+        raise BookError('找不到库存快照：' + snap_id)
+
+    def snapshots(self) -> list[dict]:
+        return [{k: v for k, v in s.items() if k != 'inventory'} for s in self.data['snapshots']]
+
+    def snapshot_book(self, snap_id: str) -> dict:
+        """The current book with the snapshot's inventory put back."""
+        book = json.loads(json.dumps(self.book))
+        book.update(json.loads(json.dumps(self.snapshot(snap_id)['inventory'])))
+        return normalize(book)
+
+    def restore_snapshot(self, snap_id: str) -> dict:
+        target = self.snapshot(snap_id)
+        book = self.snapshot_book(snap_id)
+        self.save_snapshot('恢复前自动保存')
+        self.replace_book(book, '恢复库存快照', target['label'])
+        return self.book
+
+    def delete_snapshot(self, snap_id: str):
+        target = self.snapshot(snap_id)
+        self.data['snapshots'].remove(target)
+        self.log('删除库存快照', target['label'])
 
     def change_password(self, old: str, new: str):
         if _key(old, self._salt) != self._key:

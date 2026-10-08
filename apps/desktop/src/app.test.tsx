@@ -114,6 +114,17 @@ describe("ticket book desktop", () => {
     await user.click(screen.getByRole("button", { name: "修改密码" }));
     expect(await screen.findByText("密码已修改")).toBeInTheDocument();
 
+    // Inventory snapshot: save, change an allocation, compare, restore.
+    await user.click(screen.getByRole("button", { name: "库存" }));
+    await user.type(screen.getByLabelText("快照名称"), "开售前");
+    await user.click(screen.getByRole("button", { name: "保存库存快照" }));
+    expect(await screen.findByRole("rowheader", { name: "开售前" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "和现在比较" }));
+    expect(await screen.findByText("没有变化")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "恢复" }));
+    await user.click(within(await screen.findByRole("dialog", { name: "恢复库存快照" })).getByRole("button", { name: "恢复" }));
+    expect(await screen.findByRole("rowheader", { name: "恢复前自动保存" })).toBeInTheDocument();
+
     // Damai sales: paste a copied table, check what was read, then save it.
     await user.click(screen.getByRole("button", { name: "大麦销售" }));
     await user.click(screen.getByLabelText("粘贴大麦表格"));

@@ -215,6 +215,29 @@ def flatten(value, prefix=()) -> dict:
     return out
 
 
+FIELD_NAMES = {'default': '每场', 'cap': '上限', 'seats': '座席', 'share': '比例%', 'quota': '数量', 'price': '价格',
+               'name': '名称', 'opens': '开售时间', 'sessions': '场次', 'kind': '类别', 'tier': '票档', 'bands': '比赛阶段'}
+SECTION_NAMES = {'layouts': '座席布局', 'buckets': '分配', 'products': '通票/套票', 'rounds': '放票轮次', 'sales': '已售',
+                 'prices': '票价', 'tiers': '票档', 'bands': '比赛阶段', 'sessions': '场次', 'event': '赛事', 'forecast': '测算'}
+
+
+def describe(book: dict, path: tuple) -> str:
+    """A change's place in words, e.g. ('buckets', 'r', 'overrides', 'S1', 'A') → 分配 预留 · S1 · A档."""
+    names = {}
+    for key in ('tiers', 'bands', 'layouts', 'rounds'):
+        names.update({i['code']: i.get('name') or i['code'] for i in book.get(key, [])})
+    names.update({i['id']: i.get('name') or i['id'] for key in ('buckets', 'products') for i in book.get(key, [])})
+    parts = [SECTION_NAMES.get(path[0], path[0])] if path else []
+    for i, part in enumerate(path[1:], 1):
+        if part == 'overrides':
+            continue
+        if path[0] == 'sales' and i == 1:
+            parts.append(names.get(part, part))
+        else:
+            parts.append(FIELD_NAMES.get(part) or names.get(part, part))
+    return ' · '.join(parts)
+
+
 def compare(old: dict, new: dict) -> list[dict]:
     a, b = flatten(old), flatten(new)
     rows = []
@@ -224,7 +247,7 @@ def compare(old: dict, new: dict) -> list[dict]:
         if path and path[0] == 'templates' and path[-1] == 'data':
             continue  # the Word file itself; its name and size still show
         if str(a.get(path)) != str(b.get(path)):
-            rows.append({'path': list(path), 'old': a.get(path), 'new': b.get(path)})
+            rows.append({'path': list(path), 'label': describe(new if path in b else old, path), 'old': a.get(path), 'new': b.get(path)})
     return rows
 
 

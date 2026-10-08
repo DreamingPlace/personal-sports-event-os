@@ -46,7 +46,7 @@ class Session:
         book['templates'] = [{k: v for k, v in t.items() if k != 'data'} for t in f.book['templates']]
         return {'path': str(f.path), 'book': book, 'ledger': ledger, 'forecast': fc,
                 'live': live_summary(f.book, ledger), 'damai': damai_summary(f.book, fc['gross']),
-                'versions': f.versions(), 'log': f.data['log'][-50:]}
+                'versions': f.versions(), 'snapshots': f.snapshots(), 'log': f.data['log'][-50:]}
 
     @staticmethod
     def _template(f: BookFile, ident: str) -> dict:
@@ -86,6 +86,17 @@ class Session:
             return compare(pick(p['old']), pick(p['new']))
         if method == 'restore':
             f.restore(p['id'])
+            return self.state()
+        if method == 'snapshot_save':
+            f.save_snapshot((p.get('label') or '').strip())
+            return self.state()
+        if method == 'snapshot_compare':
+            return compare(f.snapshot_book(p['id']), f.book)  # only the inventory parts differ
+        if method == 'snapshot_restore':
+            f.restore_snapshot(p['id'])
+            return self.state()
+        if method == 'snapshot_delete':
+            f.delete_snapshot(p['id'])
             return self.state()
         if method == 'forecast_preview':
             return preview(f.book, p['changes'])

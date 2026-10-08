@@ -11,6 +11,7 @@ export type State = {
   live: Dict;
   damai: Dict;
   versions: { id: string; label: string; created_at: string }[];
+  snapshots: { id: string; label: string; created_at: string; totals: Record<string, number> }[];
   log: { at: string; action: string; detail: string }[];
 };
 

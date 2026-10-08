@@ -2,11 +2,11 @@ import { useState } from "react";
 import type { Dict } from "../api";
 import { call } from "../api";
 import type { PageProps } from "../App";
-import { Confirm, Section } from "../ui";
+import { Confirm, DiffTable, Section } from "../ui";
 
 export function VersionsPage({ state, run }: PageProps) {
   const [label, setLabel] = useState("");
-  const [diff, setDiff] = useState<{ title: string; rows: Dict[] } | null>(null);
+  const [diff, setDiff] = useState<{ title: string; rows: any[] } | null>(null);
   const [restoring, setRestoring] = useState<Dict | null>(null);
   const [error, setError] = useState("");
   const versions = [...state.versions].reverse();
@@ -26,7 +26,7 @@ export function VersionsPage({ state, run }: PageProps) {
   const compareWith = async (v: Dict) => {
     setError("");
     try {
-      const rows = await call<Dict[]>("compare", { old: v.id, new: "CURRENT" });
+      const rows = await call<any[]>("compare", { old: v.id, new: "CURRENT" });
       setDiff({ title: `“${v.label}” → 现在`, rows });
     } catch (e: any) {
       setError(e?.message || String(e));
@@ -81,28 +81,7 @@ export function VersionsPage({ state, run }: PageProps) {
 
       {diff && (
         <Section title={`变化：${diff.title}`} actions={<button onClick={() => setDiff(null)}>关闭</button>}>
-          {!diff.rows.length ? (
-            <p className="ok-line">没有变化</p>
-          ) : (
-            <table className="grid">
-              <thead>
-                <tr>
-                  <th>位置</th>
-                  <th>原来</th>
-                  <th>现在</th>
-                </tr>
-              </thead>
-              <tbody>
-                {diff.rows.map((r, i) => (
-                  <tr key={i}>
-                    <td>{r.path.join(" / ")}</td>
-                    <td>{r.old === undefined || r.old === null ? "—" : String(r.old)}</td>
-                    <td>{r.new === undefined || r.new === null ? "—" : String(r.new)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+          <DiffTable rows={diff.rows} />
         </Section>
       )}
 

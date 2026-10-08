@@ -104,3 +104,29 @@ export function newId(prefix: string): string {
   counter += 1;
   return `${prefix}${Date.now().toString(36)}${counter}`;
 }
+
+/** Changes between two states of the book, one row per changed value. */
+export function DiffTable({ rows }: { rows: { path: string[]; label?: string; old: unknown; new: unknown }[] }) {
+  if (!rows.length) return <p className="ok-line">没有变化</p>;
+  const show = (v: unknown) => (v === undefined || v === null || v === "" ? "—" : Array.isArray(v) ? v.join("、") : String(v));
+  return (
+    <table className="grid">
+      <thead>
+        <tr>
+          <th>位置</th>
+          <th>原来</th>
+          <th>现在</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i}>
+            <td className="text">{r.label || r.path.join(" / ")}</td>
+            <td>{show(r.old)}</td>
+            <td>{show(r.new)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}

@@ -3,7 +3,8 @@ import { save } from "@tauri-apps/plugin-dialog";
 import type { Dict } from "../api";
 import { LINE_NAMES, bandName, num, yuan } from "../api";
 import type { PageProps } from "../App";
-import { Cell, Problems, Section } from "../ui";
+import { Cell, Confirm, DiffTable, Problems, Section } from "../ui";
+import { call } from "../api";
 
 const SUMMARY_LINES = ["seats", "hold", "comp", "priority", "reserve", "product", "public", "sold", "left"];
 
@@ -13,6 +14,14 @@ export function InventoryPage({ state, edit, run }: PageProps) {
   const [round, setRound] = useState<string>(book.rounds[0]?.code || "");
   const [counted, setCounted] = useState<string[] | null>(null);
   const [exported, setExported] = useState("");
+  const [snapLabel, setSnapLabel] = useState("");
+  const [snapDiff, setSnapDiff] = useState<{ label: string; rows: Dict[] } | null>(null);
+  const [restoring, setRestoring] = useState<Dict | null>(null);
+  const snapshots = [...(state.snapshots || [])].reverse();
+  const compareSnap = async (snap: Dict) => {
+    const rows = await call<Dict[]>("snapshot_compare", { id: snap.id }).catch(() => null);
+    if (rows) setSnapDiff({ label: snap.label, rows });
+  };
   const bucketName = (id: string) => book.buckets.find((b: Dict) => b.id === id)?.name || id;
   const roundName = (code: string) => book.rounds.find((r: Dict) => r.code === code)?.name || code;
 
@@ -87,6 +96,83 @@ export function InventoryPage({ state, edit, run }: PageProps) {
           </table>
         </div>
       </Section>
+
+      <Section
+        title="库存快照"
+        hint="快照只保存座席、分配、通票、放票轮次和已售数；恢复快照时票价、场次等其他内容不变。恢复前会自动再存一个快照。"
+        actions={
+          <>
+            <input aria-label="快照名称" placeholder="快照名称，例如 1114 开售前" value={snapLabel} onChange={(e) => setSnapLabel(e.target.value)} />
+            <button className="primary" onClick={() => run("snapshot_save", { label: snapLabel.trim() }).then(() => setSnapLabel(""))}>
+              保存库存快照
+            </button>
+          </>
+        }
+      >
+        {!snapshots.length ? (
+          <p className="hint">还没有库存快照。</p>
+        ) : (
+          <table className="grid numbers">
+            <thead>
+              <tr>
+                <th>快照</th>
+                <th>时间</th>
+                <th>{LINE_NAMES.seats}</th>
+                <th>{LINE_NAMES.public}</th>
+                <th>{LINE_NAMES.sold}</th>
+                <th>{LINE_NAMES.left}</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {snapshots.map((snap) => (
+                <tr key={snap.id}>
+                  <th scope="row">{snap.label}</th>
+                  <td className="text muted">{new Date(snap.created_at).toLocaleString()}</td>
+                  <td>{num(snap.totals.seats)}</td>
+                  <td>{num(snap.totals.public)}</td>
+                  <td>{num(snap.totals.sold)}</td>
+                  <td>{num(snap.totals.left)}</td>
+                  <td className="nowrap">
+                    <button className="link" onClick={() => compareSnap(snap)}>
+                      和现在比较
+                    </button>{" "}
+                    <button className="link" onClick={() => setRestoring(snap)}>
+                      恢复
+                    </button>{" "}
+                    <button className="link danger" onClick={() => run("snapshot_delete", { id: snap.id })}>
+                      删除
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {snapDiff && (
+          <div className="read-card">
+            <div className="row">
+              <strong>“{snapDiff.label}” → 现在</strong>
+              <button onClick={() => setSnapDiff(null)}>关闭</button>
+            </div>
+            <DiffTable rows={snapDiff.rows as any} />
+          </div>
+        )}
+      </Section>
+      {restoring && (
+        <Confirm
+          title="恢复库存快照"
+          confirmText="恢复"
+          onCancel={() => setRestoring(null)}
+          onConfirm={async () => {
+            await run("snapshot_restore", { id: restoring.id });
+            setRestoring(null);
+            setSnapDiff(null);
+          }}
+        >
+          <p>把座席、分配、通票、放票轮次和已售数恢复到“{restoring.label}”。票价、场次等不变。</p>
+        </Confirm>
+      )}
 
       <Section
         title="录入公开销售"
