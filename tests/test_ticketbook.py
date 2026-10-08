@@ -11,7 +11,7 @@ from ticketbook.example import example_book
 from ticketbook.export import forecast_table, inventory_count
 from ticketbook.forecast import candidate, forecast, preview
 from ticketbook.ledger import as_of, compute
-from ticketbook import report, seatmap
+from ticketbook import report, seatmap, setupimport
 from ticketbook.ocr import Box, parse_boxes
 from ticketbook.live import damai_summary, live_summary, parse_damai_table
 from ticketbook.model import BookError, new_book, normalize, price
@@ -560,6 +560,79 @@ class ZoneTest(unittest.TestCase):
     def test_zone_checks(self):
         with self.assertRaises(BookError):
             apply(example_book(), [{'op': 'set', 'path': ['layouts', 'four', 'zones'], 'value': [{'name': 'x', 'tier': 'NOPE', 'seats': 1}]}])
+
+
+def plan_files(folder):
+    """An invented Word plan (long price table) and Excel sheet (wide prices, seats, session list)."""
+    import docx
+    from openpyxl import Workbook
+    d = docx.Document()
+    d.add_paragraph('2030年示例杯乒乓球赛票务方案')
+    d.add_paragraph('示例杯计划于12月1日至12月3日进行。')
+    t = d.add_table(rows=1, cols=4)
+    for c, v in enumerate(['阶段', '票档', '去年', '今年']):
+        t.rows[0].cells[c].text = v
+    for stage, base in (('小组赛', 100), ('决赛', 300)):
+        for k, tier in enumerate(['VIP', 'A档', 'B档']):
+            row = t.add_row().cells
+            for c, v in enumerate([stage, tier, str(base - k * 20), str(base + 50 - k * 20)]):
+                row[c].text = v
+    word = Path(folder) / 'plan.docx'
+    d.save(word)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = '票价'
+    ws.append(['票品', '小组赛', '决赛', '备注'])
+    ws.append(['VIP', 500, 900, 'x'])
+    ws.append(['A档', 400, 700, ''])
+    ws.append([])
+    ws.append(['', 'VIP', 'A档', 'B档'])
+    ws.append(['总座席数量', 1000, 800, 600])
+    ws2 = wb.create_sheet('场次')
+    ws2.append(['日期', '2030-12-01', None, '2030-12-02'])
+    ws2.merge_cells('B1:C1')
+    ws2.append(['场次', 'S1', 'S2', 'S3'])
+    excel = Path(folder) / 'sheet.xlsx'
+    wb.save(excel)
+    return str(word), str(excel)
+
+
+class SetupImportTest(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.TemporaryDirectory()
+        self.word, self.excel = plan_files(self.dir.name)
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    def test_finds_event_prices_seats_and_sessions(self):
+        r = setupimport.scan([self.word, self.excel])
+        self.assertEqual(r['event'], {'year': 2030, 'name': '示例杯乒乓球赛', 'dates': '12月1日至12月3日'})
+        long = next(p for p in r['prices'] if p['kind'] == 'long')
+        self.assertEqual([o['label'] for o in long['options']], ['去年', '今年'])
+        self.assertEqual(long['options'][1]['prices']['决赛']['B档'], '310')
+        wide = next(p for p in r['prices'] if p['kind'] == 'wide')
+        self.assertEqual(wide['options'][0]['prices'], {'小组赛': {'VIP': '500', 'A档': '400'}, '决赛': {'VIP': '900', 'A档': '700'}})
+        self.assertEqual(r['seats'][0]['seats'], {'VIP': 1000, 'A档': 800, 'B档': 600})
+        self.assertEqual(r['sessions'][0]['sessions'], [{'code': 'S1', 'date': '2030-12-01'}, {'code': 'S2', 'date': '2030-12-01'},
+                                                         {'code': 'S3', 'date': '2030-12-02'}])
+
+    def test_applying_matches_names_and_adds_what_is_new(self):
+        r = setupimport.scan([self.word, self.excel])
+        long = next(p for p in r['prices'] if p['kind'] == 'long')
+        choice = {'event': r['event'], 'prices': long['options'][1]['prices'], 'seats': r['seats'][0]['seats'],
+                  'sessions': r['sessions'][0]['sessions'] + [{'code': 'S9', 'date': '2030-12-03'}]}
+        b = apply(example_book(), setupimport.ops_for(example_book(), choice))
+        self.assertEqual(b['event']['name'], '示例杯乒乓球赛')
+        self.assertEqual(b['prices']['final']['VIP'], '350')  # 决赛 matched the existing stage by name
+        self.assertIn('小组赛', [x['name'] for x in b['bands']])
+        self.assertEqual(next(lay for lay in b['layouts'] if lay['name'] == '导入布局')['seats']['A'], 800)
+        self.assertEqual(next(s for s in b['sessions'] if s['code'] == 'S3')['date'], '2030-12-02')  # existing: date only
+        self.assertEqual(next(s for s in b['sessions'] if s['code'] == 'S9')['layout'], next(lay['code'] for lay in b['layouts'] if lay['name'] == '导入布局'))
+
+    def test_other_files_are_refused(self):
+        with self.assertRaises(BookError):
+            setupimport.scan([str(Path(self.dir.name) / 'x.pdf')])
 
 
 class DamaiTest(unittest.TestCase):

@@ -84,6 +84,14 @@ with tempfile.TemporaryDirectory(prefix='ticketbook-packaged-') as workspace:
         response = call('seatmap_read', sheet=str(Path(workspace) / 'blank.pdf'))
         assert not response['ok'] and '没有文字' in response['error']['message'], response
         checks.append('read seat sheets (Excel, PDF)')
+        wb = Workbook()
+        wb.active.append(['票品', '预赛', '决赛'])
+        wb.active.append(['VIP', 555, 999])
+        wb.active.append(['A档', 444, 888])
+        wb.save(Path(workspace) / 'plan.xlsx')
+        found = ok('setup_scan', paths=[str(Path(workspace) / 'plan.xlsx')])
+        assert found['prices'][0]['options'][0]['prices']['决赛']['VIP'] == '999', found
+        checks.append('recognise a planning sheet')
         if health['ocr']:
             from PIL import Image, ImageDraw, ImageFont  # test runner only, to draw a picture to read
             picture = Image.new('RGB', (900, 200), (10, 20, 70))

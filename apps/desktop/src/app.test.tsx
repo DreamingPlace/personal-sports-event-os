@@ -167,6 +167,23 @@ describe("ticket book desktop", () => {
     await user.click(await screen.findByRole("button", { name: "1 个区域" }));
     expect(screen.getByLabelText("区域座位数 东A区")).toHaveValue("18");
 
+    // Setup from a planning sheet: an invented price table is recognised and imported.
+    const plan = join(dir, "plan.xlsx");
+    execFileSync(process.env.PYTHON || "python3", [
+      "-c",
+      "import sys\nfrom openpyxl import Workbook\nwb=Workbook(); ws=wb.active\nws.append(['票品','预赛','决赛'])\nws.append(['VIP',555,999])\nws.append(['A档',444,888])\nwb.save(sys.argv[1])",
+      plan,
+    ]);
+    await user.click(screen.getByRole("button", { name: "赛事与场次" }));
+    picks.push(plan);
+    await user.click(screen.getByRole("button", { name: "从文件导入…" }));
+    const importDialog = await screen.findByRole("dialog", { name: "从文件导入设置" });
+    expect(within(importDialog).getByText("999")).toBeInTheDocument();
+    await user.click(within(importDialog).getByRole("button", { name: "导入所选内容" }));
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "从文件导入设置" })).toBeNull());
+    await user.click(screen.getByRole("button", { name: "票价与座席" }));
+    expect(screen.getByLabelText("票价 预赛 VIP")).toHaveValue("555");
+
     // Reports: the field list shows numbers from the book.
     await user.click(screen.getByRole("button", { name: "报告", exact: true }));
     expect(await screen.findByRole("button", { name: "{{场次数}}" })).toBeInTheDocument();

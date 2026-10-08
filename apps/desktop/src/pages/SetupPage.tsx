@@ -3,8 +3,10 @@ import { save } from "@tauri-apps/plugin-dialog";
 import type { Dict } from "../api";
 import type { PageProps } from "../App";
 import { Cell, Confirm, Section } from "../ui";
+import { SetupImport } from "./SetupImport";
 
-export function SetupPage({ state, edit, run, go }: PageProps) {
+export function SetupPage(props: PageProps) {
+  const { state, edit, run, go } = props;
   const { book } = state;
   const ev = book.event;
   const [copying, setCopying] = useState(false);
@@ -17,7 +19,16 @@ export function SetupPage({ state, edit, run, go }: PageProps) {
 
   return (
     <div className="page">
-      <Section title="赛事" actions={<button onClick={() => setCopying(true)}>复制为下一届</button>}>
+      <Section
+        title="赛事"
+        hint="可以从你的方案（Word）和测算表（Excel）里自动认出票价、座席、场次和赛事名称，核对后再导入。"
+        actions={
+          <>
+            <SetupImport {...props} />
+            <button onClick={() => setCopying(true)}>复制为下一届</button>
+          </>
+        }
+      >
         <div className="form-grid">
           <label>
             名称 <Cell label="赛事名称" value={ev.name} onCommit={(v) => set(["event", "name"], v)} />

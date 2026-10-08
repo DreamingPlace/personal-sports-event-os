@@ -87,6 +87,16 @@ class Session:
         if method == 'restore':
             f.restore(p['id'])
             return self.state()
+        if method == 'setup_scan':
+            from .setupimport import scan
+            return scan(list(p.get('paths') or []))
+        if method == 'setup_apply':
+            from .setupimport import ops_for
+            ops = ops_for(f.book, p.get('choice') or {})
+            if not ops:
+                raise BookError('没有选择要导入的内容')
+            f.replace_book(apply(f.book, ops), '从文件导入设置', f'{len(ops)} 项')
+            return self.state()
         if method == 'seatmap_read':
             from .seatmap import read as read_seatmap
             return read_seatmap(p.get('sheet') or None, p.get('picture') or None)
