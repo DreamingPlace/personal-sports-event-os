@@ -81,6 +81,9 @@ def _drop_references(book: dict, name: str, key: str):
             band.pop(key, None)
         for layout in book['layouts']:
             layout['seats'].pop(key, None)
+            for z in layout.get('zones', []):
+                if z.get('tier') == key:
+                    z['tier'] = ''
         for b in book['buckets']:
             b['default'].pop(key, None)
             b['cap'].pop(key, None)
@@ -121,6 +124,9 @@ def _rename(book: dict, name: str, old: str, new: str):
             move(band)
         for layout in book['layouts']:
             move(layout['seats'])
+            for z in layout.get('zones', []):
+                if z.get('tier') == old:
+                    z['tier'] = new
         for t in book['tiers']:
             if t.get('blocked_of') == old:
                 t['blocked_of'] = new
@@ -172,10 +178,18 @@ def validate_types(book: dict):
         for tier, value in row.items():
             if value not in (None, '') and money(value) < 0:
                 raise BookError(f'票价不能为负：{band} {tier}')
+    tiers = {t['code'] for t in book['tiers']}
     for layout in book['layouts']:
         for tier, value in layout['seats'].items():
             if count(value) < 0:
                 raise BookError(f'座席数不能为负：{layout["code"]} {tier}')
+        for z in layout.get('zones', []):
+            if not str(z.get('name', '')).strip():
+                raise BookError(f'区域名称不能为空：{layout["name"]}')
+            if count(z.get('seats')) < 0:
+                raise BookError(f'座位数不能为负：{layout["name"]} {z["name"]}')
+            if z.get('tier') and z['tier'] not in tiers:
+                raise BookError(f'区域 {z["name"]} 的票档不存在：{z["tier"]}')
     for b in book['buckets']:
         if b['kind'] not in BUCKET_KINDS:
             raise BookError('分配类别未知：' + str(b['kind']))

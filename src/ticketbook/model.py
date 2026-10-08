@@ -83,6 +83,14 @@ def normalize(book: dict) -> dict:
     for layout in out['layouts']:
         layout.setdefault('name', layout['code'])
         layout.setdefault('seats', {})
+        layout.setdefault('zones', [])
+        if layout['zones']:  # with zones, seats per tier are always their sum
+            totals = {}
+            for z in layout['zones']:
+                z.setdefault('tier', '')
+                if z['tier']:
+                    totals[z['tier']] = totals.get(z['tier'], 0) + count(z.get('seats'))
+            layout['seats'] = totals
     for session in out['sessions']:
         session.setdefault('date', '')
         session.setdefault('start', '')
@@ -93,6 +101,7 @@ def normalize(book: dict) -> dict:
         bucket.setdefault('bands', None)
         bucket.setdefault('overrides', {})
         bucket.setdefault('cap', {})
+        bucket.setdefault('zones', [])
     for product in out['products']:
         product.setdefault('price', None)
         product.setdefault('extra', '0')
@@ -160,15 +169,25 @@ def seats(book: dict, layout: str, tier: str) -> int:
     return count(lay['seats'].get(tier)) if lay else 0
 
 
-def bucket_qty(bucket: dict, session: dict, tier: str) -> int:
-    """A bucket's seats in one session × tier: the per-session override if set, else the default rule."""
+def zone_seats(book: dict, layout: str, names: list[str], tier: str) -> int:
+    """Seats of the named zones of one layout that are in the given tier."""
+    lay = index(book['layouts']).get(layout)
+    if not lay or not names:
+        return 0
+    return sum(count(z.get('seats')) for z in lay.get('zones', []) if z['name'] in names and z.get('tier') == tier)
+
+
+def bucket_qty(bucket: dict, session: dict, tier: str, book: dict | None = None) -> int:
+    """A bucket's seats in one session × tier: the per-session override if set, else the default rule plus any whole
+    zones the bucket takes (only in sessions whose layout has those zones)."""
     override = bucket['overrides'].get(session['code'], {})
     if tier in override and override[tier] not in (None, ''):
         return count(override[tier])
     bands = bucket.get('bands')
     if bands and session['band'] not in bands:
         return 0
-    return count(bucket['default'].get(tier))
+    whole = zone_seats(book, session['layout'], bucket.get('zones') or [], tier) if book else 0
+    return count(bucket['default'].get(tier)) + whole
 
 
 def product_sessions(book: dict, product: dict) -> list[dict]:

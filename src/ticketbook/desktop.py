@@ -87,6 +87,9 @@ class Session:
         if method == 'restore':
             f.restore(p['id'])
             return self.state()
+        if method == 'seatmap_read':
+            from .seatmap import read as read_seatmap
+            return read_seatmap(p.get('sheet') or None, p.get('picture') or None)
         if method == 'snapshot_save':
             f.save_snapshot((p.get('label') or '').strip())
             return self.state()

@@ -70,6 +70,20 @@ with tempfile.TemporaryDirectory(prefix='ticketbook-packaged-') as workspace:
         made = ok('report_make', id=state['book']['templates'][0]['id'], path=str(Path(workspace) / 'report.docx'))
         assert '共5场' in '\n'.join(p.text for p in docx.Document(made['path']).paragraphs), made
         checks.append('fill a Word report template')
+        from openpyxl import Workbook  # test runner only, to write an invented seat sheet
+        wb = Workbook()
+        wb.active.cell(row=1, column=2, value='东A区')
+        for r in range(2, 5):
+            for c in range(2, 8):
+                wb.active.cell(row=r, column=c, value=c - 1)
+        wb.save(Path(workspace) / 'seats.xlsx')
+        zones = ok('seatmap_read', sheet=str(Path(workspace) / 'seats.xlsx'))['zones']
+        assert zones == [{'name': '东A区', 'seats': 18, 'colour': None, 'colours': {}, 'sure': False}], zones
+        from PIL import Image  # a PDF without text: the PDF reader must load and say so
+        Image.new('RGB', (200, 200), (255, 255, 255)).save(Path(workspace) / 'blank.pdf')
+        response = call('seatmap_read', sheet=str(Path(workspace) / 'blank.pdf'))
+        assert not response['ok'] and '没有文字' in response['error']['message'], response
+        checks.append('read seat sheets (Excel, PDF)')
         if health['ocr']:
             from PIL import Image, ImageDraw, ImageFont  # test runner only, to draw a picture to read
             picture = Image.new('RGB', (900, 200), (10, 20, 70))

@@ -11,7 +11,7 @@ from ticketbook.example import example_book
 from ticketbook.export import forecast_table, inventory_count
 from ticketbook.forecast import candidate, forecast, preview
 from ticketbook.ledger import as_of, compute
-from ticketbook import report
+from ticketbook import report, seatmap
 from ticketbook.ocr import Box, parse_boxes
 from ticketbook.live import damai_summary, live_summary, parse_damai_table
 from ticketbook.model import BookError, new_book, normalize, price
@@ -463,6 +463,103 @@ class ReportTest(unittest.TestCase):
     def test_not_a_word_file(self):
         with self.assertRaises(BookError):
             report.markers(b'not a docx')
+
+
+# An invented venue: zone 东A区 4 rows x 6 seats, 东B区 3 rows x 5 seats, VIP1号包厢 2 x 3; row numbers in yellow cells.
+ZONES = [('东A区', 2, 2, 4, 6), ('东B区', 2, 10, 3, 5), ('VIP1号包厢', 8, 2, 2, 3)]
+
+
+def seat_sheet(path, stray=False):
+    from openpyxl import Workbook
+    from openpyxl.styles import PatternFill
+    wb = Workbook()
+    ws = wb.active
+    yellow = PatternFill('solid', fgColor='FFFFF2CC')
+    for name, row, col, rows, seats in ZONES:
+        ws.cell(row=row, column=col, value=name)
+        for r in range(rows):
+            label = ws.cell(row=row + 1 + r, column=col - 1, value=rows - r)
+            label.fill = yellow
+            for k in range(seats):
+                ws.cell(row=row + 1 + r, column=col + k, value=k + 1)
+    if stray:
+        ws.cell(row=20, column=20, value=5)  # a note far from any seat
+    wb.save(path)
+
+
+def seat_picture(path):
+    """The same venue drawn with coloured seats: 东A区 blue, 东B区 green, the box yellow; plus a legend."""
+    from PIL import Image, ImageDraw
+    colours = {'东A区': (71, 177, 240), '东B区': (158, 221, 125), 'VIP1号包厢': (252, 214, 61)}
+    img = Image.new('RGB', (1400, 1000), (220, 220, 220))
+    d = ImageDraw.Draw(img)
+    for name, row, col, rows, seats in ZONES:
+        x0, y0 = col * 60, row * 60 + 40
+        d.rectangle((x0 - 10, y0 - 10, x0 + seats * 50, y0 + rows * 50), fill=(255, 255, 255), outline=(150, 150, 150))
+        for r in range(rows):
+            for k in range(seats):
+                d.rectangle((x0 + k * 50, y0 + r * 50, x0 + k * 50 + 30, y0 + r * 50 + 30), fill=colours[name])
+    for i, c in enumerate(colours.values()):
+        d.rectangle((1200, 100 + i * 80, 1360, 150 + i * 80), fill=c)
+    img.save(path)
+
+
+class SeatMapTest(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.TemporaryDirectory()
+        self.sheet = Path(self.dir.name) / 'seats.xlsx'
+        self.picture = Path(self.dir.name) / 'colours.png'
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    def test_sheet_gives_zone_names_and_seats(self):
+        seat_sheet(self.sheet, stray=True)
+        result = seatmap.read(str(self.sheet))
+        self.assertEqual({z['name']: z['seats'] for z in result['zones']}, {'东A区': 24, '东B区': 15, 'VIP1号包厢': 6})
+        self.assertEqual((result['total'], result['ignored']), (45, 1))  # yellow row numbers and the lone note are not seats
+
+    def test_wrong_file_type(self):
+        with self.assertRaises(BookError):
+            seatmap.read(str(Path(self.dir.name) / 'seats.docx'))
+
+    @unittest.skipUnless(__import__('importlib').util.find_spec('cv2'), 'needs the image reader')
+    def test_picture_alone_and_with_sheet(self):
+        seat_sheet(self.sheet)
+        seat_picture(self.picture)
+        alone = seatmap.read(None, str(self.picture))
+        self.assertEqual(sorted(z['seats'] for z in alone['zones']), [6, 15, 24])
+        self.assertEqual(len(alone['colours']), 3)
+        both = seatmap.read(str(self.sheet), str(self.picture))
+        colour = {z['name']: tuple(both['colours'][z['colour']]['rgb']) for z in both['zones']}
+        self.assertAlmostEqual(colour['东A区'][2], 240, delta=5)  # blue
+        self.assertAlmostEqual(colour['VIP1号包厢'][0], 252, delta=5)  # yellow
+        self.assertTrue(all(z['sure'] for z in both['zones']))
+
+
+class ZoneTest(unittest.TestCase):
+    def zoned(self):
+        zones = [{'name': '东A区', 'tier': 'A', 'seats': 300}, {'name': '主席台', 'tier': 'VIP', 'seats': 40},
+                 {'name': '东B区', 'tier': 'A', 'seats': 200}]
+        b = apply(example_book(), [{'op': 'set', 'path': ['layouts', 'four', 'zones'], 'value': zones}])
+        return b
+
+    def test_layout_seats_follow_zones(self):
+        b = self.zoned()
+        self.assertEqual(b['layouts'][0]['seats'], {'A': 500, 'VIP': 40})
+        b = apply(b, [{'op': 'rename', 'list': 'tiers', 'key': 'A', 'to': 'A1'}])
+        self.assertEqual(b['layouts'][0]['zones'][0]['tier'], 'A1')
+
+    def test_bucket_takes_whole_zones_only_where_the_layout_has_them(self):
+        b = apply(self.zoned(), [{'op': 'set', 'path': ['buckets', 'partner', 'zones'], 'value': ['主席台']}])
+        L = compute(b)
+        s1, s3 = L['sessions'][0], L['sessions'][2]  # S1 uses the zoned layout, S3 the other one
+        self.assertEqual(s1['tiers']['VIP']['by_bucket']['partner'], 100 + 40)
+        self.assertEqual(s3['tiers']['VIP']['by_bucket']['partner'], 100)
+
+    def test_zone_checks(self):
+        with self.assertRaises(BookError):
+            apply(example_book(), [{'op': 'set', 'path': ['layouts', 'four', 'zones'], 'value': [{'name': 'x', 'tier': 'NOPE', 'seats': 1}]}])
 
 
 class DamaiTest(unittest.TestCase):

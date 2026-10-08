@@ -11,12 +11,13 @@ export function SplitPage({ state, edit }: PageProps) {
   // Sent as typed; the backend refuses anything that is not a whole number, so typos show an error instead of vanishing.
   const qty = (v: string) => (v === "" ? null : v.trim());
   const bucket = book.buckets.find((b: Dict) => b.id === selected);
+  const zoneNames: string[] = [...new Set<string>(book.layouts.flatMap((l: Dict) => (l.zones || []).map((z: Dict) => z.name)))];
 
   return (
     <div className="page">
       <Section
         title="分配规则"
-        hint="设一次“每场多少张”，所有场次自动套用；个别场次不同，在下面的“按场次调整”里改。"
+        hint="设一次“每场多少张”，所有场次自动套用；个别场次不同，在下面的“按场次调整”里改。“整区”= 整个区域都给这项（如主席台、转播区），座位数按区域自动算，再加上每场填的张数。"
         actions={
           <button onClick={() => edit([{ op: "add", list: "buckets", item: { id: newId("b"), name: "新分配", kind: "comp", default: {} } }])}>添加分配</button>
         }
@@ -27,6 +28,7 @@ export function SplitPage({ state, edit }: PageProps) {
               <th>名称</th>
               <th>类别</th>
               <th>只用于比赛阶段</th>
+              {zoneNames.length > 0 && <th>整区</th>}
               {book.tiers.map((t: Dict) => (
                 <th key={t.code}>{t.name}</th>
               ))}
@@ -51,6 +53,11 @@ export function SplitPage({ state, edit }: PageProps) {
                 <td>
                   <BandFilter book={book} value={b.bands} onChange={(v) => set(["buckets", b.id, "bands"], v)} label={b.name} />
                 </td>
+                {zoneNames.length > 0 && (
+                  <td>
+                    <ZonePicker names={zoneNames} value={b.zones || []} label={b.name} onChange={(v) => set(["buckets", b.id, "zones"], v)} />
+                  </td>
+                )}
                 {book.tiers.map((t: Dict) => (
                   <td key={t.code}>
                     <Cell label={`${b.name} ${t.name} 每场`} type="number" value={b.default[t.code]} onCommit={(v) => set(["buckets", b.id, "default", t.code], qty(v))} width={64} />
@@ -284,6 +291,23 @@ function SessionFilter({ book, value, onChange, label }: { book: Dict; value: st
           </div>
         );
       })}
+    </details>
+  );
+}
+
+/** Whole zones a bucket takes, e.g. 主席台 for VIP guests; their seats count in each zone's own tier. */
+function ZonePicker({ names, value, onChange, label }: { names: string[]; value: string[]; onChange: (v: string[]) => void; label: string }) {
+  return (
+    <details className="band-filter">
+      <summary aria-label={`整区 ${label}`}>{value.length ? value.join("、") : "无"}</summary>
+      <div className="scroll tall">
+        {names.map((n) => (
+          <label key={n} className="check">
+            <input type="checkbox" checked={value.includes(n)} onChange={(e) => onChange(e.target.checked ? [...value, n] : value.filter((x) => x !== n))} />
+            {n}
+          </label>
+        ))}
+      </div>
     </details>
   );
 }

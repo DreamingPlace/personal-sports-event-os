@@ -1,7 +1,9 @@
 import type { Dict } from "../api";
 import { yuan } from "../api";
 import type { PageProps } from "../App";
+import { Fragment, useState } from "react";
 import { Cell, Section } from "../ui";
+import { SeatMapImport } from "./SeatMapImport";
 
 /** Price for display: own price, or base price minus discount for a view-blocked tier. */
 export function shownPrice(book: Dict, band: string, tier: Dict): { value: string; derived: boolean } {
@@ -14,8 +16,10 @@ export function shownPrice(book: Dict, band: string, tier: Dict): { value: strin
   return { value: "", derived: false };
 }
 
-export function PricesPage({ state, edit }: PageProps) {
+export function PricesPage(props: PageProps) {
+  const { state, edit } = props;
   const { book } = state;
+  const [zonesOf, setZonesOf] = useState<string | null>(null);
   const set = (path: (string | number)[], value: any) => edit([{ op: "set", path, value }]);
   const nextLayout = () => {
     let i = book.layouts.length + 1;
@@ -62,11 +66,14 @@ export function PricesPage({ state, edit }: PageProps) {
         {!book.bands.length && <p className="hint">先在“赛事与场次”里添加比赛阶段和票档。</p>}
       </Section>
 
-      <Section title="座席布局" hint="每种场地布局下，每个票档有多少座位（还没扣除转播、安保等占用，占用在“座位分配”里设）。">
+      <Section
+        title="座席布局"
+        hint="每种场地布局下，每个票档有多少座位（还没扣除转播、安保等占用，占用在“座位分配”里设）。导入座位图后按区域记座位，各票档座位数自动合计。"
+        actions={<SeatMapImport {...props} />}
+      >
         <table className="grid">
           <thead>
             <tr>
-              <th>代码</th>
               <th>名称</th>
               {book.tiers.map((t: Dict) => (
                 <th key={t.code}>{t.name}</th>
@@ -76,31 +83,94 @@ export function PricesPage({ state, edit }: PageProps) {
             </tr>
           </thead>
           <tbody>
-            {book.layouts.map((l: Dict) => (
-              <tr key={l.code}>
-                <td>
-                  <Cell label={`布局代码 ${l.code}`} value={l.code} onCommit={(v) => edit([{ op: "rename", list: "layouts", key: l.code, to: v }])} width={80} />
-                </td>
-                <td>
-                  <Cell label={`布局名称 ${l.code}`} value={l.name} onCommit={(v) => set(["layouts", l.code, "name"], v)} />
-                </td>
-                {book.tiers.map((t: Dict) => (
-                  <td key={t.code}>
-                    <Cell label={`座席 ${l.name} ${t.name}`} type="number" value={l.seats[t.code]} onCommit={(v) => set(["layouts", l.code, "seats", t.code], v === "" ? null : v.trim())} width={80} />
-                  </td>
-                ))}
-                <td className="num">{totalSeats(l).toLocaleString()}</td>
-                <td>
-                  <button className="link danger" onClick={() => edit([{ op: "remove", list: "layouts", key: l.code }])}>
-                    删除
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {book.layouts.map((l: Dict) => {
+              const zoned = (l.zones || []).length > 0;
+              return (
+                <Fragment key={l.code}>
+                  <tr>
+                    <td>
+                      <Cell label={`布局名称 ${l.code}`} value={l.name} onCommit={(v) => set(["layouts", l.code, "name"], v)} />
+                    </td>
+                    {book.tiers.map((t: Dict) => (
+                      <td key={t.code}>
+                        {zoned ? (
+                          <span className="num">{(Number(l.seats[t.code]) || 0).toLocaleString()}</span>
+                        ) : (
+                          <Cell label={`座席 ${l.name} ${t.name}`} type="number" value={l.seats[t.code]} onCommit={(v) => set(["layouts", l.code, "seats", t.code], v === "" ? null : v.trim())} width={80} />
+                        )}
+                      </td>
+                    ))}
+                    <td className="num">{totalSeats(l).toLocaleString()}</td>
+                    <td className="nowrap">
+                      {zoned && (
+                        <button className="link" onClick={() => setZonesOf(zonesOf === l.code ? null : l.code)}>
+                          {zonesOf === l.code ? "收起" : `${l.zones.length} 个区域`}
+                        </button>
+                      )}{" "}
+                      <button className="link danger" onClick={() => edit([{ op: "remove", list: "layouts", key: l.code }])}>
+                        删除
+                      </button>
+                    </td>
+                  </tr>
+                  {zoned && zonesOf === l.code && (
+                    <tr>
+                      <td colSpan={book.tiers.length + 3}>
+                        <ZoneTable layout={l} book={book} onChange={(zones) => set(["layouts", l.code, "zones"], zones)} />
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
           </tbody>
         </table>
         <button onClick={() => edit([{ op: "add", list: "layouts", item: { code: nextLayout(), name: "新布局", seats: {} } }])}>添加布局</button>
       </Section>
     </div>
+  );
+}
+
+/** A layout's zones: name, tier and seats, each editable; the layout's seats per tier follow from them. */
+function ZoneTable({ layout, book, onChange }: { layout: Dict; book: Dict; onChange: (zones: Dict[]) => void }) {
+  const zones: Dict[] = layout.zones;
+  const change = (i: number, patch: Dict) => onChange(zones.map((z, j) => (j === i ? { ...z, ...patch } : z)));
+  return (
+    <table className="grid">
+      <thead>
+        <tr>
+          <th>区域</th>
+          <th>票档</th>
+          <th>座位数</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        {zones.map((z, i) => (
+          <tr key={`${z.name}-${i}`}>
+            <td>
+              <Cell label={`区域名称 ${z.name}`} value={z.name} onCommit={(v) => v.trim() && change(i, { name: v.trim() })} />
+            </td>
+            <td>
+              <select aria-label={`区域票档 ${z.name}`} value={z.tier || ""} onChange={(e) => change(i, { tier: e.target.value })}>
+                <option value="">（不计入）</option>
+                {book.tiers.map((t: Dict) => (
+                  <option key={t.code} value={t.code}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+            </td>
+            <td>
+              <Cell label={`区域座位数 ${z.name}`} type="number" value={z.seats} onCommit={(v) => change(i, { seats: Number(v) || 0 })} width={80} />
+            </td>
+            <td>
+              <button className="link danger" onClick={() => onChange(zones.filter((_, j) => j !== i))}>
+                删除
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

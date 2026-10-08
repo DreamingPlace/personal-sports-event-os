@@ -494,3 +494,14 @@ thead th {
 .check.indent {
   padding-left: 1.4em;
 }
+.swatch {
+  display: inline-block;
+  width: 28px;
+  height: 14px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+.scroll.tall {
+  max-height: 50vh;
+  overflow: auto;
+}

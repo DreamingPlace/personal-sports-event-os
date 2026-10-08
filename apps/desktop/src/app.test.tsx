@@ -5,7 +5,7 @@
 import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
 import { render, screen, within, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
+import { execFileSync, spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -24,9 +24,10 @@ vi.mock("@tauri-apps/api/core", () => ({
       child.stdin.write(JSON.stringify({ id, method: args.method, params: args.params }) + "\n");
     }),
 }));
+const { picks } = vi.hoisted(() => ({ picks: [] as string[] }));
 vi.mock("@tauri-apps/plugin-dialog", () => ({
   save: async ({ defaultPath }: { defaultPath?: string }) => join(dir, defaultPath || "out"),
-  open: async () => join(dir, "示例.ticketbook"),
+  open: async () => picks.shift() ?? join(dir, "示例.ticketbook"),
 }));
 
 import App from "./App";
@@ -145,6 +146,26 @@ describe("ticket book desktop", () => {
     const check = await screen.findByRole("dialog", { name: "核对截图读到的数字" }, { timeout: 30000 });
     expect(within(check).getByRole("button", { name: "保存 0 场" })).toBeInTheDocument();
     await user.click(within(check).getByRole("button", { name: "取消" }));
+
+    // Seat map: read an invented seat sheet, give its zone a tier, save it as a new layout.
+    const sheet = join(dir, "seats.xlsx");
+    execFileSync(process.env.PYTHON || "python3", [
+      "-c",
+      "import sys\nfrom openpyxl import Workbook\nwb=Workbook(); ws=wb.active; ws.cell(row=1,column=2,value='东A区')\nfor r in range(2,5):\n    for c in range(2,8): ws.cell(row=r,column=c,value=c-1)\nwb.save(sys.argv[1])",
+      sheet,
+    ]);
+    await user.click(screen.getByRole("button", { name: "票价与座席" }));
+    await user.click(screen.getByRole("button", { name: "导入座位图…" }));
+    picks.push(sheet);
+    await user.click(screen.getByRole("button", { name: "选择座位表…" }));
+    await screen.findByText("seats.xlsx");
+    await user.click(screen.getByRole("button", { name: "读取" }));
+    const seatDialog = await screen.findByRole("dialog", { name: "核对座位图" });
+    await user.selectOptions(within(seatDialog).getByLabelText("票档 东A区"), "A");
+    expect(within(seatDialog).getByText(/A档 18/)).toBeInTheDocument();
+    await user.click(within(seatDialog).getByRole("button", { name: "保存 1 个区域" }));
+    await user.click(await screen.findByRole("button", { name: "1 个区域" }));
+    expect(screen.getByLabelText("区域座位数 东A区")).toHaveValue("18");
 
     // Reports: the field list shows numbers from the book.
     await user.click(screen.getByRole("button", { name: "报告", exact: true }));

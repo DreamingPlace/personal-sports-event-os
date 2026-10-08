@@ -20,7 +20,7 @@ def session_tier(book: dict, session: dict, tier: str) -> dict:
     row['seats'] = seats(book, session['layout'], tier)
     row['by_bucket'] = {}
     for bucket in book['buckets']:
-        qty = bucket_qty(bucket, session, tier)
+        qty = bucket_qty(bucket, session, tier, book)
         if qty:
             row[bucket['kind']] += qty
             row['by_bucket'][bucket['id']] = qty
