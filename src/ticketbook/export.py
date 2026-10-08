@@ -67,7 +67,7 @@ def _detail_rows(ledger: dict) -> list[list]:
 
 def _price_rows(book: dict) -> list[list]:
     tiers = [t['code'] for t in book['tiers']]
-    rows = [['价格段'] + tiers]
+    rows = [['比赛阶段'] + tiers]
     for band in book['bands']:
         rows.append([band['name']] + [price(book, band['code'], t) for t in tiers])
     return rows
@@ -102,7 +102,7 @@ def inventory_count(book: dict, path, rounds: list[str] | None = None) -> Path:
 
 def forecast_table(book: dict, path) -> Path:
     fc = forecast(book)
-    rows = [['场次', '日期', '价格段', '中国队', '上座率%', '满座票房', '预计票房']]
+    rows = [['场次', '日期', '比赛阶段', '中国队', '上座率%', '满座票房', '预计票房']]
     for s in fc['sessions']:
         rows.append([s['code'], s['date'], s['band'], '是' if s['china'] else '', money(s['fill']), money(s['full']), money(s['expected'])])
     for p in fc['products']:

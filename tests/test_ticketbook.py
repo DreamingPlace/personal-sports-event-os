@@ -49,6 +49,31 @@ class LedgerTest(unittest.TestCase):
         s = compute(tiny_book())['sessions'][0]
         self.assertEqual(s['release_plan']['A'], {'R1': 200, 'R2': 300})
 
+    def test_rounds_give_a_share_per_tier_for_chosen_sessions(self):
+        L = compute(example_book())
+        s1, s5 = L['sessions'][0], L['sessions'][4]
+        self.assertEqual(s1['release_plan']['B']['R1'], s1['tiers']['B']['public'])  # B: all in round 1
+        self.assertEqual(s1['release_plan']['VIP']['R1'], s1['tiers']['VIP']['public'] // 2)
+        self.assertEqual(s1['release_plan']['VIP']['R3'], 0)  # the final round does not cover S1
+        self.assertEqual(s5['release_plan']['C'], {'R1': 0, 'R2': 0, 'R3': s5['tiers']['C']['public']})
+
+    def test_old_band_rounds_are_converted(self):
+        b = example_book()
+        b['rounds'] = [{'code': 'R1', 'name': '第一阶段', 'share': {'pre': '100', 'rr': '40'}}]
+        b = normalize(b)
+        self.assertEqual([r['code'] for r in b['rounds']], ['R1', 'R1-rr'])
+        self.assertEqual(b['rounds'][0]['sessions'], ['S1', 'S2'])
+        self.assertEqual(b['rounds'][1]['share']['VIP'], '40')
+        self.assertEqual(b['rounds'][1]['name'], '第一阶段（循环赛）')
+
+    def test_over_100_percent_is_a_warning(self):
+        b = apply(example_book(), [{'op': 'set', 'path': ['rounds', 'R2', 'share', 'B'], 'value': '10'}])
+        self.assertTrue(any('超过 100%' in p['message'] and 'B档 110%' in p['message'] for p in compute(b)['problems']))
+
+    def test_removing_a_session_drops_it_from_rounds(self):
+        b = apply(example_book(), [{'op': 'remove', 'list': 'sessions', 'key': 'S1'}])
+        self.assertEqual(b['rounds'][0]['sessions'], ['S2', 'S3', 'S4'])
+
     def test_cap_is_a_warning(self):
         problems = compute(tiny_book())['problems']
         self.assertEqual([p['level'] for p in problems], ['warning'])
@@ -81,8 +106,8 @@ class LedgerTest(unittest.TestCase):
         del b['prices']['final']['C']
         b['sessions'][0]['band'] = 'nope'
         messages = [p['message'] for p in compute(b)['problems']]
-        self.assertTrue(any('S5 C 没有票价' in m for m in messages))
-        self.assertTrue(any('S1 的价格段 nope 不存在' in m for m in messages))
+        self.assertTrue(any('S5 C档 没有票价' in m for m in messages))
+        self.assertTrue(any('S1 的比赛阶段 nope 不存在' in m for m in messages))
 
     def test_day_pass_uses_seats_in_every_session_of_its_days(self):
         rows = {s['code']: s['tiers']['B'] for s in compute(example_book())['sessions']}
@@ -395,7 +420,7 @@ class ReportTest(unittest.TestCase):
     def test_caps_tiers_and_round_shares(self):
         f = report.fields(example_book())
         self.assertEqual((f['上限:赞助商优先购'], f['上限:赞助商优先购:VIP']), ('200', '100'))
-        self.assertEqual(f['轮次:第一轮:循环赛:比例'], '40%')
+        self.assertEqual((f['轮次:第一轮:VIP:比例'], f['轮次:决赛:场次']), ('50%', 'S5'))
         self.assertEqual(f['座席:C档'], '600')
 
     def test_formatting_around_markers_is_kept(self):

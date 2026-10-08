@@ -491,3 +491,6 @@ thead th {
   max-height: 88vh;
   overflow: auto;
 }
+.check.indent {
+  padding-left: 1.4em;
+}

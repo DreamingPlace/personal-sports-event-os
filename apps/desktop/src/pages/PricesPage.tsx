@@ -26,11 +26,11 @@ export function PricesPage({ state, edit }: PageProps) {
 
   return (
     <div className="page">
-      <Section title="票价" hint="每个价格段 × 票档一个价格（元）。遮挡票档留空时自动按原票档减价（灰色数字）。">
+      <Section title="票价" hint="每个比赛阶段 × 票档一个价格（元）。遮挡票档留空时自动按原票档减价（灰色数字）。">
         <table className="grid">
           <thead>
             <tr>
-              <th>价格段</th>
+              <th>比赛阶段</th>
               {book.tiers.map((t: Dict) => (
                 <th key={t.code}>{t.name}</th>
               ))}
@@ -59,7 +59,7 @@ export function PricesPage({ state, edit }: PageProps) {
             ))}
           </tbody>
         </table>
-        {!book.bands.length && <p className="hint">先在“赛事与场次”里添加价格段和票档。</p>}
+        {!book.bands.length && <p className="hint">先在“赛事与场次”里添加比赛阶段和票档。</p>}
       </Section>
 
       <Section title="座席布局" hint="每种场地布局下，每个票档有多少座位（还没扣除转播、安保等占用，占用在“座位分配”里设）。">

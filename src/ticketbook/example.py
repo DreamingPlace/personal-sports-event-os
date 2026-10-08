@@ -41,9 +41,12 @@ def example_book() -> dict:
     ]
     book['products'] = [{'id': 'daypass', 'name': '一日通票', 'kind': 'day', 'tier': 'B', 'quota': 50}]
     book['rounds'] = [
-        {'code': 'R1', 'name': '第一轮', 'opens': '2030-11-10T15:00', 'share': {'pre': '100', 'rr': '40'}},
-        {'code': 'R2', 'name': '第二轮', 'opens': '2030-11-18T15:00', 'share': {'rr': '60', 'final': '30'}},
-        {'code': 'R3', 'name': '第三轮', 'opens': '2030-11-25T15:00', 'share': {'final': '70'}},
+        {'code': 'R1', 'name': '第一轮', 'opens': '2030-11-10T15:00', 'sessions': ['S1', 'S2', 'S3', 'S4'],
+         'share': {'VIP': '50', 'A': '50', 'B': '100', 'C': '100'}},
+        {'code': 'R2', 'name': '第二轮', 'opens': '2030-11-18T15:00', 'sessions': ['S1', 'S2', 'S3', 'S4'],
+         'share': {'VIP': '50', 'A': '50', 'B遮挡': '100'}},
+        {'code': 'R3', 'name': '决赛', 'opens': '2030-11-25T15:00', 'sessions': ['S5'],
+         'share': {'VIP': '100', 'A': '100', 'B': '100', 'B遮挡': '100', 'C': '100'}},
     ]
     book['forecast'].update(method='china', china_fill='95', other_fill='65')
     return normalize(book)

@@ -17,6 +17,8 @@ export type PageProps = {
   edit: (ops: Dict[], note?: string) => Promise<void>;
   /** Any other sidecar call that returns a new state. */
   run: (method: string, params?: Dict) => Promise<any>;
+  /** Switch to another page. */
+  go?: (page: string) => void;
 };
 
 const PAGES = [
@@ -101,7 +103,7 @@ export default function App() {
             </button>
           </div>
         )}
-        <current.Page key={["forecast", "damai", "versions"].includes(page) ? page : `${page}-${failures}`} state={state} edit={edit} run={run} />
+        <current.Page key={["forecast", "damai", "versions"].includes(page) ? page : `${page}-${failures}`} state={state} edit={edit} run={run} go={setPage} />
       </main>
       {busy && <div className="busy" aria-live="polite">处理中…</div>}
     </div>

@@ -86,12 +86,15 @@ def _drop_references(book: dict, name: str, key: str):
             b['cap'].pop(key, None)
             for o in b['overrides'].values():
                 o.pop(key, None)
+        for r in book['rounds']:
+            r['share'].pop(key, None)
     elif name == 'bands':
         book['prices'].pop(key, None)
         book['forecast']['band_fill'].pop(key, None)
-        for r in book['rounds']:
-            r['share'].pop(key, None)
     elif name == 'sessions':
+        for r in book['rounds']:
+            if r.get('sessions'):
+                r['sessions'] = [c for c in r['sessions'] if c != key]
         for b in book['buckets']:
             b['overrides'].pop(key, None)
         for sales in book['sales'].values():
@@ -132,14 +135,14 @@ def _rename(book: dict, name: str, old: str, new: str):
         for sales in book['sales'].values():
             for s in sales.values():
                 move(s)
+        for r in book['rounds']:
+            move(r['share'])
     elif name == 'bands':
         move(book['prices'])
         move(book['forecast']['band_fill'])
         for s in book['sessions']:
             if s['band'] == old:
                 s['band'] = new
-        for r in book['rounds']:
-            move(r['share'])
         for b in book['buckets']:
             if b.get('bands'):
                 b['bands'] = [new if x == old else x for x in b['bands']]
@@ -154,6 +157,9 @@ def _rename(book: dict, name: str, old: str, new: str):
             move(sales)
         move(book['forecast']['session_fill'])
         move(book['live'])
+        for r in book['rounds']:
+            if r.get('sessions'):
+                r['sessions'] = [new if c == old else c for c in r['sessions']]
     elif name == 'rounds':
         move(book['sales'])
     else:
@@ -186,6 +192,10 @@ def validate_types(book: dict):
             for value in row.values():
                 if count(value) < 0:
                     raise BookError('已售数量不能为负')
+    for r in book['rounds']:
+        for value in r['share'].values():
+            if value not in (None, '') and not 0 <= money(value) <= 100:
+                raise BookError(f'放票比例须在 0–100 之间：{r.get("name") or r["code"]}')
     money(book['event']['agent_fee_pct'])
     validate_live(book)
     validate_damai(book)

@@ -4,7 +4,7 @@ import type { Dict } from "../api";
 import type { PageProps } from "../App";
 import { Cell, Confirm, Section } from "../ui";
 
-export function SetupPage({ state, edit, run }: PageProps) {
+export function SetupPage({ state, edit, run, go }: PageProps) {
   const { book } = state;
   const ev = book.event;
   const [copying, setCopying] = useState(false);
@@ -38,7 +38,6 @@ export function SetupPage({ state, edit, run }: PageProps) {
         <table>
           <thead>
             <tr>
-              <th>代码</th>
               <th>名称</th>
               <th>原票档（遮挡）</th>
               <th>减价</th>
@@ -48,9 +47,6 @@ export function SetupPage({ state, edit, run }: PageProps) {
           <tbody>
             {book.tiers.map((t: Dict) => (
               <tr key={t.code}>
-                <td>
-                  <Cell label={`票档代码 ${t.code}`} value={t.code} onCommit={(v) => edit([{ op: "rename", list: "tiers", key: t.code, to: v }])} width={90} />
-                </td>
                 <td>
                   <Cell label={`票档名称 ${t.code}`} value={t.name} onCommit={(v) => set(["tiers", t.code, "name"], v)} />
                 </td>
@@ -79,11 +75,20 @@ export function SetupPage({ state, edit, run }: PageProps) {
         <button onClick={() => edit([{ op: "add", list: "tiers", item: { code: nextCode("T", book.tiers), name: "新票档" } }])}>添加票档</button>
       </Section>
 
-      <Section title="价格段" hint="票价按价格段定，例如预赛、循环赛周中晚场、决赛。每个场次选一个价格段。">
+      <Section
+        title="比赛阶段"
+        hint="同一阶段的场次票价相同，例如预赛、循环赛、半决赛、决赛；周末票价不同就再加一个“循环赛周末”。这里只填阶段名称，每个场次在下方选它属于哪个阶段。"
+        actions={
+          go && (
+            <button className="primary" onClick={() => go("prices")}>
+              填票价 →
+            </button>
+          )
+        }
+      >
         <table>
           <thead>
             <tr>
-              <th>代码</th>
               <th>名称</th>
               <th />
             </tr>
@@ -92,10 +97,7 @@ export function SetupPage({ state, edit, run }: PageProps) {
             {book.bands.map((b: Dict) => (
               <tr key={b.code}>
                 <td>
-                  <Cell label={`价格段代码 ${b.code}`} value={b.code} onCommit={(v) => edit([{ op: "rename", list: "bands", key: b.code, to: v }])} width={110} />
-                </td>
-                <td>
-                  <Cell label={`价格段名称 ${b.code}`} value={b.name} onCommit={(v) => set(["bands", b.code, "name"], v)} />
+                  <Cell label={`比赛阶段名称 ${b.code}`} value={b.name} onCommit={(v) => set(["bands", b.code, "name"], v)} />
                 </td>
                 <td>
                   <button className="link danger" onClick={() => edit([{ op: "remove", list: "bands", key: b.code }])}>
@@ -106,7 +108,7 @@ export function SetupPage({ state, edit, run }: PageProps) {
             ))}
           </tbody>
         </table>
-        <button onClick={() => edit([{ op: "add", list: "bands", item: { code: nextCode("band", book.bands), name: "新价格段" } }])}>添加价格段</button>
+        <button onClick={() => edit([{ op: "add", list: "bands", item: { code: nextCode("band", book.bands), name: "新比赛阶段" } }])}>添加比赛阶段</button>
       </Section>
 
       <Section title="场次" hint="一个比赛日可以有多个场次；一个场次可以包含多场比赛（写在备注里）。">
@@ -116,7 +118,7 @@ export function SetupPage({ state, edit, run }: PageProps) {
               <th>场次</th>
               <th>日期</th>
               <th>开始</th>
-              <th>价格段</th>
+              <th>比赛阶段</th>
               <th>座席布局</th>
               <th>中国队</th>
               <th>备注（比赛）</th>
@@ -136,7 +138,7 @@ export function SetupPage({ state, edit, run }: PageProps) {
                   <Cell label={`开始时间 ${s.code}`} type="time" value={s.start} onCommit={(v) => set(["sessions", s.code, "start"], v)} />
                 </td>
                 <td>
-                  <select aria-label={`价格段 ${s.code}`} value={s.band} onChange={(e) => set(["sessions", s.code, "band"], e.target.value)}>
+                  <select aria-label={`比赛阶段 ${s.code}`} value={s.band} onChange={(e) => set(["sessions", s.code, "band"], e.target.value)}>
                     {!book.bands.some((b: Dict) => b.code === s.band) && <option value={s.band}>{s.band || "（请选择）"}</option>}
                     {book.bands.map((b: Dict) => (
                       <option key={b.code} value={b.code}>

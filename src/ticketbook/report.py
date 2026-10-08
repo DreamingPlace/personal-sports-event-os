@@ -96,19 +96,21 @@ def fields(book: dict) -> dict[str, str]:
         out[f'产品:{p["name"]}:数量'] = str(p['quota'])
         if lines:
             out[f'产品:{p["name"]}:票价'] = _per_session([int(unit) if unit == int(unit) else unit for _, _, unit in lines])
+    session_names = {s['code']: s['code'] for s in book['sessions']}
     for rnd in book['rounds']:
         out[f'轮次:{rnd["name"]}:开售日期'] = _cn_date(rnd.get('opens') or '')
-        for band in bands:
-            share = rnd['share'].get(band['code'])
+        out[f'轮次:{rnd["name"]}:场次'] = '全部场次' if rnd.get('sessions') is None else '、'.join(session_names.get(c, c) for c in rnd['sessions'])
+        for tier in tiers:
+            share = rnd['share'].get(tier['code'])
             if share not in (None, ''):
-                out[f'轮次:{rnd["name"]}:{band["name"]}:比例'] = _num(money(share)) + '%'
+                out[f'轮次:{rnd["name"]}:{tier["name"]}:比例'] = _num(money(share)) + '%'
     return out
 
 
 def _tables(book: dict) -> dict[str, list[list[str]]]:
     ledger, fc = compute(book), forecast(book)
     tiers = book['tiers']
-    prices = [['价格段'] + [t['name'] for t in tiers]]
+    prices = [['比赛阶段'] + [t['name'] for t in tiers]]
     for band in book['bands']:
         row = [band['name']]
         for t in tiers:
@@ -128,7 +130,7 @@ def _tables(book: dict) -> dict[str, list[list[str]]]:
         line('可售', [first['tiers'][t['code']]['sellable'] - first['tiers'][t['code']]['comp'] for t in tiers])
     by_code = index(book['bands'])
     expected = {s['code']: s['expected'] for s in fc['sessions']}
-    sessions = [['场次', '日期', '价格段', '公开销售', '预计票房']]
+    sessions = [['场次', '日期', '比赛阶段', '公开销售', '预计票房']]
     for s in ledger['sessions']:
         sessions.append([s['code'], s['date'], by_code.get(s['band'], {}).get('name', s['band']), str(s['total']['public']), _num(money(expected[s['code']]))])
     return {'票价表': prices, '座席表': seats, '场次表': sessions}

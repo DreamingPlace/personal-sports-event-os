@@ -5,9 +5,9 @@ import type { PageProps } from "../App";
 import { Section } from "../ui";
 
 const TABLES: [string, string][] = [
-  ["票价表", "价格段 × 票档的票价表"],
+  ["票价表", "比赛阶段 × 票档的票价表"],
   ["座席表", "每个票档的总座席、各项分配和可售"],
-  ["场次表", "每场的日期、价格段、公开销售和预计票房"],
+  ["场次表", "每场的日期、比赛阶段、公开销售和预计票房"],
 ];
 
 export function ReportsPage({ state, edit, run }: PageProps) {

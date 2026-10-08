@@ -26,7 +26,7 @@ export function SplitPage({ state, edit }: PageProps) {
             <tr>
               <th>名称</th>
               <th>类别</th>
-              <th>只用于价格段</th>
+              <th>只用于比赛阶段</th>
               {book.tiers.map((t: Dict) => (
                 <th key={t.code}>{t.name}</th>
               ))}
@@ -178,13 +178,13 @@ export function SplitPage({ state, edit }: PageProps) {
 
       <Section
         title="放票轮次"
-        hint="每轮放出各价格段“公开销售”座位的百分之几。"
+        hint="每一轮放出所选场次中，各票档“公开销售”座位的百分之几。场次不选就是全部场次。"
         actions={
           <button
             onClick={() => {
               let i = book.rounds.length + 1;
               while (book.rounds.some((r: Dict) => r.code === "R" + i)) i += 1;
-              edit([{ op: "add", list: "rounds", item: { code: "R" + i, name: `第${i}轮`, opens: "", share: {} } }]);
+              edit([{ op: "add", list: "rounds", item: { code: "R" + i, name: `第${i}轮`, opens: "", sessions: null, share: {} } }]);
             }}
           >
             添加轮次
@@ -196,8 +196,9 @@ export function SplitPage({ state, edit }: PageProps) {
             <tr>
               <th>名称</th>
               <th>开售时间</th>
-              {book.bands.map((b: Dict) => (
-                <th key={b.code}>{b.name} %</th>
+              <th>场次</th>
+              {book.tiers.map((t: Dict) => (
+                <th key={t.code}>{t.name} %</th>
               ))}
               <th />
             </tr>
@@ -211,9 +212,12 @@ export function SplitPage({ state, edit }: PageProps) {
                 <td>
                   <Cell label={`开售时间 ${r.code}`} type="datetime-local" value={r.opens} onCommit={(v) => set(["rounds", r.code, "opens"], v)} />
                 </td>
-                {book.bands.map((b: Dict) => (
-                  <td key={b.code}>
-                    <Cell label={`${r.name} ${bandName(book, b.code)} 比例`} type="number" value={r.share[b.code]} onCommit={(v) => set(["rounds", r.code, "share", b.code], v === "" ? null : v)} width={64} />
+                <td>
+                  <SessionFilter book={book} value={r.sessions ?? null} label={r.name} onChange={(v) => set(["rounds", r.code, "sessions"], v)} />
+                </td>
+                {book.tiers.map((t: Dict) => (
+                  <td key={t.code}>
+                    <Cell label={`${r.name} ${t.name} 比例`} type="number" value={r.share[t.code]} onCommit={(v) => set(["rounds", r.code, "share", t.code], v === "" ? null : v)} width={64} />
                   </td>
                 ))}
                 <td>
@@ -234,7 +238,7 @@ function BandFilter({ book, value, onChange, label }: { book: Dict; value: strin
   const chosen = value || [];
   return (
     <details className="band-filter">
-      <summary aria-label={`价格段范围 ${label}`}>{chosen.length ? chosen.map((c) => bandName(book, c)).join("、") : "全部"}</summary>
+      <summary aria-label={`比赛阶段范围 ${label}`}>{chosen.length ? chosen.map((c) => bandName(book, c)).join("、") : "全部"}</summary>
       {book.bands.map((b: Dict) => (
         <label key={b.code} className="check">
           <input
@@ -248,6 +252,38 @@ function BandFilter({ book, value, onChange, label }: { book: Dict; value: strin
           {b.name}
         </label>
       ))}
+    </details>
+  );
+}
+
+/** Pick the sessions a sale round covers; a tick on a stage picks all its sessions. Nothing picked means every session. */
+function SessionFilter({ book, value, onChange, label }: { book: Dict; value: string[] | null; onChange: (v: string[] | null) => void; label: string }) {
+  const chosen = value || [];
+  const toggle = (codes: string[], on: boolean) => {
+    const next = on ? [...chosen, ...codes.filter((c) => !chosen.includes(c))] : chosen.filter((c) => !codes.includes(c));
+    onChange(next.length ? book.sessions.map((s: Dict) => s.code).filter((c: string) => next.includes(c)) : null);
+  };
+  return (
+    <details className="band-filter">
+      <summary aria-label={`场次范围 ${label}`}>{chosen.length ? chosen.join("、") : "全部场次"}</summary>
+      {book.bands.map((b: Dict) => {
+        const codes = book.sessions.filter((s: Dict) => s.band === b.code).map((s: Dict) => s.code);
+        if (!codes.length) return null;
+        return (
+          <div key={b.code}>
+            <label className="check">
+              <input type="checkbox" checked={codes.every((c: string) => chosen.includes(c))} onChange={(e) => toggle(codes, e.target.checked)} />
+              <strong>{b.name}</strong>
+            </label>
+            {codes.map((c: string) => (
+              <label key={c} className="check indent">
+                <input type="checkbox" checked={chosen.includes(c)} onChange={(e) => toggle([c], e.target.checked)} />
+                {c}
+              </label>
+            ))}
+          </div>
+        );
+      })}
     </details>
   );
 }

@@ -65,7 +65,7 @@ export function InventoryPage({ state, edit, run }: PageProps) {
               <tr>
                 <th>场次</th>
                 <th>日期</th>
-                <th>价格段</th>
+                <th>比赛阶段</th>
                 {SUMMARY_LINES.map((l) => (
                   <th key={l}>{LINE_NAMES[l]}</th>
                 ))}

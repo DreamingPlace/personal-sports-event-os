@@ -100,7 +100,38 @@ def normalize(book: dict) -> dict:
     for rnd in out['rounds']:
         rnd.setdefault('opens', '')
         rnd.setdefault('share', {})
+        rnd.setdefault('sessions', None)
+    _migrate_band_rounds(out)
     return out
+
+
+def _migrate_band_rounds(book: dict):
+    """Rounds used to give one % per price band; now each round covers chosen sessions with one % per tier.
+
+    An old round becomes one round per band it named, covering that band's sessions with the same % for every tier.
+    Sales stay with the first of them."""
+    bands = {b['code'] for b in book['bands']}
+    tiers = [t['code'] for t in book['tiers']]
+    rounds = []
+    for rnd in book['rounds']:
+        keys = [k for k, v in rnd['share'].items() if v not in (None, '')]
+        if not keys or not set(keys) <= bands or set(keys) & set(tiers):
+            rounds.append(rnd)
+            continue
+        for i, band in enumerate(keys):
+            part = dict(rnd)
+            if i:
+                part['code'] = f'{rnd["code"]}-{band}'
+            name = next(b.get('name', b['code']) for b in book['bands'] if b['code'] == band)
+            part['name'] = f'{rnd.get("name") or rnd["code"]}（{name}）' if len(keys) > 1 else rnd.get('name', rnd['code'])
+            part['sessions'] = [x['code'] for x in book['sessions'] if x['band'] == band]
+            part['share'] = {t: rnd['share'][band] for t in tiers}
+            rounds.append(part)
+    book['rounds'] = rounds
+
+
+def round_covers(rnd: dict, session: dict) -> bool:
+    return rnd.get('sessions') is None or session['code'] in rnd['sessions']
 
 
 def index(items: list, key: str = 'code') -> dict:

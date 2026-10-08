@@ -102,7 +102,7 @@ export function ForecastPage({ state, run }: PageProps) {
           <label>
             测算方式{" "}
             <select aria-label="测算方式" value={value(["forecast", "method"])} onChange={(e) => change(["forecast", "method"], e.target.value)}>
-              <option value="band">按价格段</option>
+              <option value="band">按比赛阶段</option>
               <option value="china">按是否有中国队</option>
             </select>
           </label>
@@ -144,7 +144,7 @@ export function ForecastPage({ state, run }: PageProps) {
         <table className="grid">
           <thead>
             <tr>
-              <th>价格段</th>
+              <th>比赛阶段</th>
               {book.tiers.map((t: Dict) => (
                 <th key={t.code}>{t.name}</th>
               ))}
@@ -214,7 +214,7 @@ export function ForecastPage({ state, run }: PageProps) {
               <tr>
                 <th>场次</th>
                 <th>日期</th>
-                <th>价格段</th>
+                <th>比赛阶段</th>
                 <th>上座率</th>
                 <th>现在</th>
                 <th>修改后</th>
