@@ -1,2 +1,2 @@
-from sports_os.desktop.server import main
+from ticketbook.desktop import main
 if __name__ == '__main__': main()

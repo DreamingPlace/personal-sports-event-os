@@ -122,10 +122,11 @@ class ValidatorPolishTests(unittest.TestCase):
 
 class DesktopTracebackTests(unittest.TestCase):
     def test_health_version_matches_desktop_config(self):
-        from sports_os.desktop.server import DesktopSession
+        # The desktop app now runs the ticket book sidecar; its health reply must match the shipped app version.
+        from ticketbook.desktop import Session
         config = json.loads((Path(__file__).resolve().parents[1] /
                              'apps/desktop/src-tauri/tauri.conf.json').read_text())
-        result = DesktopSession().handle('{"id":"health","method":"health","params":{}}')
+        result = Session().handle('{"id":"health","method":"health","params":{}}')
         self.assertTrue(result['ok'])
         self.assertEqual(result['result']['desktop_version'], config['version'])
 

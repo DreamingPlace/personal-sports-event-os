@@ -1,0 +1,57 @@
+name: Mac app
+# Builds the desktop app for Apple-silicon Macs. Every run keeps the zip as a downloadable run artifact;
+# runs on main also put it on the "mac-latest" release so it can be downloaded from the Releases page.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths: ["apps/desktop/**", "src/**", "pyproject.toml", ".github/workflows/mac-app.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mac:
+    runs-on: macos-14
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install '.[ocr]' 'pyinstaller>=6,<7'
+        working-directory: .
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: apps/desktop/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Build the Python sidecar (ticket book engine + screenshot reader)
+        run: python scripts/build_sidecar.py
+      - name: Build the app
+        run: pnpm tauri build --bundles app
+      - name: Check signature, run the bundled engine, zip
+        run: |
+          VERSION=$(python -c "import json;print(json.load(open('src-tauri/tauri.conf.json'))['version'])")
+          python scripts/package_macos.py "src-tauri/target/release/bundle/macos/Sports Event OS.app" "release/TicketBook-${VERSION}-mac-arm64.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TicketBook-mac-arm64
+          path: apps/desktop/release/*.zip
+      - name: Publish to the mac-latest release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view mac-latest >/dev/null 2>&1 || gh release create mac-latest --prerelease --title "Mac app (latest build)" \
+            --notes "Latest build of the ticket book desktop app for Apple-silicon Macs (M1 or newer). Unzip, move to Applications, then right-click the app and choose Open the first time (the app is not notarized by Apple)."
+          gh release upload mac-latest release/*.zip --clobber

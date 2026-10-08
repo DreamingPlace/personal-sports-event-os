@@ -25,3 +25,6 @@ apps/desktop/*.tsbuildinfo
 .codex/
 
 apps/desktop/src-tauri/gen/
+
+# Real event files are private and encrypted; never commit them.
+*.ticketbook

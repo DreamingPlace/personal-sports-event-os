@@ -13,5 +13,6 @@
     "strict": false,
     "types": ["vite/client", "vitest/globals"]
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["src/**/*.test.tsx"]
 }
