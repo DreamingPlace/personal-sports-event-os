@@ -182,7 +182,7 @@ class EditTest(unittest.TestCase):
     def test_compare_lists_changed_values(self):
         a = tiny_book()
         b = apply(a, [{'op': 'set', 'path': ['prices', 'x', 'A'], 'value': '120'}])
-        self.assertEqual(compare(a, b), [{'path': ['prices', 'x', 'A'], 'old': '100', 'new': '120'}])
+        self.assertEqual(compare(a, b), [{'path': ['prices', 'x', 'A'], 'label': '票价 · x · A', 'old': '100', 'new': '120'}])
 
     def test_copy_event_moves_dates_and_clears_sales(self):
         b = copy_event(example_book(), '下一届', 2031, 365)
